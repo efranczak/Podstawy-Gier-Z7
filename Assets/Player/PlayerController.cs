@@ -21,9 +21,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private float _time;
 
+    public bool IsGrappling{ get; set; }
+
     private void Awake()
     {
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
+        IsGrappling = false;
     }
 
     private void Update()
@@ -56,6 +59,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void FixedUpdate()
     {
+        if (IsGrappling)
+        {
+            HandleGrappleMovement();
+            return;
+         }
+
         CheckCollisions();
 
         HandleJump();
@@ -135,6 +144,29 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _frameVelocity.y = _stats.JumpPower;
         Jumped?.Invoke();
     }
+
+    private void HandleGrappleMovement()
+    {
+        // Allow horizontal input while grappling
+        float horizontal = _frameInput.Move.x;
+        Vector2 velocity = _rb.linearVelocity;
+
+        // Simple swing control – push tangentially
+        velocity.x = Mathf.MoveTowards(
+            velocity.x,
+            horizontal * _stats.MaxSpeed,
+            _stats.Acceleration * Time.fixedDeltaTime
+        );
+
+        if (Mathf.Abs(_frameInput.Move.y) > 0.1f)
+        {
+            float reelSpeed = 5f; 
+            _rb.linearVelocity += Vector2.up * (_frameInput.Move.y * reelSpeed);
+        }
+
+        _rb.linearVelocity = velocity;
+    }
+
 
     #endregion
 
