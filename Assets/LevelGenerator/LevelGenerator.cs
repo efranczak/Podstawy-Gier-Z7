@@ -40,7 +40,7 @@ public class LevelGenerator : MonoBehaviour
         GameObject go = Instantiate(prefab, chunkParent);
         Chunk chunk = go.GetComponent<Chunk>();
 
-        if (Random.value < 0.5f)
+        if (chunk.isFlippable && Random.value < 0.5f)
         {
             Vector3 scale = go.transform.localScale;
             scale.x *= -1;

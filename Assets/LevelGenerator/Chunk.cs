@@ -4,4 +4,5 @@ public class Chunk : MonoBehaviour
 {
     public Transform Entry;
     public Transform Exit;
+    public bool isFlippable;
 }
