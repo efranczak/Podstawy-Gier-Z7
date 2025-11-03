@@ -40,6 +40,20 @@ public class LevelGenerator : MonoBehaviour
         GameObject go = Instantiate(prefab, chunkParent);
         Chunk chunk = go.GetComponent<Chunk>();
 
+        if (Random.value < 0.5f)
+        {
+            Vector3 scale = go.transform.localScale;
+            scale.x *= -1;
+            go.transform.localScale = scale;
+        }
+
+        if (go.transform.localScale.x < 0)
+        {
+            Transform tmp = chunk.Entry;
+            chunk.Entry = chunk.Exit;
+            chunk.Exit = tmp;
+        }
+
         if (activeChunks.Count > 0)
         {
             Chunk prev = activeChunks[activeChunks.Count - 1];
