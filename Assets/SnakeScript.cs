@@ -6,7 +6,7 @@ public class SnakeScript : MonoBehaviour
 {   
     private GameObject player;
     private CameraScript camera;
-    private SnakeLogic snakeLogic;
+    public SnakeLogic snakeLogic;
 
     public float velocity = 0.05f;
 
@@ -20,7 +20,6 @@ public class SnakeScript : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         camera = Camera.main.GetComponent<CameraScript>();
-        snakeLogic = GetComponent<SnakeLogic>();
     }
 
     private void Update()
@@ -65,9 +64,9 @@ public class SnakeScript : MonoBehaviour
         transform.position = move;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collider.gameObject.CompareTag("Player"))
         {
             snakeLogic.PlayerDefeated();
         }

@@ -8,7 +8,8 @@ public class SnakeLogic : MonoBehaviour
     public int currentHunger;
 
     public HealthBar hungerBar;
-
+    public GameOverScript gameOverScript;
+    public SnakeScript snakeScript;
 
     void Start()
     {
@@ -19,7 +20,7 @@ public class SnakeLogic : MonoBehaviour
     public void DecreaseHunger(int amount)
     {
         currentHunger -= amount;
-        if (currentHunger < 0)
+        if (currentHunger <= 0)
         {
             currentHunger = 0;
             hungerBar.setHealth(currentHunger);
@@ -32,12 +33,14 @@ public class SnakeLogic : MonoBehaviour
     }
 
     void SnakeDefeated()
-    {
-        // Logic for when the snake is defeated
+    {   
+        snakeScript.velocity = 0f;
+        gameOverScript.TriggerYouWon();
     }
 
     public void PlayerDefeated()
-    {
-        // Logic for when the player is defeated
+    {   
+        snakeScript.velocity = 0f;
+        gameOverScript.TriggerGameOver();
     }
 }
