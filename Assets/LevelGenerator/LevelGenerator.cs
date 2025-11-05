@@ -6,6 +6,7 @@ public class LevelGenerator : MonoBehaviour
     public Camera mainCamera;
     public Transform chunkParent;
     public GameObject[] chunkTemplates;
+    public GameObject startChunk;
 
     [Header("Ustawienia")]
     public float spawnBuffer = 10f;
@@ -16,7 +17,7 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
-        SpawnNextChunk(Vector3.zero);
+        SpawnNextChunk(Vector3.zero, startChunk);
     }
 
     void Update()
@@ -24,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
         float cameraRight = mainCamera.transform.position.x + mainCamera.orthographicSize * mainCamera.aspect + spawnBuffer;
         while (rightmostX < cameraRight)
         {
-            SpawnNextChunk(Vector3.zero);
+            SpawnNextChunk(Vector3.zero, chunkTemplates[Random.Range(0, chunkTemplates.Length)]);
         }
 
         float cameraLeft = mainCamera.transform.position.x - mainCamera.orthographicSize * mainCamera.aspect - despawnBuffer;
@@ -34,9 +35,9 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    void SpawnNextChunk(Vector3 spawnPosition)
+    void SpawnNextChunk(Vector3 spawnPosition, GameObject prefab)
     {
-        GameObject prefab = chunkTemplates[Random.Range(0, chunkTemplates.Length)];
+        
         GameObject go = Instantiate(prefab, chunkParent);
         Chunk chunk = go.GetComponent<Chunk>();
 
