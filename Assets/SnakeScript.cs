@@ -6,6 +6,7 @@ public class SnakeScript : MonoBehaviour
 {   
     private GameObject player;
     private CameraScript camera;
+    private SnakeLogic snakeLogic;
 
     public float velocity = 0.05f;
 
@@ -19,12 +20,14 @@ public class SnakeScript : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         camera = Camera.main.GetComponent<CameraScript>();
+        snakeLogic = GetComponent<SnakeLogic>();
     }
 
     private void Update()
     {
         // get the distance to player
         distance = DistanceToPlayer();
+
 
         // if the snake is getting closer move the camera
         TriggerBossEvent();
@@ -61,4 +64,13 @@ public class SnakeScript : MonoBehaviour
         Vector3 move = new Vector3(transform.position.x + velocity, transform.position.y, transform.position.z);
         transform.position = move;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            snakeLogic.PlayerDefeated();
+        }
+    }
 }
+

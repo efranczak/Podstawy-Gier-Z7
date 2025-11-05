@@ -17,6 +17,8 @@ public class ResetLevel : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
+
+    /*
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Snake") && !resetOff)
@@ -24,4 +26,5 @@ public class ResetLevel : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
+    */
 }
