@@ -15,14 +15,16 @@ public class GameOverScript : MonoBehaviour
     }
 
     public void TriggerGameOver()
-    {   
+    {
+        PauseGame();
         gameOverText.text = "You Died";
         gameOverText.enabled = true;
         restartButton.gameObject.SetActive(true);
     }
 
     public void TriggerYouWon()
-    {
+    {   
+        PauseGame();
         gameOverText.text = "You Won!";
         gameOverText.enabled = true;
         restartButton.gameObject.SetActive(true);
@@ -35,7 +37,18 @@ public class GameOverScript : MonoBehaviour
     }
 
     public void RestartLevel()
-    {
+    {   
+        ResumeGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
     }
 }
