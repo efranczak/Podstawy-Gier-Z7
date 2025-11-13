@@ -1728,6 +1728,7 @@ MonoBehaviour:
   _stats: {fileID: 11400000, guid: 0283c47f022e9814083880c749e4aab2, type: 2}
   _rb: {fileID: 1107785735}
   _col: {fileID: 1107785739}
+  _spriteRenderer: {fileID: 755125203}
 --- !u!4 &1107785734
 Transform:
   m_ObjectHideFlags: 0
