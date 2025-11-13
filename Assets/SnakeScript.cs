@@ -9,17 +9,20 @@ public class SnakeScript : MonoBehaviour
     public SnakeLogic snakeLogic;
 
     public float velocity = 0.05f;
+    public float increaseModifier = 2f;
 
     public float CameraActivationDistance = 10.0f;
     private bool cameraTriggered = false;
 
     private float distance;
+    private float startDistance;
    
 
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         camera = Camera.main.GetComponent<CameraScript>();
+        startDistance = DistanceToPlayer();
     }
 
     private void Update()
@@ -62,6 +65,16 @@ public class SnakeScript : MonoBehaviour
     {
         Vector3 move = new Vector3(transform.position.x + velocity, transform.position.y, transform.position.z);
         transform.position = move;
+    }
+
+    public void IncreaseVelocity()
+    {
+        velocity *= increaseModifier;
+    }
+
+    public void resetPosition()
+    {
+        transform.position = new Vector3(transform.position.x - startDistance, transform.position.y, transform.position.z);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

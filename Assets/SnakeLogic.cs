@@ -35,9 +35,11 @@ public class SnakeLogic : MonoBehaviour
 
     void SnakeDefeated()
     {   
-        snakeScript.velocity = 0f;
         upgradePanelUI.ShowUpgradeSelection();
+        snakeScript.resetPosition();
+        snakeScript.IncreaseVelocity();
     }
+
 
     public void PlayerDefeated()
     {   

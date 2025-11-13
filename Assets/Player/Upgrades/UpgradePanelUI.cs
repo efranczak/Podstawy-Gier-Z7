@@ -8,6 +8,8 @@ public class UpgradePanelUI : MonoBehaviour
     [SerializeField] private UpgradeButton[] _upgradeButtons; 
     [SerializeField] private PlayerController _player;
 
+    public SnakeLogic _snakeLogic;
+
 
     void Start()
     {
@@ -17,6 +19,7 @@ public class UpgradePanelUI : MonoBehaviour
     public void UpgradeSelected()
     {
         Time.timeScale = 1f;
+        _snakeLogic.DecreaseHunger(-_snakeLogic.maxHunger); 
         Hide();
     }
 
