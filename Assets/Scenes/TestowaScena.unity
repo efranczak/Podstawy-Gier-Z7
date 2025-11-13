@@ -847,7 +847,8 @@ MonoBehaviour:
   chunkParent: {fileID: 2077614939}
   chunkTemplates:
   - {fileID: 806826401658938746, guid: 44526a9e33b5b864890772643e598f9b, type: 3}
-  - {fileID: 3840287670580990443, guid: a732015063476cc40a339c78ad5f8e99, type: 3}
+  - {fileID: 806826401658938746, guid: 44526a9e33b5b864890772643e598f9b, type: 3}
+  - {fileID: 3840287670580990443, guid: 16acbd93150a7fe4ca8f358760cef2a7, type: 3}
   startChunk: {fileID: 3840287670580990443, guid: 5c0360694f9856644935dc1a3901e825, type: 3}
   spawnBuffer: 10
   despawnBuffer: 10
@@ -2601,6 +2602,7 @@ Transform:
   m_Children:
   - {fileID: 755125202}
   - {fileID: 1206172707}
+  - {fileID: 1253817783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1107785735
@@ -2889,6 +2891,54 @@ Transform:
   - {fileID: 653831388}
   m_Father: {fileID: 1107785734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1253817782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1253817783}
+  - component: {fileID: 1253817784}
+  m_Layer: 3
+  m_Name: DoubleJumpHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1253817783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253817782}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1107785734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1253817784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253817782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 286c499121dedbc4489f4eb0b58e881d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpHandler
+  _player: {fileID: 1107785732}
+  _maxJumps: 2
+  _enabled: 0
+  _jumpCount: 0
 --- !u!1 &1368335674
 GameObject:
   m_ObjectHideFlags: 0

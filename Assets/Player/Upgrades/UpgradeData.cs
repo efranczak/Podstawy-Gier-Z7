@@ -14,9 +14,16 @@ public class UpgradeData : ScriptableObject
     {
         switch (upgradeType)
         {
-            // add implementation for each upgrade type
+            case UpgradeType.DoubleJump:
+                var doubleJumpHandler = player.GetComponentInChildren<DoubleJumpHandler>();
+                if (doubleJumpHandler != null)
+                {
+                    doubleJumpHandler.SetEnabled(true);
+                }
+                break;
         }
     }
+
 }
 
 public enum UpgradeType { Health, Sprint, DoubleJump, Dash }

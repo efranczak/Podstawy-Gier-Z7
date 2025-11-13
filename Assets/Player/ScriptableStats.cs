@@ -40,6 +40,9 @@ public class ScriptableStats : ScriptableObject
     [Tooltip("The immediate velocity applied when jumping")]
     public float JumpPower = 36;
 
+    [Tooltip("How much weaker the double jump is compared to the first one (velocity = JumpPower * DoubleJumpPower)")]
+    public float DoubleJumpPower = 0.75f;
+
     [Tooltip("The maximum vertical movement speed")]
     public float MaxFallSpeed = 40;
 

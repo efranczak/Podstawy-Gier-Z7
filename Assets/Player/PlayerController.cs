@@ -147,6 +147,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
         Jumped?.Invoke();
     }
 
+    public void ForceJump(float jumpPowerOverride = -1)
+    {
+        _endedJumpEarly = false;
+        _timeJumpWasPressed = 0;
+        _bufferedJumpUsable = false;
+        _coyoteUsable = false;
+        _frameVelocity.y = jumpPowerOverride > 0 ? jumpPowerOverride : _stats.JumpPower;
+        Jumped?.Invoke();
+    }
+
     private void HandleGrappleMovement()
     {
         // Allow horizontal input while grappling

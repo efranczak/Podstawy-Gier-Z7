@@ -17,7 +17,7 @@ public class UpgradePanelUI : MonoBehaviour
     public void UpgradeSelected()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Hide();
     }
 
     public void ShowUpgradeSelection()
