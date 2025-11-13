@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour, IPlayerController
 {
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private float _time;
 
     public bool IsGrappling{ get; set; }
+
+    public bool IsDashing { get; private set; }
 
     private void Awake()
     {
@@ -182,6 +185,36 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #endregion
 
+    #region Dashing
+
+    public void AddExternalVelocity(Vector2 velocity, float duration)
+    {
+        StartCoroutine(ExternalVelocityCoroutine(velocity, duration));
+    }
+
+    private IEnumerator ExternalVelocityCoroutine(Vector2 velocity, float duration)
+    {
+        IsDashing = true;
+        float timer = 0f;
+
+        float originalGravity = _rb.gravityScale;
+        _rb.gravityScale = 0f;
+
+        while (timer < duration)
+        {
+            _rb.linearVelocity = velocity;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        _rb.gravityScale = originalGravity;
+        _rb.linearVelocity = Vector2.zero;
+
+        IsDashing = false;
+    }
+
+    #endregion
+
     #region Horizontal
 
     private void HandleDirection()
@@ -205,7 +238,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _spriteRenderer.flipX = true;  
     }
 
-
     #endregion
 
     #region Gravity
@@ -226,7 +258,17 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #endregion
 
-    private void ApplyMovement() => _rb.linearVelocity = _frameVelocity;
+    public float GetFacingDirection()
+{
+    return _spriteRenderer.flipX ? -1f : 1f;
+}
+
+
+    private void ApplyMovement()
+    {
+        if (IsDashing) return;
+        _rb.linearVelocity = _frameVelocity;
+    }
 
 #if UNITY_EDITOR
     private void OnValidate()

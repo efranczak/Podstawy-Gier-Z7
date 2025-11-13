@@ -21,6 +21,13 @@ public class UpgradeData : ScriptableObject
                     doubleJumpHandler.SetEnabled(true);
                 }
                 break;
+            case UpgradeType.Dash:
+                var dashHandler = player.GetComponentInChildren<DashHandler>();
+                if (dashHandler != null)
+                {
+                    dashHandler.SetEnabled(true);
+                }
+                break;
         }
     }
 

@@ -1555,6 +1555,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   gameOverText: {fileID: 92827772}
   restartButton: {fileID: 347590371}
+--- !u!1 &554331020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 554331021}
+  - component: {fileID: 554331022}
+  m_Layer: 3
+  m_Name: DashHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &554331021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554331020}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1107785734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &554331022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554331020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7c370d2bd25904aa74c086e7614463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashHandler
+  _player: {fileID: 1107785732}
+  _enabled: 0
+  DashDistance: 5
+  DashDuration: 0.2
+  DashCooldown: 1
 --- !u!1 &559980141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2603,6 +2652,7 @@ Transform:
   - {fileID: 755125202}
   - {fileID: 1206172707}
   - {fileID: 1253817783}
+  - {fileID: 554331021}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1107785735
