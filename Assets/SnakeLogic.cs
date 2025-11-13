@@ -36,8 +36,7 @@ public class SnakeLogic : MonoBehaviour
     void SnakeDefeated()
     {   
         upgradePanelUI.ShowUpgradeSelection();
-        snakeScript.resetPosition();
-        snakeScript.IncreaseVelocity();
+        // snakeScript.resetPosition();
     }
 
 

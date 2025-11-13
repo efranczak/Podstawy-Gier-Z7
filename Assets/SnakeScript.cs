@@ -1,5 +1,6 @@
 using TreeEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Scripting.APIUpdating;
 
 public class SnakeScript : MonoBehaviour
@@ -8,9 +9,15 @@ public class SnakeScript : MonoBehaviour
     private CameraScript camera;
     public SnakeLogic snakeLogic;
 
+    [Header ("Speed Settings")]
     public float velocity = 0.05f;
-    public float increaseModifier = 2f;
+    public float increaseModifier = 1.01f;
+    public float increaseInterval = 1f;
 
+    private float increaseTimer = 0f;
+    private float baseVelocity;
+
+    [Header ("Camera Settings")]
     public float CameraActivationDistance = 10.0f;
     private bool cameraTriggered = false;
 
@@ -23,6 +30,7 @@ public class SnakeScript : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         camera = Camera.main.GetComponent<CameraScript>();
         startDistance = DistanceToPlayer();
+        baseVelocity = velocity;
     }
 
     private void Update()
@@ -30,10 +38,16 @@ public class SnakeScript : MonoBehaviour
         // get the distance to player
         distance = DistanceToPlayer();
 
-
         // if the snake is getting closer move the camera
         TriggerBossEvent();
-        
+
+        // Increase Speed
+        increaseTimer += Time.deltaTime;
+        if (increaseTimer >= increaseInterval)
+        {
+            IncreaseVelocity();
+            increaseTimer = 0f; 
+        }
     }
 
     void FixedUpdate()
@@ -72,9 +86,15 @@ public class SnakeScript : MonoBehaviour
         velocity *= increaseModifier;
     }
 
+    public void DecreaseVelocity(float amount)
+    {
+        if (velocity - amount < baseVelocity) velocity = baseVelocity;
+        else velocity -= amount;
+    }
+
     public void resetPosition()
     {
-        transform.position = new Vector3(transform.position.x - startDistance, transform.position.y, transform.position.z);
+        transform.position = new Vector3(player.transform.position.x - startDistance, transform.position.y, transform.position.z);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

@@ -168,6 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SnakeScript
   snakeLogic: {fileID: 1368335676}
   velocity: 0.1
+  increaseModifier: 1.02
+  increaseInterval: 1
   CameraActivationDistance: 15
 --- !u!61 &47162586
 BoxCollider2D:
@@ -849,6 +851,7 @@ MonoBehaviour:
   - {fileID: 806826401658938746, guid: 44526a9e33b5b864890772643e598f9b, type: 3}
   - {fileID: 806826401658938746, guid: 44526a9e33b5b864890772643e598f9b, type: 3}
   - {fileID: 3840287670580990443, guid: 16acbd93150a7fe4ca8f358760cef2a7, type: 3}
+  - {fileID: 3840287670580990443, guid: c56f5d375067d9246956ac0ab1f621af, type: 3}
   startChunk: {fileID: 3840287670580990443, guid: 5c0360694f9856644935dc1a3901e825, type: 3}
   spawnBuffer: 10
   despawnBuffer: 10
@@ -2715,7 +2718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31b273e92a67fc4a84690628408118e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
-  hungerDecreaseAmount: 10
+  hungerDecreaseAmount: 25
 --- !u!114 &1107785738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2871,6 +2874,7 @@ MonoBehaviour:
   - {fileID: 420886856}
   - {fileID: 244260309}
   _player: {fileID: 1107785732}
+  _snakeLogic: {fileID: 1368335676}
 --- !u!114 &1114497611
 MonoBehaviour:
   m_ObjectHideFlags: 0
