@@ -1704,6 +1704,8 @@ GameObject:
   - component: {fileID: 1107785737}
   - component: {fileID: 1107785738}
   - component: {fileID: 1107785739}
+  - component: {fileID: 1107785740}
+  - component: {fileID: 1107785741}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1854,6 +1856,50 @@ CapsuleCollider2D:
   m_Offset: {x: 0.056557745, y: -0.012996972}
   m_Size: {x: 0.7443027, y: 1.3836435}
   m_Direction: 0
+--- !u!233 &1107785740
+HingeJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107785731}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_UseConnectedAnchor: 1
+  m_UseMotor: 0
+  m_Motor:
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 0
+  m_AngleLimits:
+    m_LowerAngle: 0
+    m_UpperAngle: 359
+--- !u!114 &1107785741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107785731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcbe9afee1fa6d4eb577c94597b817b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
+  playerRigidbody: {fileID: 0}
+  lianaHingeJoint: {fileID: 0}
+  pushForce: 5
+  attachedToLiana: 0
+  attachedTo: {fileID: 0}
+  pulleySellected: {fileID: 0}
 --- !u!1 &1206172706
 GameObject:
   m_ObjectHideFlags: 0
