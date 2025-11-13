@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private ScriptableStats _stats;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private CapsuleCollider2D _col;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
@@ -69,6 +70,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         HandleJump();
         HandleDirection();
         HandleGravity();
+
+        HandleSpriteDirection();
 
         ApplyMovement();
     }
@@ -183,6 +186,15 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
         }
     }
+
+    private void HandleSpriteDirection()
+    {
+        if (_frameInput.Move.x > 0.01f)
+            _spriteRenderer.flipX = false; 
+        else if (_frameInput.Move.x < -0.01f)
+            _spriteRenderer.flipX = true;  
+    }
+
 
     #endregion
 
