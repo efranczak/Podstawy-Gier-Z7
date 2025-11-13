@@ -10,6 +10,7 @@ public class SnakeLogic : MonoBehaviour
     public HealthBar hungerBar;
     public GameOverScript gameOverScript;
     public SnakeScript snakeScript;
+    public UpgradePanelUI upgradePanelUI;
 
     void Start()
     {
@@ -35,7 +36,7 @@ public class SnakeLogic : MonoBehaviour
     void SnakeDefeated()
     {   
         snakeScript.velocity = 0f;
-        gameOverScript.TriggerYouWon();
+        upgradePanelUI.ShowUpgradeSelection();
     }
 
     public void PlayerDefeated()
