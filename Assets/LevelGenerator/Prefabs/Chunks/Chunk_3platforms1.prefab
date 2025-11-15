@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 1875473397510880970}
   - component: {fileID: 6643247011963053680}
   - component: {fileID: 4258113139247910356}
+  - component: {fileID: 2745891814908338970}
   m_Layer: 0
   m_Name: Liana
   m_TagString: Liana
@@ -264,6 +265,21 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!114 &2745891814908338970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317393802734668723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58eedeaf314bbda44ab74068750b40a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LianaSegment
+  connectedAbove: {fileID: 0}
+  connectBelow: {fileID: 0}
+  isPlayerAttached: 0
 --- !u!1 &1030501425042409837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,6 +1261,7 @@ GameObject:
   - component: {fileID: 1726456884153440789}
   - component: {fileID: 3029985281140410525}
   - component: {fileID: 680832627107842222}
+  - component: {fileID: 8666775467847779436}
   m_Layer: 0
   m_Name: Liana (1)
   m_TagString: Liana
@@ -1464,6 +1481,21 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!114 &8666775467847779436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179155939696630368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58eedeaf314bbda44ab74068750b40a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LianaSegment
+  connectedAbove: {fileID: 0}
+  connectBelow: {fileID: 0}
+  isPlayerAttached: 0
 --- !u!1 &4578384199888769546
 GameObject:
   m_ObjectHideFlags: 0

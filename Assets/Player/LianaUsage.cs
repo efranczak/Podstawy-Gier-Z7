@@ -2,107 +2,62 @@ using UnityEngine;
 
 public class LianaUsage : MonoBehaviour
 {
-    public Rigidbody2D playerRigidbody;
-    public HingeJoint2D lianaHingeJoint;
+    [SerializeField] Rigidbody2D playerRigidbody;
 
-    public float pushForce = 5f;
-    public bool attachedToLiana = false;
-    public Transform attachedTo;
-    private GameObject disregard;
-    public GameObject pulleySellected = null;
+    private float vertical;
+    private float speed = 5f;
+    private bool isLiana;
+    private bool isClimbing;
 
-    void Awake()
-    {
-        playerRigidbody = gameObject.GetComponent<Rigidbody2D>();
-        lianaHingeJoint = gameObject.GetComponent<HingeJoint2D>();
-    }
+
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkKeyBoardInputs();
-    }
+        vertical = Input.GetAxis("Vertical");
 
-    void checkKeyBoardInputs()
-    {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && attachedToLiana)
+        if (isLiana && Mathf.Abs(vertical) > 0.1f)
         {
-            Slide(1);
+            isClimbing = true;
         }
-        if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && attachedToLiana)
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (isClimbing)
         {
-            Slide(-1);
+            playerRigidbody.gravityScale = 0f;
+            playerRigidbody.linearVelocity = new Vector2(playerRigidbody.linearVelocity.x, vertical * speed);
         }
-    }
-
-    public void Attach(Rigidbody2D lianaBone)
-    {
-        lianaBone.gameObject.GetComponent<LianaSegment>().isPlayerAttached = true;
-        lianaHingeJoint.connectedBody = lianaBone;
-        lianaHingeJoint.enabled = true;
-        attachedToLiana = true;
-        attachedTo = lianaBone.gameObject.transform.parent;
-    }
-
-    public void Detach(Rigidbody2D lianaBone)
-    {
-        lianaBone.gameObject.GetComponent<LianaSegment>().isPlayerAttached = false;
-        lianaHingeJoint.connectedBody = null;
-        lianaHingeJoint.enabled = false;
-        attachedToLiana = false;
-    }
-
-    public void Slide(int direction)
-    {
-        if (attachedToLiana)
+        else
         {
-            LianaSegment currentSegment = lianaHingeJoint.connectedBody.gameObject.GetComponent<LianaSegment>();
-            GameObject newSegment = null;
-            if (direction > 0)
-            {
-                if (currentSegment.connectedAbove != null)
-                {
-                    if (currentSegment.connectedAbove.gameObject.GetComponent<LianaSegment>() != null)
-                    {
-                        newSegment = currentSegment.connectedAbove;
-                    }
-                }
-            }
-            else
-            {
-                if (currentSegment.connectBelow != null)
-                {
-                    newSegment = currentSegment.connectBelow;
-                }
-            }
-            if (newSegment != null)
-            {
-                transform.position = newSegment.transform.position;
-                currentSegment.isPlayerAttached = false;
-                newSegment.GetComponent<LianaSegment>().isPlayerAttached = true;
-                lianaHingeJoint.connectedBody = newSegment.GetComponent<Rigidbody2D>();
-            }
+            playerRigidbody.gravityScale = 4f;
         }
     }
+
+
 
     private void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {
-       if(!attachedToLiana) {
-            if (collision.gameObject.CompareTag("Liana"))
-            {
-                if (attachedToLiana != collision.gameObject.transform.parent)
-                {
-                    if (disregard == null || collision.gameObject.transform.parent != disregard)
-                    {
-                        Attach(collision.gameObject.GetComponent<Rigidbody2D>());
-                    }
-                }
-            }
+        if (collision.gameObject.CompareTag("Liana"))
+        {
+            isLiana = true;
+        }
+
+    }
+
+    private void OnTriggerExit2D(UnityEngine.Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Liana"))
+        {
+            isLiana = false;
+            isClimbing = false;
         }
     }
 

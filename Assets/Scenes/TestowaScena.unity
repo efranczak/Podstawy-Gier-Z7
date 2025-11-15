@@ -852,6 +852,7 @@ MonoBehaviour:
   - {fileID: 806826401658938746, guid: 44526a9e33b5b864890772643e598f9b, type: 3}
   - {fileID: 3840287670580990443, guid: 16acbd93150a7fe4ca8f358760cef2a7, type: 3}
   - {fileID: 3840287670580990443, guid: c56f5d375067d9246956ac0ab1f621af, type: 3}
+  - {fileID: 3840287670580990443, guid: a732015063476cc40a339c78ad5f8e99, type: 3}
   startChunk: {fileID: 3840287670580990443, guid: 5c0360694f9856644935dc1a3901e825, type: 3}
   spawnBuffer: 10
   despawnBuffer: 10
@@ -2808,12 +2809,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbcbe9afee1fa6d4eb577c94597b817b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
-  playerRigidbody: {fileID: 0}
+  playerRigidbody: {fileID: 1107785735}
   lianaHingeJoint: {fileID: 0}
   pushForce: 5
   attachedToLiana: 0
   attachedTo: {fileID: 0}
   pulleySellected: {fileID: 0}
+  normalGravity: 0
 --- !u!1 &1114497608
 GameObject:
   m_ObjectHideFlags: 0
