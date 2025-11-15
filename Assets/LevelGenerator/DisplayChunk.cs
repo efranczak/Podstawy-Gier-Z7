@@ -24,7 +24,7 @@ public class DisplayChunk : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.O))
             {
                 Chunk chunk = currentChunk.GetComponent<Chunk>();
-                if (chunk != null && chunk.isFlippable && Random.value < 0.5f)
+                if (chunk != null && chunk.isFlippable)
                 {
                     Vector3 scale = currentChunk.transform.localScale;
                     scale.x *= -1;
