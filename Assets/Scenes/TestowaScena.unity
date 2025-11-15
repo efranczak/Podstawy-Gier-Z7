@@ -2810,12 +2810,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
   playerRigidbody: {fileID: 1107785735}
-  lianaHingeJoint: {fileID: 0}
-  pushForce: 5
-  attachedToLiana: 0
-  attachedTo: {fileID: 0}
-  pulleySellected: {fileID: 0}
-  normalGravity: 0
 --- !u!1 &1114497608
 GameObject:
   m_ObjectHideFlags: 0
