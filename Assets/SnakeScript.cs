@@ -8,6 +8,7 @@ public class SnakeScript : MonoBehaviour
     private GameObject player;
     private CameraScript camera;
     public SnakeLogic snakeLogic;
+    public ArrowScript arrowScript;
 
     [Header ("Speed Settings")]
     public float velocity = 0.05f;
@@ -20,6 +21,10 @@ public class SnakeScript : MonoBehaviour
     [Header ("Camera Settings")]
     public float CameraActivationDistance = 10.0f;
     private bool cameraTriggered = false;
+
+    [Header ("Arrow Settings")]
+    public float showArrowDistance = 15.0f;
+    public float blinkArrowDistance = 7.0f;
 
     private float distance;
     private float startDistance;
@@ -40,6 +45,9 @@ public class SnakeScript : MonoBehaviour
 
         // if the snake is getting closer move the camera
         TriggerBossEvent();
+
+        // handle arrow visibility
+        TriggerArrow();
 
         // Increase Speed
         increaseTimer += Time.deltaTime;
@@ -72,6 +80,24 @@ public class SnakeScript : MonoBehaviour
         {
             camera.bossEvent = false;
             cameraTriggered = false;
+        }
+    }
+
+    void TriggerArrow()
+    {
+        if (distance < showArrowDistance && distance > blinkArrowDistance)
+        {
+            arrowScript.StopBlinking();
+            arrowScript.Show();
+        }
+        else if (distance <= blinkArrowDistance && distance > startDistance)
+        {
+            arrowScript.StartBlinking();
+        }
+        else
+        {   
+            arrowScript.StopBlinking();
+            arrowScript.Hide();
         }
     }
 
