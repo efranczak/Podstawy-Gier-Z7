@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
+    private float _gravityMultiplier = 1f;
 
     #region Interface
 
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _coyoteUsable = true;
             _bufferedJumpUsable = true;
             _endedJumpEarly = false;
+            _gravityMultiplier = 1f;
             GroundedChanged?.Invoke(true, Mathf.Abs(_frameVelocity.y));
         }
         // Left the Ground
@@ -194,11 +196,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private IEnumerator ExternalVelocityCoroutine(Vector2 velocity, float duration)
     {
+        _frameVelocity.y = 0;
         IsDashing = true;
         float timer = 0f;
-
-        float originalGravity = _rb.gravityScale;
-        _rb.gravityScale = 0f;
 
         while (timer < duration)
         {
@@ -206,8 +206,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             timer += Time.deltaTime;
             yield return null;
         }
-
-        _rb.gravityScale = originalGravity;
+        _gravityMultiplier = 0.8f;
         _rb.linearVelocity = Vector2.zero;
 
         IsDashing = false;
@@ -244,6 +243,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void HandleGravity()
     {
+        if (IsDashing) return;
+
         if (_grounded && _frameVelocity.y <= 0f)
         {
             _frameVelocity.y = _stats.GroundingForce;
@@ -252,7 +253,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             var inAirGravity = _stats.FallAcceleration;
             if (_endedJumpEarly && _frameVelocity.y > 0) inAirGravity *= _stats.JumpEndEarlyGravityModifier;
-            _frameVelocity.y = Mathf.MoveTowards(_frameVelocity.y, -_stats.MaxFallSpeed, inAirGravity * Time.fixedDeltaTime);
+            _frameVelocity.y = Mathf.MoveTowards(_frameVelocity.y, -_stats.MaxFallSpeed, inAirGravity * _gravityMultiplier * Time.fixedDeltaTime);
         }
     }
 

@@ -2807,7 +2807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31b273e92a67fc4a84690628408118e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
-  hungerDecreaseAmount: 25
+  hungerDecreaseAmount: 100
   speedDecreaseAmount: 2.5
 --- !u!114 &1107785738
 MonoBehaviour:
