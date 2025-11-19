@@ -159,7 +159,7 @@ BoxCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.25724632, y: 2.9267979}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 8.849999, y: 6.6499996, z: 8.389999, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 20.48, y: 20.48}
     newSize: {x: 20.48, y: 20.48}
@@ -420,8 +420,8 @@ Transform:
   m_GameObject: {fileID: 7852807539251276628}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.62, y: -3.32, z: 0}
-  m_LocalScale: {x: 0.32981715, y: 0.38631484, z: 1.0283}
+  m_LocalPosition: {x: -14.62, y: -1.8184, z: 0}
+  m_LocalScale: {x: 0.32981715, y: 0.53296, z: 1.0283}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5622445313280672291}
@@ -520,7 +520,7 @@ BoxCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.25724632, y: 3.1651797}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 8.849999, y: 6.6499996, z: 8.389999, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 20.48, y: 20.48}
     newSize: {x: 20.48, y: 20.48}
@@ -1046,7 +1046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6342334264352177860, guid: ff17724a136431145b5a918969791cc4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.20337002
+      value: 0.16495343
       objectReference: {fileID: 0}
     - target: {fileID: 6342334264352177860, guid: ff17724a136431145b5a918969791cc4, type: 3}
       propertyPath: m_LocalScale.y
@@ -1058,7 +1058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6342334264352177860, guid: ff17724a136431145b5a918969791cc4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.02
+      value: -8.0974
       objectReference: {fileID: 0}
     - target: {fileID: 6342334264352177860, guid: ff17724a136431145b5a918969791cc4, type: 3}
       propertyPath: m_LocalPosition.y
