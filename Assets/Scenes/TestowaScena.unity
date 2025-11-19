@@ -161,7 +161,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 47162583}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66a0b3698a4d5a34fbdd4bd8d509e8f0, type: 3}
   m_Name: 
@@ -2466,8 +2466,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1107785734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2856,8 +2856,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.007716775, y: -0.08625853}
-  m_Size: {x: 0.5210295, y: 1.2371204}
+  m_Offset: {x: 0.023652196, y: -0.08988643}
+  m_Size: {x: 0.52062416, y: 1.0526693}
   m_Direction: 0
 --- !u!114 &1107785741
 MonoBehaviour:
