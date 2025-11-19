@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chunk
   Entry: {fileID: 6618695946138630800}
   Exit: {fileID: 1545955628668277744}
-  isFlippable: 1
+  isFlippable: 0
 --- !u!1 &6368987620520776813
 GameObject:
   m_ObjectHideFlags: 0

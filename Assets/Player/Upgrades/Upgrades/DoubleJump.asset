@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DoubleJump
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   upgradeName: DoubleJump
-  description: ...
+  description: Press space in mid-air to perform a jump!
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   upgradeType: 2

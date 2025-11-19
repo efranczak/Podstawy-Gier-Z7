@@ -10,7 +10,7 @@ public class UpgradeData : ScriptableObject
     public UpgradeType upgradeType;
 
     // Example apply method — call this from UpgradeButton or manager
-    public void ApplyUpgrade(PlayerController player)
+    public void ApplyUpgrade(PlayerController player/*, SnakeScript snake*/)
     {
         switch (upgradeType)
         {
@@ -28,6 +28,11 @@ public class UpgradeData : ScriptableObject
                     dashHandler.SetEnabled(true);
                 }
                 break;
+            case UpgradeType.Health:
+                //snake.DecreaseVelocity(-1000.0f);
+
+                break;  
+
         }
     }
 
