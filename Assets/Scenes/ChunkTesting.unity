@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   chunkParent: {fileID: 2077614939}
   chunkTemplates:
-  - {fileID: 3840287670580990443, guid: c56f5d375067d9246956ac0ab1f621af, type: 3}
+  - {fileID: 3840287670580990443, guid: 3d36e4f641066ff4f8a0900d001285d8, type: 3}
   - {fileID: 3840287670580990443, guid: 5c0360694f9856644935dc1a3901e825, type: 3}
   - {fileID: 3840287670580990443, guid: 16acbd93150a7fe4ca8f358760cef2a7, type: 3}
   - {fileID: 3840287670580990443, guid: c56f5d375067d9246956ac0ab1f621af, type: 3}
