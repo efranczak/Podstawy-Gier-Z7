@@ -1,31 +1,50 @@
 using UnityEngine;
+using System.Collections;
 
 public class LianaUsage : MonoBehaviour
 {
     [SerializeField] Rigidbody2D playerRigidbody;
+    [SerializeField] private float jumpForce = 6f;
+    [SerializeField] private float climbSpeed = 5f;
+    [SerializeField] private float jumpHorizontalForce = 3f;
+
 
     private float vertical;
-    private float speed = 5f;
     private bool isLiana;
     private bool isClimbing;
+    private bool jumpedFromLiana = false;
 
-
+    private RigidbodyConstraints2D originalConstraints;
 
     void Start()
     {
+        if (playerRigidbody == null)
+        {
+            Debug.LogError("LianaUsage: playerRigidbody nie jest przypisane!");
+            enabled = false;
+            return;
+        }
 
+        originalConstraints = playerRigidbody.constraints;
+
+        Debug.Log($"LianaUsage START - originalConstraints = {originalConstraints}, bodyType = {playerRigidbody.bodyType}");
     }
 
-    // Update is called once per frame
     void Update()
     {
         vertical = Input.GetAxis("Vertical");
 
-        if (isLiana && Mathf.Abs(vertical) > 0.1f)
+        // wspinanie jeśli na lianie i poruszamy się w pionie, ale nie wciśnięto Space
+        if (isLiana && Mathf.Abs(vertical) > 0.1f && !Input.GetKey(KeyCode.Space))
         {
             isClimbing = true;
         }
 
+        // Zejście/skok z liany po wciśnięciu Space
+        if (isLiana && Input.GetKeyDown(KeyCode.Space))
+        {
+            ExitLiana();
+        }
     }
 
     private void FixedUpdate()
@@ -33,32 +52,70 @@ public class LianaUsage : MonoBehaviour
         if (isClimbing)
         {
             playerRigidbody.gravityScale = 0f;
-            playerRigidbody.linearVelocity = new Vector2(playerRigidbody.linearVelocity.x, vertical * speed);
+            playerRigidbody.constraints = (originalConstraints | RigidbodyConstraints2D.FreezePositionX) & ~RigidbodyConstraints2D.FreezeRotation;
+            playerRigidbody.linearVelocity = new Vector2(0f, vertical * climbSpeed);
         }
         else
         {
-            playerRigidbody.gravityScale = 4f;
+            playerRigidbody.gravityScale = 1f;
+            playerRigidbody.constraints = originalConstraints;
         }
     }
 
-
-
-    private void OnTriggerEnter2D(UnityEngine.Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Liana"))
         {
             isLiana = true;
+            Debug.Log("Wejście na lianę - isLiana = true");
         }
-
     }
 
-    private void OnTriggerExit2D(UnityEngine.Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Liana"))
         {
-            isLiana = false;
-            isClimbing = false;
+            if (!jumpedFromLiana) // ignoruj exit wywołany skokiem
+            {
+                isLiana = false;
+                isClimbing = false;
+                playerRigidbody.constraints = originalConstraints;
+                playerRigidbody.gravityScale = 1f;
+                Debug.Log("Opuszczenie liany - przywrócono physics");
+            }
+
+            jumpedFromLiana = false; // reset flagi
         }
+    }
+
+    private void ExitLiana()
+    {
+        jumpedFromLiana = true;
+        isClimbing = false;
+        isLiana = false;
+
+        // natychmiast przywróć normalną fizykę
+        playerRigidbody.gravityScale = 1f;
+        playerRigidbody.constraints = originalConstraints;
+
+        float h = Input.GetAxisRaw("Horizontal");
+        if (Mathf.Abs(h) < 0.1f) h = 1f;
+
+        playerRigidbody.linearVelocity = new Vector2(
+            h * jumpHorizontalForce,
+            jumpForce
+        ); 
+
+        StartCoroutine(PreventClimbForOneFixedUpdate());
+    }
+
+
+    private IEnumerator PreventClimbForOneFixedUpdate()
+    {
+        isClimbing = false;      // natychmiast wyłącz climbing
+        vertical = 0f;           // zerujemy input wspinania
+        yield return new WaitForFixedUpdate();
+        jumpedFromLiana = false;
     }
 
 }
