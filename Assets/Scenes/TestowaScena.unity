@@ -250,8 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SnakeScript
   snakeLogic: {fileID: 1368335676}
   arrowScript: {fileID: 144055058}
-  velocity: 0.1
-  increaseModifier: 1.02
+  velocity: 0.05
+  increaseModifier: 1.035
   increaseInterval: 1
   CameraActivationDistance: 15
   showArrowDistance: 100
@@ -3218,7 +3218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
   hungerDecreaseAmount: 34
-  speedDecreaseAmount: 2.5
+  speedDecreaseAmount: 0.1
 --- !u!114 &1107785738
 MonoBehaviour:
   m_ObjectHideFlags: 0
