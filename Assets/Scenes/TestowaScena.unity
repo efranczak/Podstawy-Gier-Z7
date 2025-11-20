@@ -251,7 +251,7 @@ MonoBehaviour:
   snakeLogic: {fileID: 1368335676}
   arrowScript: {fileID: 144055058}
   velocity: 0.05
-  increaseModifier: 1.035
+  increaseModifier: 1.09
   increaseInterval: 1
   CameraActivationDistance: 15
   showArrowDistance: 100
@@ -3282,6 +3282,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
   playerRigidbody: {fileID: 1107785735}
+  jumpForce: 6
+  climbSpeed: 5
+  jumpHorizontalForce: 3
 --- !u!1 &1114497608
 GameObject:
   m_ObjectHideFlags: 0
