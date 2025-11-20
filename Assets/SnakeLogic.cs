@@ -18,6 +18,14 @@ public class SnakeLogic : MonoBehaviour
         hungerBar.SetMaxHealth(maxHunger);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            SnakeDefeated();
+        }
+    }
+
     public void DecreaseHunger(int amount)
     {
         currentHunger -= amount;
