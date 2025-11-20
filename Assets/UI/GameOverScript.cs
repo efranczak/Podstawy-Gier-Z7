@@ -9,6 +9,7 @@ public class GameOverScript : MonoBehaviour
     public Text controlsText;
     public Button restartButton;
     public Button startButton;
+    public Image background;
 
     void Start()
     {   
@@ -17,6 +18,7 @@ public class GameOverScript : MonoBehaviour
 
         PauseGame();
         controlsText.enabled = true;
+        background.enabled = true;
         startButton.onClick.AddListener(StartGame);
 
         restartButton.onClick.AddListener(RestartLevel);
@@ -26,6 +28,7 @@ public class GameOverScript : MonoBehaviour
     {
         ResumeGame();
         controlsText.enabled = false;
+        background.enabled = false;
         startButton.gameObject.SetActive(false);
     }
 
@@ -36,6 +39,7 @@ public class GameOverScript : MonoBehaviour
         gameOverText.enabled = true;
         controlsText.enabled = true;
         restartButton.gameObject.SetActive(true);
+        background.enabled = true;
     }
 
     public void TriggerYouWon()
@@ -44,12 +48,14 @@ public class GameOverScript : MonoBehaviour
         gameOverText.text = "You Won!";
         gameOverText.enabled = true;
         restartButton.gameObject.SetActive(true);
+        background.enabled = true;
     }
 
     public void HideGameOver()
     {
         gameOverText.enabled = false;
         controlsText.enabled = false;
+        background.enabled = false;
         restartButton.gameObject.SetActive(false);
     }
 
