@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         float horizontal = _frameInput.Move.x;
         Vector2 velocity = _rb.linearVelocity;
 
-        // Simple swing control – push tangentially
+        // Simple swing control ï¿½ push tangentially
         velocity.x = Mathf.MoveTowards(
             velocity.x,
             horizontal * _stats.MaxSpeed,
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Horizontal
 
     private void HandleDirection()
-    {
+    {        
         if (_frameInput.Move.x == 0)
         {
             var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;

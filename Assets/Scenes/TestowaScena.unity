@@ -3115,6 +3115,7 @@ GameObject:
   - component: {fileID: 1107785738}
   - component: {fileID: 1107785739}
   - component: {fileID: 1107785741}
+  - component: {fileID: 1107785742}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -3138,6 +3139,7 @@ MonoBehaviour:
   _rb: {fileID: 1107785735}
   _col: {fileID: 1107785739}
   _spriteRenderer: {fileID: 755125203}
+  _audioManager: {fileID: 0}
 --- !u!4 &1107785734
 Transform:
   m_ObjectHideFlags: 0
@@ -3285,6 +3287,20 @@ MonoBehaviour:
   jumpForce: 6
   climbSpeed: 5
   jumpHorizontalForce: 3
+--- !u!114 &1107785742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107785731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a73281a79f75f2047867df34abdcfb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioManager
+  appleCollectSound: {fileID: 8300000, guid: 4a2a772d96da5b04ab38f7f0180ebcd9, type: 3}
+  appleVolume: 0.8
 --- !u!1 &1114497608
 GameObject:
   m_ObjectHideFlags: 0

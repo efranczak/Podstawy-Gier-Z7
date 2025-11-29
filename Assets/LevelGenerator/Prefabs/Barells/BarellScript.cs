@@ -3,7 +3,9 @@ using UnityEngine;
 public class BarellScript : MonoBehaviour
 {
     public float velocity = 0.1f;
+    public float lifetime = 10f;
     private Collider2D col;
+    private float timer = 0f;
 
     void Start()
     {
@@ -13,6 +15,12 @@ public class BarellScript : MonoBehaviour
     void FixedUpdate()
     {
         transform.position = new Vector3(transform.position.x - velocity, transform.position.y, transform.position.z);
+        
+        timer += Time.fixedDeltaTime;
+        if (timer >= lifetime)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
