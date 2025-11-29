@@ -262,6 +262,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5622445313280672291}
     m_Modifications:
+    - target: {fileID: 2071332971424107209, guid: 21bef343c5249474c8278d7514c81546, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 99a7b776f848fc046a53c3c6655a4609, type: 2}
     - target: {fileID: 2885253082721449231, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_Name
       value: Platforma (2)
@@ -476,6 +480,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5622445313280672291}
     m_Modifications:
+    - target: {fileID: 2071332971424107209, guid: 890b9e4cd9e2c57409dd7e64ea62bde4, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 99a7b776f848fc046a53c3c6655a4609, type: 2}
     - target: {fileID: 2885253082721449231, guid: 890b9e4cd9e2c57409dd7e64ea62bde4, type: 3}
       propertyPath: m_Name
       value: half_platforma
