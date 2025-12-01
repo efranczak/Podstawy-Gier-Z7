@@ -1,22 +1,22 @@
 using UnityEngine;
 
-public class DoubleJumpHandler : MonoBehaviour
+public class JumpHandler : MonoBehaviour
 {
     [SerializeField] private PlayerController _player;
-    [SerializeField] private int _maxJumps = 2;
-    [SerializeField] private bool _enabled = false;
+    [SerializeField] public int _maxJumps = 1;
+    [SerializeField] private bool _enabled = true;
 
     public int _jumpCount;
 
     private void OnEnable()
     {
-        _player.Jumped += OnJumped;
+        // USUÑ: _player.Jumped += OnJumped;
         _player.GroundedChanged += OnGroundedChanged;
     }
 
     private void OnDisable()
     {
-        _player.Jumped -= OnJumped;
+        // USUÑ: _player.Jumped -= OnJumped;
         _player.GroundedChanged -= OnGroundedChanged;
     }
 
@@ -26,9 +26,11 @@ public class DoubleJumpHandler : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && _jumpCount < _maxJumps)
         {
-            if (_jumpCount >= 1) {
-                ForceJump();
-            }
+            // 1. Zwiêksz licznik
+            _jumpCount++; // <-- Zliczamy skok TUTAJ
+
+            // 2. Wykonaj skok
+            ForceJump();
         }
     }
 

@@ -15,10 +15,10 @@ public class UpgradeData : ScriptableObject
         switch (upgradeType)
         {
             case UpgradeType.DoubleJump:
-                var doubleJumpHandler = player.GetComponentInChildren<DoubleJumpHandler>();
+                var doubleJumpHandler = player.GetComponentInChildren<JumpHandler>();
                 if (doubleJumpHandler != null)
                 {
-                    doubleJumpHandler.SetEnabled(true);
+                    doubleJumpHandler._maxJumps = 2;
                 }
                 break;
             case UpgradeType.Dash:

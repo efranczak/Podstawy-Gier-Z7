@@ -7,6 +7,8 @@ public class LianaUsage : MonoBehaviour
     [SerializeField] private float jumpForce = 6f;
     [SerializeField] private float climbSpeed = 5f;
     [SerializeField] private float jumpHorizontalForce = 3f;
+    [SerializeField] JumpHandler jumpHandler;
+    [SerializeField] PlayerController playerController;
 
 
     private float vertical;
@@ -25,6 +27,20 @@ public class LianaUsage : MonoBehaviour
             return;
         }
 
+        // poprawka lian jest tu
+        jumpHandler = GetComponentInChildren<JumpHandler>();
+        if (jumpHandler == null)
+        {
+            Debug.LogError("LianaUsage: Skrypt JumpHandler nie znaleziono na tym samym obiekcie!");
+        }
+
+        playerController = GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogError("LianaUsage: Skrypt PlayerController nie znaleziono na tym samym obiekcie!");
+        }
+        // koniec poprawki
+
         originalConstraints = playerRigidbody.constraints;
 
         Debug.Log($"LianaUsage START - originalConstraints = {originalConstraints}, bodyType = {playerRigidbody.bodyType}");
@@ -38,6 +54,10 @@ public class LianaUsage : MonoBehaviour
         if (isLiana && Mathf.Abs(vertical) > 0.1f && !Input.GetKey(KeyCode.Space))
         {
             isClimbing = true;
+
+            // poprawka lian jest tu
+            playerController.IsClimbing = true;
+            // koniec poprawki
         }
 
         // Zejście/skok z liany po wciśnięciu Space
@@ -104,7 +124,12 @@ public class LianaUsage : MonoBehaviour
         playerRigidbody.linearVelocity = new Vector2(
             h * jumpHorizontalForce,
             jumpForce
-        ); 
+        );
+
+        // poprawka lian jest tu
+        jumpHandler._jumpCount = 0; // reset liczby skoków podczas wspinaczki, wejscie na liane traktuje jako dotkniecie ziemii (resetuje skoki)
+        playerController.IsClimbing = false;
+        // koniec poprawki
 
         StartCoroutine(PreventClimbForOneFixedUpdate());
     }

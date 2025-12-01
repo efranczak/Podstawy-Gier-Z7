@@ -3397,6 +3397,8 @@ MonoBehaviour:
   jumpForce: 6
   climbSpeed: 5
   jumpHorizontalForce: 3
+  jumpHandler: {fileID: 0}
+  playerController: {fileID: 0}
 --- !u!114 &1107785742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3682,7 +3684,7 @@ GameObject:
   - component: {fileID: 1253817783}
   - component: {fileID: 1253817784}
   m_Layer: 3
-  m_Name: DoubleJumpHandler
+  m_Name: JumpHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3716,8 +3718,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpHandler
   _player: {fileID: 1107785732}
-  _maxJumps: 2
-  _enabled: 0
+  _maxJumps: 1
+  _enabled: 1
   _jumpCount: 0
 --- !u!1 &1260135898
 GameObject:

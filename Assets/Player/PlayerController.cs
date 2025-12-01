@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     public bool IsDashing { get; private set; }
 
+    public bool IsClimbing { get; set; }
+
     private void Awake()
     {
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
@@ -244,6 +246,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void HandleGravity()
     {
         if (IsDashing) return;
+
+        if (IsClimbing) return;
 
         if (_grounded && _frameVelocity.y <= 0f)
         {
