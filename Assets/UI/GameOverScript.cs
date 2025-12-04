@@ -10,6 +10,7 @@ public class GameOverScript : MonoBehaviour
     public Button restartButton;
     public Button startButton;
     public Image background;
+    private bool startFlag = true;
 
     void Start()
     {   
@@ -19,9 +20,10 @@ public class GameOverScript : MonoBehaviour
         PauseGame();
         controlsText.enabled = true;
         background.enabled = true;
-        startButton.onClick.AddListener(StartGame);
 
         restartButton.onClick.AddListener(RestartLevel);
+        startButton.onClick.AddListener(StartGame);
+        
     }
 
     public void StartGame()
@@ -30,6 +32,7 @@ public class GameOverScript : MonoBehaviour
         controlsText.enabled = false;
         background.enabled = false;
         startButton.gameObject.SetActive(false);
+        startFlag = false;
     }
 
     public void TriggerGameOver()
