@@ -1270,7 +1270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 376081018}
-  - component: {fileID: 376081017}
+  - component: {fileID: 376081019}
   m_Layer: 0
   m_Name: LevelGenerator
   m_TagString: Untagged
@@ -1278,34 +1278,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &376081017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376081016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2933b4b42add9468b53461cc6e8e8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
-  mainCamera: {fileID: 519420031}
-  chunkParent: {fileID: 2077614939}
-  chunkTemplates:
-  - {fileID: 806826401658938746, guid: 44526a9e33b5b864890772643e598f9b, type: 3}
-  - {fileID: 806826401658938746, guid: 44526a9e33b5b864890772643e598f9b, type: 3}
-  - {fileID: 3840287670580990443, guid: 16acbd93150a7fe4ca8f358760cef2a7, type: 3}
-  - {fileID: 3840287670580990443, guid: c56f5d375067d9246956ac0ab1f621af, type: 3}
-  - {fileID: 3840287670580990443, guid: a732015063476cc40a339c78ad5f8e99, type: 3}
-  - {fileID: 3840287670580990443, guid: be37d762bdce4ce47ba1784b94de58d2, type: 3}
-  - {fileID: 3840287670580990443, guid: 3a25fdaf20cbb694ab277223fef54776, type: 3}
-  - {fileID: 3840287670580990443, guid: 70a30dd8a1f872b4288f9f418bd0ef31, type: 3}
-  - {fileID: 3840287670580990443, guid: aa63948074061e140bf312a24e402384, type: 3}
-  - {fileID: 3840287670580990443, guid: 9d6f090a5deab844db5c56894a699a01, type: 3}
-  startChunk: {fileID: 3840287670580990443, guid: 290475d4762aa4b48a158d2d3deb9232, type: 3}
-  spawnBuffer: 10
-  despawnBuffer: 10
 --- !u!4 &376081018
 Transform:
   m_ObjectHideFlags: 0
@@ -1321,6 +1293,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &376081019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376081016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb0f242f5c1b5046ac539bdab6e27f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformLevelGenerator
+  mainCamera: {fileID: 519420031}
+  chunkParent: {fileID: 2077614939}
+  chunkTemplates:
+  - {fileID: 3840287670580990443, guid: 80a31857cc59f9b4abcc742401a519d8, type: 3}
+  platfromChunkTemplates: []
+  startChunk: {fileID: 3840287670580990443, guid: 290475d4762aa4b48a158d2d3deb9232, type: 3}
+  spawnBuffer: 10
+  despawnBuffer: 10
 --- !u!1 &420886854
 GameObject:
   m_ObjectHideFlags: 0
