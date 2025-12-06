@@ -1027,7 +1027,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!231 &1107785736
@@ -1154,6 +1154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
   playerRigidbody: {fileID: 1107785735}
+  jumpForce: 6
+  climbSpeed: 5
+  jumpHorizontalForce: 3
+  jumpHandler: {fileID: 0}
+  playerController: {fileID: 0}
 --- !u!1 &1206172706
 GameObject:
   m_ObjectHideFlags: 0

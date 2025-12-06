@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class PlayerController : MonoBehaviour, IPlayerController
 {
@@ -12,6 +13,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
     private float _gravityMultiplier = 1f;
+
+    private Vector2 movement = new Vector2(0, 0);
+    private float frictionAmount = 0f;
 
     #region Interface
 
@@ -93,10 +97,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         // Ground and Ceiling
         bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
-        bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, ~_stats.PlayerLayer);
-
-        // Hit a Ceiling
-        if (ceilingHit) _frameVelocity.y = Mathf.Min(0, _frameVelocity.y);
 
         // Landed on the Ground
         if (!_grounded && groundHit)
@@ -135,7 +135,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void HandleJump()
     {
-        if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.linearVelocity.y > 0) _endedJumpEarly = true;
+        if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.linearVelocity.y > 0f)
+        {
+            _endedJumpEarly = true;
+            _rb.AddForce(Vector2.down * _stats.JumpCutForce, ForceMode2D.Impulse);
+        }
 
         if (!_jumpToConsume && !HasBufferedJump) return;
 
@@ -150,9 +154,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _timeJumpWasPressed = 0;
         _bufferedJumpUsable = false;
         _coyoteUsable = false;
-        _frameVelocity.y = _stats.JumpPower;
+
+        // Reset vertical velocity before jumping for consistency
+        _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0f);
+
+        // Apply jump as an impulse
+        _rb.AddForce(Vector2.up * _stats.JumpPower, ForceMode2D.Impulse);
+
         Jumped?.Invoke();
     }
+
 
     public void ForceJump(float jumpPowerOverride = -1)
     {
@@ -160,9 +171,15 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _timeJumpWasPressed = 0;
         _bufferedJumpUsable = false;
         _coyoteUsable = false;
-        _frameVelocity.y = jumpPowerOverride > 0 ? jumpPowerOverride : _stats.JumpPower;
+
+        float power = jumpPowerOverride > 0 ? jumpPowerOverride : _stats.JumpPower;
+
+        _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0f);
+        _rb.AddForce(Vector2.up * power, ForceMode2D.Impulse);
+
         Jumped?.Invoke();
     }
+
 
     private void HandleGrappleMovement()
     {
@@ -219,16 +236,37 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Horizontal
 
     private void HandleDirection()
-    {        
-        if (_frameInput.Move.x == 0)
+    {
+        #region Run
+
+        // calculate direction
+        float targetSpeed = _frameInput.Move.x * _stats.MaxSpeed; // change stat name to moveSpeed?
+
+        // diffetence between current and target
+        float speedDiff = targetSpeed - _rb.linearVelocity.x;
+
+        // determine acceletration rate 
+        float accelRate = (Math.Abs(targetSpeed) > 0.01f) ? _stats.Acceleration : _stats.GroundDeceleration;
+
+        movement.x = Mathf.Pow(Mathf.Abs(speedDiff) * accelRate, _stats.VelocityPower) * Mathf.Sign(speedDiff);
+
+        #endregion
+
+        #region Friction
+
+        if (_grounded && Math.Abs(_frameInput.Move.x) < 0.01f)
         {
-            var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
-            _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
+            // use either friction or deceleration
+            frictionAmount = Math.Min(Math.Abs(_rb.linearVelocity.x), _stats.FrictionAmount);
+            // sets direction
+            frictionAmount *= Mathf.Sign(_rb.linearVelocity.x);
         }
         else
         {
-            _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+            frictionAmount = 0f;
         }
+
+        #endregion
     }
 
     private void HandleSpriteDirection()
@@ -249,18 +287,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         if (IsClimbing) return;
 
-        if (_grounded && _frameVelocity.y <= 0f)
+        if (_rb.linearVelocity.y < 0)
         {
-            _frameVelocity.y = _stats.GroundingForce;
+            _rb.gravityScale = _stats.GravityScale * _stats.FallGravityMultiplier;
         }
-        else
+        else 
         {
-            var inAirGravity = _stats.FallAcceleration;
-            if (_endedJumpEarly && _frameVelocity.y > 0) inAirGravity *= _stats.JumpEndEarlyGravityModifier;
-            _frameVelocity.y = Mathf.MoveTowards(_frameVelocity.y, -_stats.MaxFallSpeed, inAirGravity * _gravityMultiplier * Time.fixedDeltaTime);
+            _rb.gravityScale = _stats.GravityScale;
         }
+        
     }
-
     #endregion
 
     public float GetFacingDirection()
@@ -272,7 +308,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void ApplyMovement()
     {
         if (IsDashing) return;
-        _rb.linearVelocity = _frameVelocity;
+
+        // aplies force to rigidbody (x axis)
+        _rb.AddForce(movement.x * Vector2.right);
+        // applies friction (x axis)
+        _rb.AddForce(-frictionAmount * Vector2.right, ForceMode2D.Force);
+
+        // _rb.linearVelocity = _frameVelocity;
     }
 
 #if UNITY_EDITOR
