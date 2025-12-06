@@ -116,7 +116,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
             GroundedChanged?.Invoke(false, 0);
         }
 
+        
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+
     }
 
     #endregion
