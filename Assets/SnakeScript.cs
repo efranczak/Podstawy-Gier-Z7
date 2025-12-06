@@ -17,6 +17,9 @@ public class SnakeScript : MonoBehaviour
 
     private float increaseTimer = 0f;
     private float baseVelocity;
+    private bool isStopping = false;
+    private float stopTimer = 0f;
+    private float previousVelocity = 0f;
 
     [Header ("Camera Settings")]
     public float CameraActivationDistance = 10.0f;
@@ -57,6 +60,24 @@ public class SnakeScript : MonoBehaviour
             increaseTimer = 0f; 
         }
     }
+
+    public void StartPlatfromingSection(float stopDuration, float stopX)
+    {
+        if (isStopping) return;
+        isStopping = true;
+        previousVelocity = velocity;
+        velocity = 0f;
+        transform.position = new Vector3(stopX, transform.position.y, transform.position.z);
+        stopTimer = stopDuration;
+        Invoke("EndPlatformingSection", stopDuration);
+    }
+
+    public void EndPlatformingSection()
+    {
+        velocity = previousVelocity;
+        isStopping = false;
+    }
+
 
     void FixedUpdate()
     {   
