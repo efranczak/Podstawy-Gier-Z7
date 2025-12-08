@@ -1998,10 +1998,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashHandler
   _player: {fileID: 1107785732}
-  _enabled: 0
+  _enabled: 1
   DashDistance: 5
   DashDuration: 0.2
-  DashCooldown: 1
+  MaxConsecutiveDashes: 0
+  DashCooldown: 0.3
 --- !u!1 &559980141
 GameObject:
   m_ObjectHideFlags: 0

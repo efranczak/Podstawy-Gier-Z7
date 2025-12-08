@@ -18,14 +18,14 @@ public class UpgradeData : ScriptableObject
                 var doubleJumpHandler = player.GetComponentInChildren<JumpHandler>();
                 if (doubleJumpHandler != null)
                 {
-                    doubleJumpHandler._maxJumps = 2;
+                    doubleJumpHandler._maxJumps += 1;
                 }
                 break;
             case UpgradeType.Dash:
                 var dashHandler = player.GetComponentInChildren<DashHandler>();
                 if (dashHandler != null)
                 {
-                    dashHandler.SetEnabled(true);
+                    dashHandler.MaxConsecutiveDashes += 1;
                 }
                 break;
             case UpgradeType.Health:
