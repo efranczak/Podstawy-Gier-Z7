@@ -30,13 +30,18 @@ public class UpgradeData : ScriptableObject
                 break;
             case UpgradeType.Health:
                 //snake.DecreaseVelocity(-1000.0f);
-
-                break;  
-
+                break;
+            case UpgradeType.WallJump:
+                var wallJumpHandler = player.GetComponentInChildren<WallJumpHandler>();
+                if (wallJumpHandler != null)
+                {
+                    wallJumpHandler.SetEnabled(true);
+                }
+                break;
         }
     }
 
 }
 
-public enum UpgradeType { Health, Sprint, DoubleJump, Dash }
+public enum UpgradeType { Health, Sprint, DoubleJump, Dash, WallJump }
 

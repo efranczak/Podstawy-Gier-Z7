@@ -13,26 +13,47 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private bool _cachedQueryStartInColliders;
     private float _gravityMultiplier = 1f;
 
+    // Dla wall jump
+    [SerializeField] private WallJumpHandler _wallJumpHandler;
+
+    private float _wallJumpTimer;
+    private float _wallJumpVelocityX;
+    private float _wallJumpDirection;
+    private bool _isWallJumpingOverride;
+
+    private float _externalVelocityX;
+    private float _externalTimer;
+
+    [Header("Wall Detection")]
+    [SerializeField] private float _wallCheckDistance = 0.6f;
+    [SerializeField] private LayerMask _wallLayer;
+
     #region Interface
 
     public Vector2 FrameInput => _frameInput.Move;
     public event Action<bool, float> GroundedChanged;
     public event Action Jumped;
 
-    #endregion
-
-    private float _time;
-
-    public bool IsGrappling{ get; set; }
+    public bool IsGrappling { get; set; }
 
     public bool IsDashing { get; private set; }
 
     public bool IsClimbing { get; set; }
 
+    public bool IsTouchingWall { get; private set; }
+
+    public float WallDirection { get; private set; }
+
+    #endregion
+
+    private float _time;
+
     private void Awake()
     {
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         IsGrappling = false;
+
+        if (_wallJumpHandler == null) _wallJumpHandler = GetComponent<WallJumpHandler>();
     }
 
     private void Update()
@@ -69,15 +90,21 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             HandleGrappleMovement();
             return;
-         }
+        }
 
         CheckCollisions();
 
         HandleJump();
-        HandleDirection();
-        HandleGravity();
 
-        HandleSpriteDirection();
+        HandleWallJumpLogic();
+
+        if (!_isWallJumpingOverride && _externalTimer <= 0)
+        {
+            HandleDirection();
+            HandleSpriteDirection();
+        }
+
+        HandleGravity();
 
         ApplyMovement();
     }
@@ -116,13 +143,61 @@ public class PlayerController : MonoBehaviour, IPlayerController
             GroundedChanged?.Invoke(false, 0);
         }
 
-        
-        Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
 
+        WallDirection = GetFacingDirection();
+        Vector2 wallCheckOrigin = _col.bounds.center;
+
+        RaycastHit2D wallHit = Physics2D.Raycast(
+            wallCheckOrigin,
+            Vector2.right * WallDirection,
+            _wallCheckDistance,
+            _wallLayer
+        );
+
+        IsTouchingWall = wallHit.collider != null && !_grounded;
+
+
+        Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
     }
 
     #endregion
 
+    #region Wall Jumping
+
+    private void HandleWallJumpLogic()
+    {
+        if (!_isWallJumpingOverride) return;
+
+        _wallJumpTimer -= Time.fixedDeltaTime;
+
+        //Czy input w ta sama strone co kierunek wall jumpu? (tzn. jak sciana po prawo to kierunek wall jumpu uznajemy jest w lewo)
+        bool tryingToMoveWithJump = Mathf.Sign(_frameInput.Move.x) == _wallJumpDirection && Mathf.Abs(_frameInput.Move.x) > 0.1f;
+
+        // Blokada jest zdjeta gdy spelnione jedno z tych trzech:
+        // 1. Minął czas timera
+        // 2. Dotkneliśmy ziemi
+        // 3. Imput gracza jest zgodny z kierunkiem wall jumpu
+        if (_wallJumpTimer <= 0 || _grounded || tryingToMoveWithJump)
+        {
+            _isWallJumpingOverride = false;
+
+            if (tryingToMoveWithJump)
+            {
+                _frameVelocity.x = _wallJumpVelocityX;
+            }
+        }
+    }
+
+    public void AddWallJumpVelocity(float velocityX, float duration)
+    {
+        _wallJumpVelocityX = velocityX;
+        _wallJumpTimer = duration;
+        _wallJumpDirection = Mathf.Sign(velocityX);
+        // Aktywujemy blokadę, aby logika Wall Jump zrobila swoje
+        _isWallJumpingOverride = true;
+    }
+
+    #endregion
 
     #region Jumping
 
@@ -140,6 +215,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.linearVelocity.y > 0) _endedJumpEarly = true;
 
         if (!_jumpToConsume && !HasBufferedJump) return;
+
+        if (_wallJumpHandler != null && _wallJumpHandler.HasCoyoteTime)
+        {
+            return;
+        }
 
         if (_grounded || CanUseCoyote) ExecuteJump();
 
@@ -181,11 +261,17 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         if (Mathf.Abs(_frameInput.Move.y) > 0.1f)
         {
-            float reelSpeed = 5f; 
+            float reelSpeed = 5f;
             _rb.linearVelocity += Vector2.up * (_frameInput.Move.y * reelSpeed);
         }
 
         _rb.linearVelocity = velocity;
+    }
+
+    public void AddExternalHorizontalVelocity(float velocityX, float duration)
+    {
+        _externalVelocityX = velocityX;
+        _externalTimer = duration;
     }
 
 
@@ -221,7 +307,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Horizontal
 
     private void HandleDirection()
-    {        
+    {
         if (_frameInput.Move.x == 0)
         {
             var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
@@ -236,9 +322,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void HandleSpriteDirection()
     {
         if (_frameInput.Move.x > 0.01f)
-            _spriteRenderer.flipX = false; 
+            _spriteRenderer.flipX = false;
         else if (_frameInput.Move.x < -0.01f)
-            _spriteRenderer.flipX = true;  
+            _spriteRenderer.flipX = true;
     }
 
     #endregion
@@ -261,20 +347,41 @@ public class PlayerController : MonoBehaviour, IPlayerController
             if (_endedJumpEarly && _frameVelocity.y > 0) inAirGravity *= _stats.JumpEndEarlyGravityModifier;
             _frameVelocity.y = Mathf.MoveTowards(_frameVelocity.y, -_stats.MaxFallSpeed, inAirGravity * _gravityMultiplier * Time.fixedDeltaTime);
         }
+
+        if (_wallJumpHandler != null && _wallJumpHandler.IsWallSliding)
+        {
+            if (_frameVelocity.y < -_wallJumpHandler.WallSlideSpeed)
+            {
+                _frameVelocity.y = -_wallJumpHandler.WallSlideSpeed;
+            }
+        }
     }
 
     #endregion
 
     public float GetFacingDirection()
-{
-    return _spriteRenderer.flipX ? -1f : 1f;
-}
-
+    {
+        return _spriteRenderer.flipX ? -1f : 1f;
+    }
 
     private void ApplyMovement()
     {
         if (IsDashing) return;
-        _rb.linearVelocity = _frameVelocity;
+
+        Vector2 finalVelocity = _frameVelocity;
+
+        if (_isWallJumpingOverride)
+        {
+            finalVelocity.x = _wallJumpVelocityX;
+        }
+
+        else if (_externalTimer > 0)
+        {
+            finalVelocity.x = _externalVelocityX;
+            _externalTimer -= Time.fixedDeltaTime;
+        }
+
+        _rb.linearVelocity = finalVelocity;
     }
 
 #if UNITY_EDITOR
@@ -299,4 +406,3 @@ public interface IPlayerController
     public event Action Jumped;
     public Vector2 FrameInput { get; }
 }
-

@@ -2000,7 +2000,7 @@ MonoBehaviour:
   _player: {fileID: 1107785732}
   _enabled: 1
   DashDistance: 5
-  DashDuration: 0.2
+  DashDuration: 0.25
   MaxConsecutiveDashes: 0
   DashCooldown: 0.3
 --- !u!1 &559980141
@@ -2220,6 +2220,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1260135899}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &613314183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613314184}
+  - component: {fileID: 613314185}
+  m_Layer: 3
+  m_Name: WallJumpHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613314184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613314183}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1107785734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &613314185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613314183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93021e60676eb044fafa98591794340a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallJumpHandler
+  _player: {fileID: 1107785732}
+  _rb: {fileID: 1107785735}
+  _enabled: 0
+  _wallSlideSpeed: 4
+  _wallJumpPowerX: 5
+  _wallJumpPowerY: 18
+  _wallJumpDuration: 0.1
+  _wallJumpCoyoteTime: 0.15
+  _wallJumpBufferTime: 0.15
+  _dashHandler: {fileID: 554331022}
+  _jumpHandler: {fileID: 1253817784}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,6 +3306,11 @@ MonoBehaviour:
   _rb: {fileID: 1107785735}
   _col: {fileID: 1107785739}
   _spriteRenderer: {fileID: 755125203}
+  _wallJumpHandler: {fileID: 613314185}
+  _wallCheckDistance: 0.6
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &1107785734
 Transform:
   m_ObjectHideFlags: 0
@@ -3268,6 +3328,7 @@ Transform:
   - {fileID: 1206172707}
   - {fileID: 1253817783}
   - {fileID: 554331021}
+  - {fileID: 613314184}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1107785735
@@ -3398,8 +3459,8 @@ MonoBehaviour:
   jumpForce: 6
   climbSpeed: 5
   jumpHorizontalForce: 3
-  jumpHandler: {fileID: 0}
-  playerController: {fileID: 0}
+  jumpHandler: {fileID: 1253817784}
+  playerController: {fileID: 1107785732}
 --- !u!114 &1107785742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3467,9 +3528,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _allUpgrades:
-  - {fileID: 11400000, guid: e0a43689c84e23c4dab83d197129c214, type: 2}
   - {fileID: 11400000, guid: 1b3983cc9b0037b4cad831fbddee0799, type: 2}
   - {fileID: 11400000, guid: 6379a200a0ef74a4ead8ee62c66d95fa, type: 2}
+  - {fileID: 11400000, guid: 4fab101bb90795544b5f8f297ac41e3e, type: 2}
+  - {fileID: 11400000, guid: e0a43689c84e23c4dab83d197129c214, type: 2}
   _upgradeButtons:
   - {fileID: 559980146}
   - {fileID: 420886856}
@@ -3721,6 +3783,7 @@ MonoBehaviour:
   _player: {fileID: 1107785732}
   _maxJumps: 1
   _enabled: 1
+  _wallJumpHandler: {fileID: 0}
   _jumpCount: 0
 --- !u!1 &1260135898
 GameObject:

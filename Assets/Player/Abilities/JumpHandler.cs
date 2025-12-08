@@ -6,17 +6,24 @@ public class JumpHandler : MonoBehaviour
     [SerializeField] public int _maxJumps = 1;
     [SerializeField] private bool _enabled = true;
 
+    [Header("Handlers")]
+    [SerializeField] private WallJumpHandler _wallJumpHandler;
+
     public int _jumpCount;
+
+    private void Awake()
+    {
+        if (_player == null) _player = GetComponentInParent<PlayerController>();
+        if (_wallJumpHandler == null) _wallJumpHandler = _player.GetComponent<WallJumpHandler>();
+    }
 
     private void OnEnable()
     {
-        // USUÑ: _player.Jumped += OnJumped;
         _player.GroundedChanged += OnGroundedChanged;
     }
 
     private void OnDisable()
     {
-        // USUÑ: _player.Jumped -= OnJumped;
         _player.GroundedChanged -= OnGroundedChanged;
     }
 
@@ -24,19 +31,19 @@ public class JumpHandler : MonoBehaviour
     {
         if (!_enabled) return;
 
-        if (Input.GetButtonDown("Jump") && _jumpCount < _maxJumps)
+        if (Input.GetButtonDown("Jump"))
         {
-            // 1. Zwiêksz licznik
-            _jumpCount++; // <-- Zliczamy skok TUTAJ
+            if (_wallJumpHandler != null && _wallJumpHandler.HasCoyoteTime)
+            {
+                return;
+            }
 
-            // 2. Wykonaj skok
-            ForceJump();
+            if (_jumpCount < _maxJumps)
+            {
+                _jumpCount++;
+                ForceJump();
+            }
         }
-    }
-
-    private void OnJumped()
-    {
-        _jumpCount++;
     }
 
     private void OnGroundedChanged(bool grounded, float impactVelocity)
@@ -54,6 +61,11 @@ public class JumpHandler : MonoBehaviour
             ?.GetValue(_player) as ScriptableStats;
 
         _player.ForceJump(stats.JumpPower * stats.DoubleJumpPower);
+
+        if (stats != null)
+        {
+            _player.ForceJump(stats.JumpPower);
+        }
     }
 
     public void SetEnabled(bool value)

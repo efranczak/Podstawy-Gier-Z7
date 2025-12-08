@@ -57,7 +57,7 @@ public class DashHandler : MonoBehaviour
         }
     }
 
-    private void ResetDashChain()
+    public void ResetDashChain()
     {
         _currentConsecutiveDashes = 0;
         _canDash = true;
