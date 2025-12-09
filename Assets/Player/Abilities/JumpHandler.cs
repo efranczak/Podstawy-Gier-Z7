@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class JumpHandler : MonoBehaviour
 {
@@ -11,27 +12,42 @@ public class JumpHandler : MonoBehaviour
 
     public int _jumpCount;
 
+    private PlayerInputActions _inputActions;
+    private InputAction jumpAction;
+
     private void Awake()
     {
         if (_player == null) _player = GetComponentInParent<PlayerController>();
         if (_wallJumpHandler == null) _wallJumpHandler = _player.GetComponent<WallJumpHandler>();
+
+        _inputActions = new PlayerInputActions();
     }
 
     private void OnEnable()
     {
         _player.GroundedChanged += OnGroundedChanged;
+
+        jumpAction = _inputActions.Player.Jump;
+        jumpAction.Enable();
     }
 
     private void OnDisable()
     {
         _player.GroundedChanged -= OnGroundedChanged;
+
+        jumpAction.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        _inputActions.Dispose();
     }
 
     private void Update()
     {
         if (!_enabled) return;
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpAction.WasPressedThisFrame())
         {
             if (_wallJumpHandler != null && _wallJumpHandler.HasCoyoteTime)
             {

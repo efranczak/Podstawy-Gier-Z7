@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WallJumpHandler : MonoBehaviour
 {
@@ -32,13 +33,36 @@ public class WallJumpHandler : MonoBehaviour
     private float _wallJumpBufferCounter;
     private float _lastWallDirection;
 
+    private PlayerInputActions inputActions;
+    private InputAction jumpAction;
+
     private void Awake()
     {
         if (_jumpHandler == null) _jumpHandler = GetComponent<JumpHandler>();
         if (_dashHandler == null) _dashHandler = GetComponent<DashHandler>();
         if (_player == null) _player = GetComponent<PlayerController>();
         if (_rb == null) _rb = GetComponent<Rigidbody2D>();
+
+        inputActions = new PlayerInputActions();
     }
+
+    private void OnEnable()
+    {
+        jumpAction = inputActions.Player.Jump;
+        jumpAction.Enable();
+
+    }
+
+    private void OnDisable()
+    {
+        jumpAction.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        inputActions.Dispose();
+    }
+
 
     private void FixedUpdate()
     {
@@ -50,7 +74,7 @@ public class WallJumpHandler : MonoBehaviour
     {
         if (!_enabled) return;
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpAction.WasPressedThisFrame())
         {
             _wallJumpBufferCounter = _wallJumpBufferTime;
         }

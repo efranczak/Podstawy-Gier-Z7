@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class LianaUsage : MonoBehaviour
 {
@@ -17,6 +18,40 @@ public class LianaUsage : MonoBehaviour
     private bool jumpedFromLiana = false;
 
     private RigidbodyConstraints2D originalConstraints;
+
+    private PlayerInputActions inputActions;
+    private InputAction jumpAction;
+    private InputAction moveAction;
+
+    #region Input System
+
+    private void Awake()
+    {
+        inputActions = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        jumpAction = inputActions.Player.Jump;
+        moveAction = inputActions.Player.Move;
+        jumpAction.Enable();
+        moveAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        jumpAction.Disable();
+        moveAction.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        inputActions.Dispose();
+    }
+
+
+    #endregion
+
 
     void Start()
     {
@@ -48,10 +83,10 @@ public class LianaUsage : MonoBehaviour
 
     void Update()
     {
-        vertical = Input.GetAxis("Vertical");
+        vertical = moveAction.ReadValue<Vector2>().y;
 
         // wspinanie jeśli na lianie i poruszamy się w pionie, ale nie wciśnięto Space
-        if (isLiana && Mathf.Abs(vertical) > 0.1f && !Input.GetKey(KeyCode.Space))
+        if (isLiana && Mathf.Abs(vertical) > 0.1f && !jumpAction.WasPressedThisFrame())
         {
             isClimbing = true;
 
@@ -61,7 +96,7 @@ public class LianaUsage : MonoBehaviour
         }
 
         // Zejście/skok z liany po wciśnięciu Space
-        if (isLiana && Input.GetKeyDown(KeyCode.Space))
+        if (isLiana && jumpAction.WasPressedThisFrame())
         {
             ExitLiana();
         }
@@ -118,7 +153,7 @@ public class LianaUsage : MonoBehaviour
         playerRigidbody.gravityScale = 1f;
         playerRigidbody.constraints = originalConstraints;
 
-        float h = Input.GetAxisRaw("Horizontal");
+        float h = moveAction.ReadValue<Vector2>().x;
         if (Mathf.Abs(h) < 0.1f) h = 1f;
 
         playerRigidbody.linearVelocity = new Vector2(

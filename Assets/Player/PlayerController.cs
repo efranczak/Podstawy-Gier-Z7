@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IPlayerController
 {
@@ -12,6 +13,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
     private float _gravityMultiplier = 1f;
+
+    private PlayerInputActions playerControls;
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction dashAction;
+
 
     // Dla wall jump
     [SerializeField] private WallJumpHandler _wallJumpHandler;
@@ -27,6 +34,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [Header("Wall Detection")]
     [SerializeField] private float _wallCheckDistance = 0.6f;
     [SerializeField] private LayerMask _wallLayer;
+
+    
 
     #region Interface
 
@@ -48,12 +57,48 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private float _time;
 
+
+
     private void Awake()
     {
+        playerControls = new PlayerInputActions();
+
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         IsGrappling = false;
 
         if (_wallJumpHandler == null) _wallJumpHandler = GetComponent<WallJumpHandler>();
+    }
+
+    private void OnEnable()
+    {
+        moveAction = playerControls.Player.Move;
+        moveAction.Enable();
+
+        jumpAction = playerControls.Player.Jump;
+        jumpAction.Enable();
+
+        dashAction = playerControls.Player.Dash;
+        dashAction.Enable();
+
+    }
+
+    private void OnDisable()
+    {
+        if (moveAction != null) moveAction.Disable();
+        if (jumpAction != null) jumpAction.Disable();
+        if (dashAction != null) dashAction.Disable();
+
+        if (playerControls != null)
+            playerControls.Player.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        if (playerControls != null)
+        {
+            playerControls.Player.Disable();
+            playerControls.Dispose();
+        }
     }
 
     private void Update()
@@ -66,9 +111,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         _frameInput = new FrameInput
         {
-            JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space),
-            JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space),
-            Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+            JumpDown = jumpAction.WasPressedThisFrame(),
+            JumpHeld = jumpAction.IsPressed(),
+            Move = moveAction.ReadValue<Vector2>()
         };
 
         if (_stats.SnapInput)

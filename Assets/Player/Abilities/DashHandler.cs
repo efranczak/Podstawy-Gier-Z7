@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
+using System.Xml.Serialization;
 
 public class DashHandler : MonoBehaviour
 {
@@ -23,15 +25,33 @@ public class DashHandler : MonoBehaviour
     private bool _canDash = true;
     private int _currentConsecutiveDashes = 0;
 
+    private PlayerInputActions _inputActions;
+    private InputAction dashAction;
+
+    private void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
     private void OnEnable()
     {
         _player.GroundedChanged += OnGroundedChanged;
+
+        dashAction = _inputActions.Player.Dash;
+        dashAction.Enable();
+
     }
 
     private void OnDisable()
     {
         _player.GroundedChanged -= OnGroundedChanged;
+        dashAction.Disable();
     }
+
+    private void OnDestroy()
+    {
+        _inputActions.Dispose();
+    }
+
 
     private void Update()
     {
@@ -43,7 +63,7 @@ public class DashHandler : MonoBehaviour
             ResetDashChain();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (dashAction.WasPressedThisFrame())
         {
             TryDash();
         }
