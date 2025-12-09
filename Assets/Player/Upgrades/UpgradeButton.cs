@@ -1,41 +1,83 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class UpgradeButton : MonoBehaviour
 {
-    [SerializeField] private Image _icon;
+    [SerializeField] private Sprite _icon;
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private TextMeshProUGUI _description;
-    [SerializeField] private Button _button;
+    [SerializeField] private Outline outline;
 
     private UpgradeData _upgradeData;
     private PlayerController _player;
+    private bool isChosen = false;
     //public SnakeScript _snake;
-    
+
+    private PlayerInputActions _playerInputActions;
+    private InputAction _selectAction;
 
     private UpgradePanelUI _upgradePanel;
 
     private void Awake()
     {
         _upgradePanel = GetComponentInParent<UpgradePanelUI>();
+
+        _playerInputActions = new PlayerInputActions();
     }
 
-    public void Setup(UpgradeData data, PlayerController player)
+    private void OnEnable()
+    {
+        _selectAction = _playerInputActions.UI.Select;
+        _selectAction.Enable();
+        _selectAction.performed += ctx => OnSelected();
+    }
+
+    private void OnDisable()
+    {
+        _selectAction.performed -= ctx => OnSelected();
+        _selectAction.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        _playerInputActions.Dispose();
+    }
+
+    public void setIsChosen(bool chosen)
+    {
+        isChosen = chosen;
+    }
+
+    public void Setup(UpgradeData data, PlayerController player, bool isChosen)
     {
         _upgradeData = data;
         _player = player;
 
-        _icon.sprite = data.icon;
+        _icon = data.icon;
         _title.text = data.upgradeName;
         _description.text = data.description;
 
-        _button.onClick.RemoveAllListeners();
-        _button.onClick.AddListener(OnSelected);
+        this.isChosen = isChosen;
+
+    }
+
+    private void Update()
+    {
+        if (isChosen)
+        {
+            outline.enabled = true;
+        }
+        else
+        {
+            outline.enabled = false;
+        }
     }
 
     private void OnSelected()
-    {
+    {   
+        if (!isChosen) return;
         _upgradeData.ApplyUpgrade(_player/*, _snake*/);
         _upgradePanel.UpgradeSelected();
     }
