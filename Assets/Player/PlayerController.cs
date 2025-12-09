@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private InputAction jumpAction;
     private InputAction dashAction;
 
+    public bool autoRun;
+
 
     // Dla wall jump
     [SerializeField] private WallJumpHandler _wallJumpHandler;
@@ -352,7 +354,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Horizontal
 
     private void HandleDirection()
-    {
+    {   
+
+        if (autoRun)
+        {                
+            _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+            return;
+        }
         if (_frameInput.Move.x == 0)
         {
             var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
