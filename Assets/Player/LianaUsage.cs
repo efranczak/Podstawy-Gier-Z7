@@ -134,6 +134,7 @@ public class LianaUsage : MonoBehaviour
             {
                 isLiana = false;
                 isClimbing = false;
+                playerController.IsClimbing = false;
                 playerRigidbody.constraints = originalConstraints;
                 playerRigidbody.gravityScale = 1f;
                 Debug.Log("Opuszczenie liany - przywrócono physics");
