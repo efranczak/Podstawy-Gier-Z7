@@ -53,30 +53,42 @@ public class SnakeScript : MonoBehaviour
         TriggerArrow();
 
         // Increase Speed
-        increaseTimer += Time.deltaTime;
-        if (increaseTimer >= increaseInterval)
+        if (!isStopping)
         {
-            IncreaseVelocity();
-            increaseTimer = 0f; 
+            increaseTimer += Time.deltaTime;
+            if (increaseTimer >= increaseInterval)
+            {
+                IncreaseVelocity();
+                increaseTimer = 0f;
+            }
         }
     }
 
     public void StartPlatfromingSection(float stopDuration, float stopX)
     {
         if (isStopping) return;
+
         isStopping = true;
+
         previousVelocity = velocity;
         velocity = 0f;
+
         transform.position = new Vector3(stopX, transform.position.y, transform.position.z);
-        stopTimer = stopDuration;
-        Invoke("EndPlatformingSection", stopDuration);
+
+        CancelInvoke(nameof(EndPlatformingSection)); 
+        Invoke(nameof(EndPlatformingSection), stopDuration); 
     }
 
     public void EndPlatformingSection()
     {
-        velocity = previousVelocity;
-        isStopping = false;
+        if (!isStopping) return; 
+
+        CancelInvoke(nameof(EndPlatformingSection)); 
+
+        velocity = previousVelocity;  
+        isStopping = false;            
     }
+
 
 
     void FixedUpdate()

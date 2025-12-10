@@ -36,11 +36,13 @@ public class PlatfromerChunk : Chunk
 
     private void EndPlatfromingSection()
     {
-        
-        SnakeScript.EndPlatformingSection();
+        if (!isActive) return;
+
+        SnakeScript.EndPlatformingSection(); 
         chunkCamera.Priority = 0;
-        
+        isActive = false;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
