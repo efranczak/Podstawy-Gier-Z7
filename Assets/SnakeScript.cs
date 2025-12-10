@@ -1,4 +1,5 @@
 using TreeEditor;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Scripting.APIUpdating;
@@ -53,30 +54,42 @@ public class SnakeScript : MonoBehaviour
         TriggerArrow();
 
         // Increase Speed
-        increaseTimer += Time.deltaTime;
-        if (increaseTimer >= increaseInterval)
+        if (!isStopping)
         {
-            IncreaseVelocity();
-            increaseTimer = 0f; 
+            increaseTimer += Time.deltaTime;
+            if (increaseTimer >= increaseInterval)
+            {
+                IncreaseVelocity();
+                increaseTimer = 0f;
+            }
         }
     }
 
     public void StartPlatfromingSection(float stopDuration, float stopX)
     {
         if (isStopping) return;
+
         isStopping = true;
+
         previousVelocity = velocity;
         velocity = 0f;
+
         transform.position = new Vector3(stopX, transform.position.y, transform.position.z);
-        stopTimer = stopDuration;
-        Invoke("EndPlatformingSection", stopDuration);
+
+        CancelInvoke(nameof(EndPlatformingSection)); 
+        Invoke(nameof(EndPlatformingSection), stopDuration); 
     }
 
     public void EndPlatformingSection()
     {
-        velocity = previousVelocity;
-        isStopping = false;
+        if (!isStopping) return; 
+
+        CancelInvoke(nameof(EndPlatformingSection)); 
+
+        velocity = previousVelocity;  
+        isStopping = false;            
     }
+
 
 
     void FixedUpdate()
@@ -124,7 +137,8 @@ public class SnakeScript : MonoBehaviour
 
     private void Move()
     {
-        Vector3 move = new Vector3(transform.position.x + velocity, transform.position.y, transform.position.z);
+        if (isStopping) return;
+        Vector3 move = new Vector3(transform.position.x + velocity, player.transform.position.y + 4, transform.position.z);
         transform.position = move;
     }
 
