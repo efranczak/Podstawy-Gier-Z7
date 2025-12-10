@@ -12,13 +12,20 @@ public class PlatfromerChunk : Chunk
     public CinemachineCamera chunkCamera;
 
     private Transform player;
-    
+
+    private BoxCollider2D playerCameraBoundaryCollider;
+
     private bool isActive = false;
 
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject boundaryObject = GameObject.FindGameObjectWithTag("CameraBoundary");
+        if (boundaryObject != null)
+        {
+            playerCameraBoundaryCollider = boundaryObject.GetComponent<BoxCollider2D>();
+        }
         SnakeScript = FindAnyObjectByType<SnakeScript>();
     }
 
@@ -32,6 +39,7 @@ public class PlatfromerChunk : Chunk
         SnakeScript.StartPlatfromingSection(sectionDuration, Entry.position.x);
         isActive = true;
         chunkCamera.Priority = 12;
+        playerCameraBoundaryCollider.enabled = false;
     }
 
     private void EndPlatfromingSection()
@@ -41,6 +49,7 @@ public class PlatfromerChunk : Chunk
         SnakeScript.EndPlatformingSection(); 
         chunkCamera.Priority = 0;
         isActive = false;
+        playerCameraBoundaryCollider.enabled = true;
     }
 
 

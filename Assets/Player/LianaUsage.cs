@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class LianaUsage : MonoBehaviour
 {
     [SerializeField] Rigidbody2D playerRigidbody;
-    [SerializeField] private float jumpForce = 6f;
+    [SerializeField] private float jumpForce = 30f;
     [SerializeField] private float climbSpeed = 5f;
     [SerializeField] private float jumpHorizontalForce = 3f;
     [SerializeField] JumpHandler jumpHandler;
@@ -92,11 +92,14 @@ public class LianaUsage : MonoBehaviour
 
             // poprawka lian jest tu
             playerController.IsClimbing = true;
+            playerController.SetVelocity(Vector2.zero);
+
+            if (jumpHandler != null) jumpHandler.SetEnabled(false);
             // koniec poprawki
         }
 
         // Zejście/skok z liany po wciśnięciu Space
-        if (isLiana && jumpAction.WasPressedThisFrame())
+        if (isLiana && jumpAction.WasPressedThisFrame() && isClimbing)
         {
             ExitLiana();
         }
@@ -109,6 +112,7 @@ public class LianaUsage : MonoBehaviour
             playerRigidbody.gravityScale = 0f;
             playerRigidbody.constraints = (originalConstraints | RigidbodyConstraints2D.FreezePositionX) & ~RigidbodyConstraints2D.FreezeRotation;
             playerRigidbody.linearVelocity = new Vector2(0f, vertical * climbSpeed);
+            playerController.SetVelocity(new Vector2(0f, vertical * climbSpeed));
         }
         else
         {
@@ -137,8 +141,11 @@ public class LianaUsage : MonoBehaviour
                 playerController.IsClimbing = false;
                 playerRigidbody.constraints = originalConstraints;
                 playerRigidbody.gravityScale = 1f;
+                playerRigidbody.linearVelocity = Vector2.zero;
                 Debug.Log("Opuszczenie liany - przywrócono physics");
             }
+
+            if (jumpHandler != null) jumpHandler.SetEnabled(true);
 
             jumpedFromLiana = false; // reset flagi
         }
@@ -149,22 +156,21 @@ public class LianaUsage : MonoBehaviour
         jumpedFromLiana = true;
         isClimbing = false;
         isLiana = false;
+        playerController.SetVelocity(Vector2.zero);
 
         // natychmiast przywróć normalną fizykę
         playerRigidbody.gravityScale = 1f;
+        playerRigidbody.linearVelocity = Vector2.zero;
         playerRigidbody.constraints = originalConstraints;
 
         float h = moveAction.ReadValue<Vector2>().x;
         if (Mathf.Abs(h) < 0.1f) h = 1f;
 
-        playerRigidbody.linearVelocity = new Vector2(
-            h * jumpHorizontalForce,
-            jumpForce
-        );
-
         // poprawka lian jest tu
-        jumpHandler._jumpCount = 0; // reset liczby skoków podczas wspinaczki, wejscie na liane traktuje jako dotkniecie ziemii (resetuje skoki)
+        jumpHandler._jumpCount = 1; // reset liczby skoków podczas wspinaczki, wejscie na liane traktuje jako dotkniecie ziemii (resetuje skoki)
         playerController.IsClimbing = false;
+
+        playerController.ForceJump(jumpForce);
         // koniec poprawki
 
         StartCoroutine(PreventClimbForOneFixedUpdate());

@@ -156,6 +156,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
         ApplyMovement();
     }
 
+    public void SetVelocity(Vector2 newVelocity)
+    {
+        _frameVelocity = newVelocity;
+        _rb.linearVelocity = newVelocity;
+    }
+
     #region Collisions
 
     private float _frameLeftGrounded = float.MinValue;

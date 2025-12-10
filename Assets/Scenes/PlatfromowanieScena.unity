@@ -3011,7 +3011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
   playerRigidbody: {fileID: 1310816164}
-  jumpForce: 6
+  jumpForce: 17
   climbSpeed: 5
   jumpHorizontalForce: 3
   jumpHandler: {fileID: 909251776}
@@ -3381,7 +3381,7 @@ GameObject:
   - component: {fileID: 1454425716}
   m_Layer: 0
   m_Name: CameraYBoundary
-  m_TagString: Untagged
+  m_TagString: CameraBoundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
