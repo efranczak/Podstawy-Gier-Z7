@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class PlatfromerChunk : Chunk
 {
@@ -8,8 +9,10 @@ public class PlatfromerChunk : Chunk
     public int sectionDuration;
     public PlatfromerApple apple;
     public BoxCollider2D entryTrigger;
+    public CinemachineCamera chunkCamera;
 
     private Transform player;
+    
     private bool isActive = false;
 
 
@@ -28,12 +31,14 @@ public class PlatfromerChunk : Chunk
     { 
         SnakeScript.StartPlatfromingSection(sectionDuration, Entry.position.x);
         isActive = true;
+        chunkCamera.Priority = 12;
     }
 
     private void EndPlatfromingSection()
     {
         
         SnakeScript.EndPlatformingSection();
+        chunkCamera.Priority = 0;
         
     }
 

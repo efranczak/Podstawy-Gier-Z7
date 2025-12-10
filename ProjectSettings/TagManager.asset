@@ -9,6 +9,8 @@ TagManager:
   - Liana
   - Rope
   - PlatformerEntry
+  - point
+  - ChunkCamera
   layers:
   - Default
   - TransparentFX
