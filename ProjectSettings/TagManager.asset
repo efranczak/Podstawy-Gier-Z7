@@ -12,6 +12,7 @@ TagManager:
   - point
   - ChunkCamera
   - CameraBoundary
+  - tail
   layers:
   - Default
   - TransparentFX

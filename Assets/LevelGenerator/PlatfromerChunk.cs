@@ -10,6 +10,7 @@ public class PlatfromerChunk : Chunk
     public PlatfromerApple apple;
     public BoxCollider2D entryTrigger;
     public CinemachineCamera chunkCamera;
+    public GameObject snakeTail;
 
     private Transform player;
 
@@ -48,6 +49,7 @@ public class PlatfromerChunk : Chunk
 
         SnakeScript.EndPlatformingSection(); 
         chunkCamera.Priority = 0;
+        Destroy(snakeTail);
         isActive = false;
         playerCameraBoundaryCollider.enabled = true;
     }

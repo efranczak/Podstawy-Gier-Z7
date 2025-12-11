@@ -950,7 +950,12 @@ MonoBehaviour:
   chunkParent: {fileID: 2006758202}
   chunkTemplates:
   - {fileID: 3840287670580990443, guid: 80a31857cc59f9b4abcc742401a519d8, type: 3}
-  - {fileID: 3840287670580990443, guid: 80a31857cc59f9b4abcc742401a519d8, type: 3}
+  - {fileID: 3840287670580990443, guid: f37238ca369b1ec4da80c71842266cbf, type: 3}
+  - {fileID: 3840287670580990443, guid: d416d1dd40fb4c547aa2042eb14a93cf, type: 3}
+  - {fileID: 3840287670580990443, guid: c56f5d375067d9246956ac0ab1f621af, type: 3}
+  - {fileID: 3840287670580990443, guid: be37d762bdce4ce47ba1784b94de58d2, type: 3}
+  - {fileID: 3840287670580990443, guid: a732015063476cc40a339c78ad5f8e99, type: 3}
+  - {fileID: 3840287670580990443, guid: 16acbd93150a7fe4ca8f358760cef2a7, type: 3}
   platfromChunkTemplates: []
   startChunk: {fileID: 3840287670580990443, guid: 290475d4762aa4b48a158d2d3deb9232, type: 3}
   spawnBuffer: 10
@@ -2855,7 +2860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e2bb10dffcf3940bf6c5805daba694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _stats: {fileID: 11400000, guid: 0283c47f022e9814083880c749e4aab2, type: 2}
+  _stats: {fileID: 11400000, guid: 2b1fe7f558f1ab148b46fc8e1dde13dc, type: 2}
   _rb: {fileID: 1310816164}
   _col: {fileID: 1310816163}
   _spriteRenderer: {fileID: 766932322}
@@ -3435,7 +3440,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -4.02569}
+  m_Offset: {x: 0, y: 2.9}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3445,7 +3450,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 10000, y: 11.246243}
+  m_Size: {x: 10000, y: 25}
   m_EdgeRadius: 0
 --- !u!1 &1456588646
 GameObject:
@@ -3536,7 +3541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1456899260}
   - component: {fileID: 1456899263}
-  - component: {fileID: 1456899262}
+  - component: {fileID: 1456899264}
   - component: {fileID: 1456899261}
   m_Layer: 0
   m_Name: VirtualCameraOne
@@ -3554,7 +3559,7 @@ Transform:
   m_GameObject: {fileID: 1456899259}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7629633, y: 0.17776978, z: -10}
+  m_LocalPosition: {x: -1.77037, y: -1.9111, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3580,37 +3585,6 @@ MonoBehaviour:
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
---- !u!114 &1456899262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456899259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePositionComposer
-  CameraDistance: 10
-  DeadZoneDepth: 0
-  Composition:
-    ScreenPosition: {x: -0.1425, y: 0.208887}
-    DeadZone:
-      Enabled: 1
-      Size: {x: 0.1208336, y: 0.275555}
-    HardLimits:
-      Enabled: 1
-      Size: {x: 2, y: 2}
-      Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 1, z: 1}
-  Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
-    IgnoreY: 1
 --- !u!114 &1456899263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3654,6 +3628,37 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1456899264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456899259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePositionComposer
+  CameraDistance: 10
+  DeadZoneDepth: 0
+  Composition:
+    ScreenPosition: {x: 0, y: 0}
+    DeadZone:
+      Enabled: 1
+      Size: {x: 0.2, y: 0.2}
+    HardLimits:
+      Enabled: 1
+      Size: {x: 0.8, y: 0.8}
+      Offset: {x: 0, y: 0}
+  CenterOnActivate: 1
+  TargetOffset: {x: 0, y: 0, z: 0}
+  Damping: {x: 1, y: 1, z: 1}
+  Lookahead:
+    Enabled: 0
+    Time: 0
+    Smoothing: 0
+    IgnoreY: 0
 --- !u!1 &1552539393
 GameObject:
   m_ObjectHideFlags: 0
@@ -3969,7 +3974,7 @@ Transform:
   m_GameObject: {fileID: 1879155489}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7574575, y: -1.1167904, z: -10}
+  m_LocalPosition: {x: -1.77037, y: -1.9111, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
