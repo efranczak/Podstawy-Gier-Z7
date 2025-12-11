@@ -2860,7 +2860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e2bb10dffcf3940bf6c5805daba694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _stats: {fileID: 11400000, guid: 2b1fe7f558f1ab148b46fc8e1dde13dc, type: 2}
+  _stats: {fileID: 11400000, guid: 0283c47f022e9814083880c749e4aab2, type: 2}
   _rb: {fileID: 1310816164}
   _col: {fileID: 1310816163}
   _spriteRenderer: {fileID: 766932322}
@@ -3559,7 +3559,7 @@ Transform:
   m_GameObject: {fileID: 1456899259}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0203702, y: -1.9110999, z: -10}
+  m_LocalPosition: {x: 3.22963, y: -1.9110999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3652,7 +3652,7 @@ MonoBehaviour:
       Size: {x: 0.2, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0.75, y: 0, z: 0}
+  TargetOffset: {x: 5, y: 0, z: 0}
   Damping: {x: 0.5, y: 0.75, z: 1}
   Lookahead:
     Enabled: 0
@@ -3974,7 +3974,7 @@ Transform:
   m_GameObject: {fileID: 1879155489}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0203702, y: -1.9111, z: -10}
+  m_LocalPosition: {x: 3.22963, y: -1.9111, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
