@@ -110,14 +110,12 @@ public class LianaUsage : MonoBehaviour
         if (isClimbing)
         {
             playerRigidbody.gravityScale = 0f;
-            playerRigidbody.constraints = (originalConstraints | RigidbodyConstraints2D.FreezePositionX) & ~RigidbodyConstraints2D.FreezeRotation;
             playerRigidbody.linearVelocity = new Vector2(0f, vertical * climbSpeed);
             playerController.SetVelocity(new Vector2(0f, vertical * climbSpeed));
         }
         else
         {
             playerRigidbody.gravityScale = 1f;
-            playerRigidbody.constraints = originalConstraints;
         }
     }
 
@@ -139,7 +137,6 @@ public class LianaUsage : MonoBehaviour
                 isLiana = false;
                 isClimbing = false;
                 playerController.IsClimbing = false;
-                playerRigidbody.constraints = originalConstraints;
                 playerRigidbody.gravityScale = 1f;
                 playerRigidbody.linearVelocity = Vector2.zero;
                 Debug.Log("Opuszczenie liany - przywrócono physics");
@@ -161,7 +158,6 @@ public class LianaUsage : MonoBehaviour
         // natychmiast przywróć normalną fizykę
         playerRigidbody.gravityScale = 1f;
         playerRigidbody.linearVelocity = Vector2.zero;
-        playerRigidbody.constraints = originalConstraints;
 
         float h = moveAction.ReadValue<Vector2>().x;
         if (Mathf.Abs(h) < 0.1f) h = 1f;

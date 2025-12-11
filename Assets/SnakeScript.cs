@@ -149,8 +149,17 @@ public class SnakeScript : MonoBehaviour
 
     public void DecreaseVelocity(float amount)
     {
-        if (velocity - amount < baseVelocity) velocity = baseVelocity;
-        else velocity -= amount;
+        if (!isStopping)
+        {
+            if (velocity - amount < baseVelocity) velocity = baseVelocity;
+            else velocity -= amount;
+        }
+        else
+        {
+            if (previousVelocity - amount < baseVelocity) previousVelocity = baseVelocity;
+            else previousVelocity -= amount;
+        }
+
     }
 
     public void resetPosition()

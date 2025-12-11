@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,6 +12,38 @@ public class GameOverScript : MonoBehaviour
     public Button startButton;
     public Image background;
     private bool startFlag = true;
+
+    private PlayerInputActions playerInputActions;
+    private InputAction button;
+
+    private void Awake()
+    {
+        playerInputActions = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        button = playerInputActions.UI.Select;
+        button.Enable();
+
+        button.performed += ctx =>
+        {
+            if (startFlag && startButton.IsActive())
+            {
+                StartGame();
+            }
+            else if (restartButton.IsActive())
+            {
+                RestartLevel();
+            }
+        };
+    }
+
+    private void OnDisable()
+    {
+        button.Disable();
+    }
+
 
     void Start()
     {   
