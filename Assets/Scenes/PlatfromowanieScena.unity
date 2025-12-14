@@ -3066,7 +3066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec27eb887d4ab8547b3a5ec290f77e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkills
-  _currentDifficulty: 0
+  _currentDifficulty: 1
   _playerJumps: 1
   _playerDashes: 0
   _playerHasWallJump: 0
