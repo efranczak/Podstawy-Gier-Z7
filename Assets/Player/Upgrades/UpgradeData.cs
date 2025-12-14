@@ -12,31 +12,33 @@ public class UpgradeData : ScriptableObject
     // Example apply method — call this from UpgradeButton or manager
     public void ApplyUpgrade(PlayerController player/*, SnakeScript snake*/)
     {
+        PlayerSkills playerSkills = player.GetComponent<PlayerSkills>();
+
+        PlatformLevelGenerator generator = FindAnyObjectByType<PlatformLevelGenerator>();
+
         switch (upgradeType)
         {
             case UpgradeType.DoubleJump:
                 var doubleJumpHandler = player.GetComponentInChildren<JumpHandler>();
                 if (doubleJumpHandler != null)
                 {
-                    doubleJumpHandler._maxJumps += 1;
+                    playerSkills.SetMaxJumps(playerSkills.PlayerJumps + 1);
+                    generator.UpdateViableChunks();
                 }
                 break;
             case UpgradeType.Dash:
                 var dashHandler = player.GetComponentInChildren<DashHandler>();
                 if (dashHandler != null)
                 {
-                    dashHandler.MaxConsecutiveDashes += 1;
+                    playerSkills.SetMaxDashes(playerSkills.PlayerDashes + 1);
+                    generator.UpdateViableChunks();
                 }
                 break;
             case UpgradeType.Health:
                 //snake.DecreaseVelocity(-1000.0f);
                 break;
             case UpgradeType.WallJump:
-                var wallJumpHandler = player.GetComponentInChildren<WallJumpHandler>();
-                if (wallJumpHandler != null)
-                {
-                    wallJumpHandler.SetEnabled(true);
-                }
+                    playerSkills.SetWallJumpStatus(true);
                 break;
         }
     }

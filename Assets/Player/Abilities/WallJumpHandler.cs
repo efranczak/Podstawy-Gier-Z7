@@ -7,6 +7,8 @@ public class WallJumpHandler : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private bool _enabled = false;
 
+    [SerializeField] private PlayerSkills _playerSkills;
+
     [Header("Wall Slide Settings")]
     [SerializeField] private float _wallSlideSpeed = 2f;
     public float WallSlideSpeed => _wallSlideSpeed;
@@ -43,6 +45,13 @@ public class WallJumpHandler : MonoBehaviour
         if (_player == null) _player = GetComponent<PlayerController>();
         if (_rb == null) _rb = GetComponent<Rigidbody2D>();
 
+        if (_playerSkills == null) _playerSkills = _player.GetComponent<PlayerSkills>();
+
+        if (_playerSkills == null)
+        {
+            enabled = false;
+        }
+
         inputActions = new PlayerInputActions();
     }
 
@@ -66,13 +75,13 @@ public class WallJumpHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_enabled) return;
+        if (!_playerSkills.PlayerHasWallJump) return;
         HandleWallSlideLogic();
     }
 
     private void Update()
     {
-        if (!_enabled) return;
+        if (!_playerSkills.PlayerHasWallJump) return;
 
         if (jumpAction.WasPressedThisFrame())
         {

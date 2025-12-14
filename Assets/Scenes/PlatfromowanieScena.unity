@@ -946,17 +946,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb0f242f5c1b5046ac539bdab6e27f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformLevelGenerator
+  chunksBeforePlatformer: 3
+  endlessRunnerCount: 0
   mainCamera: {fileID: 1879155490}
   chunkParent: {fileID: 2006758202}
   chunkTemplates:
-  - {fileID: 3840287670580990443, guid: 80a31857cc59f9b4abcc742401a519d8, type: 3}
-  - {fileID: 3840287670580990443, guid: f37238ca369b1ec4da80c71842266cbf, type: 3}
-  - {fileID: 3840287670580990443, guid: d416d1dd40fb4c547aa2042eb14a93cf, type: 3}
   - {fileID: 3840287670580990443, guid: c56f5d375067d9246956ac0ab1f621af, type: 3}
   - {fileID: 3840287670580990443, guid: be37d762bdce4ce47ba1784b94de58d2, type: 3}
   - {fileID: 3840287670580990443, guid: a732015063476cc40a339c78ad5f8e99, type: 3}
   - {fileID: 3840287670580990443, guid: 16acbd93150a7fe4ca8f358760cef2a7, type: 3}
-  platfromChunkTemplates: []
+  platfromChunkTemplates:
+  - {fileID: 3840287670580990443, guid: d416d1dd40fb4c547aa2042eb14a93cf, type: 3}
+  - {fileID: 3840287670580990443, guid: f37238ca369b1ec4da80c71842266cbf, type: 3}
+  - {fileID: 3840287670580990443, guid: 80a31857cc59f9b4abcc742401a519d8, type: 3}
+  - {fileID: 3840287670580990443, guid: a171a428122090d46bcd44aea03e845e, type: 3}
+  - {fileID: 3840287670580990443, guid: 10b1ee2d50ecd7543810f2908adb5546, type: 3}
   startChunk: {fileID: 3840287670580990443, guid: 290475d4762aa4b48a158d2d3deb9232, type: 3}
   spawnBuffer: 10
   despawnBuffer: 10
@@ -2096,8 +2100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpHandler
   _player: {fileID: 1310816160}
-  _maxJumps: 1
   _enabled: 1
+  _playerSkills: {fileID: 1310816170}
   _wallJumpHandler: {fileID: 0}
   _jumpCount: 0
 --- !u!4 &909251777
@@ -2299,8 +2303,8 @@ MonoBehaviour:
   _enabled: 1
   DashDistance: 5
   DashDuration: 0.25
-  MaxConsecutiveDashes: 0
-  DashCooldown: 0.3
+  DashCooldown: 0.1
+  _playerSkills: {fileID: 1310816170}
 --- !u!1 &1091073076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,6 +2618,7 @@ MonoBehaviour:
   _player: {fileID: 1310816160}
   _rb: {fileID: 1310816164}
   _enabled: 0
+  _playerSkills: {fileID: 1310816170}
   _wallSlideSpeed: 4
   _wallJumpPowerX: 5
   _wallJumpPowerY: 18
@@ -2841,6 +2846,7 @@ GameObject:
   - component: {fileID: 1310816167}
   - component: {fileID: 1310816166}
   - component: {fileID: 1310816165}
+  - component: {fileID: 1310816170}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -3017,7 +3023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
   playerRigidbody: {fileID: 1310816164}
   jumpForce: 17
-  climbSpeed: 5
+  climbSpeed: 7
   jumpHorizontalForce: 3
   jumpHandler: {fileID: 909251776}
   playerController: {fileID: 1310816160}
@@ -3048,6 +3054,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
   hungerDecreaseAmount: 34
   speedDecreaseAmount: 0.1
+--- !u!114 &1310816170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310816159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec27eb887d4ab8547b3a5ec290f77e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSkills
+  _currentDifficulty: 0
+  _playerJumps: 1
+  _playerDashes: 0
+  _playerHasWallJump: 0
 --- !u!1 &1328005987
 GameObject:
   m_ObjectHideFlags: 0
@@ -4012,6 +4034,10 @@ MonoBehaviour:
   Entry: {fileID: 0}
   Exit: {fileID: 0}
   isFlippable: 0
+  difficultyLevel: 0
+  howManyDashes: 0
+  howManyJumps: 1
+  wallJumpingRequired: 0
 --- !u!4 &2006758202
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.UIElements;
 
 public class PlatfromerChunk : Chunk
 {
@@ -16,6 +17,9 @@ public class PlatfromerChunk : Chunk
 
     private BoxCollider2D playerCameraBoundaryCollider;
 
+    private PlayerSkills _playerSkills;
+    private PlatformLevelGenerator _levelGenerator;
+
     private bool isActive = false;
 
 
@@ -28,6 +32,13 @@ public class PlatfromerChunk : Chunk
             playerCameraBoundaryCollider = boundaryObject.GetComponent<BoxCollider2D>();
         }
         SnakeScript = FindAnyObjectByType<SnakeScript>();
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            _playerSkills = playerObject.GetComponent<PlayerSkills>();
+        }
+        _levelGenerator = FindAnyObjectByType<PlatformLevelGenerator>();
     }
 
     void Update()
@@ -46,6 +57,16 @@ public class PlatfromerChunk : Chunk
     private void EndPlatfromingSection()
     {
         if (!isActive) return;
+
+        if (_playerSkills != null)
+        {
+            _playerSkills.IncreaseDifficulty(1);
+        }
+
+        if (_levelGenerator != null)
+        {
+            _levelGenerator.UpdateViableChunks();
+        }
 
         SnakeScript.EndPlatformingSection(); 
         chunkCamera.Priority = 0;

@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class JumpHandler : MonoBehaviour
 {
     [SerializeField] private PlayerController _player;
-    [SerializeField] public int _maxJumps = 1;
     [SerializeField] private bool _enabled = true;
+    [SerializeField] private PlayerSkills _playerSkills;
 
     [Header("Handlers")]
     [SerializeField] private WallJumpHandler _wallJumpHandler;
@@ -19,6 +19,11 @@ public class JumpHandler : MonoBehaviour
     {
         if (_player == null) _player = GetComponentInParent<PlayerController>();
         if (_wallJumpHandler == null) _wallJumpHandler = _player.GetComponent<WallJumpHandler>();
+        _playerSkills = _player.GetComponent<PlayerSkills>();
+        if (_playerSkills == null)
+        {
+            enabled = false;
+        }
 
         _inputActions = new PlayerInputActions();
     }
@@ -54,7 +59,7 @@ public class JumpHandler : MonoBehaviour
                 return;
             }
 
-            if (_jumpCount < _maxJumps)
+            if (_jumpCount < _playerSkills.PlayerJumps)
             {
                 _jumpCount++;
                 ForceJump();

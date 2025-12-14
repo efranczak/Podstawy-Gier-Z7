@@ -1609,6 +1609,10 @@ MonoBehaviour:
   Entry: {fileID: 8775384872580894350}
   Exit: {fileID: 2273905443495756981}
   isFlippable: 0
+  difficultyLevel: 2
+  howManyDashes: 0
+  howManyJumps: 1
+  wallJumpingRequired: 0
   sectionDuration: 20
   apple: {fileID: 3304984598393750474}
   entryTrigger: {fileID: 3177367400587831766}

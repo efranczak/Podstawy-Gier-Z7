@@ -9,18 +9,16 @@ public class DashHandler : MonoBehaviour
     [SerializeField] private bool _enabled = true;
 
     [Header("Dash Settings")]
-    [Tooltip("Jak daleko gracz dashuje w jednostkach Unity")]
+    [Tooltip("Jak daleko gracz dashuje")]
     public float DashDistance = 6f;
 
-    [Tooltip("Czas trwania dasza w sekundach")]
+    [Tooltip("Czas trwania dasha w sekundach")]
     public float DashDuration = 0.2f;
 
-    [Tooltip("Maksymalna liczba doskoków pod rząd, zanim zostanie nałożony pełny cooldown.")]
-    public int MaxConsecutiveDashes = 0;
+    [Tooltip("Czas oczekiwania po dashu, zanim można wykonać kolejny w serii kilku dashy")]
+    public float DashCooldown = 0.1f;
 
-    [Tooltip("Czas odczekania po daszu, zanim można wykonać kolejny")]
-    public float DashCooldown = 0.3f;
-
+    [SerializeField] private PlayerSkills _playerSkills;
 
     private bool _canDash = true;
     private int _currentConsecutiveDashes = 0;
@@ -31,6 +29,13 @@ public class DashHandler : MonoBehaviour
     private void Awake()
     {
         _inputActions = new PlayerInputActions();
+
+        if (_playerSkills == null) _playerSkills = _player.GetComponent<PlayerSkills>();
+
+        if (_playerSkills == null)
+        {
+            enabled = false;
+        }
     }
     private void OnEnable()
     {
@@ -55,7 +60,7 @@ public class DashHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!_enabled || !_canDash) return;
+        if (!_enabled || !_canDash || _playerSkills == null) return;
 
 
         if (_player.IsClimbing && _currentConsecutiveDashes > 0)
@@ -85,7 +90,7 @@ public class DashHandler : MonoBehaviour
 
     private void TryDash()
     {
-        if (_currentConsecutiveDashes < MaxConsecutiveDashes)
+        if (_currentConsecutiveDashes < _playerSkills.PlayerDashes)
         {
             StartCoroutine(DashCoroutine());
         }
@@ -104,10 +109,9 @@ public class DashHandler : MonoBehaviour
 
         yield return new WaitForSeconds(DashDuration);
 
-        if (_currentConsecutiveDashes < MaxConsecutiveDashes)
+        if (_currentConsecutiveDashes < _playerSkills.PlayerDashes)
         {
-            float miniCooldown = 0.1f;
-            yield return new WaitForSeconds(miniCooldown);
+            yield return new WaitForSeconds(DashCooldown);
 
             _canDash = true;
         }
