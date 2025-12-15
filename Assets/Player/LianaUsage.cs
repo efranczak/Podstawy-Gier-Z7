@@ -96,7 +96,7 @@ public class LianaUsage : MonoBehaviour
         horizontal = moveAction.ReadValue<Vector2>().x;
 
         // wspinanie jeśli na lianie i poruszamy się w pionie, ale nie wciśnięto Space
-        if (isLiana && canGrabLiana && Mathf.Abs(vertical) > 0.3f && !jumpAction.WasPressedThisFrame())
+        if (isLiana && canGrabLiana && Mathf.Abs(vertical) > 0.3f && !isClimbing)
         {
             isClimbing = true;
 
@@ -165,6 +165,7 @@ public class LianaUsage : MonoBehaviour
             {
                 isLiana = false;
                 isClimbing = false;
+                canGrabLiana = true;
                 playerController.IsClimbing = false;
                 playerRigidbody.gravityScale = originalGravityScale;
                 playerRigidbody.linearVelocity = Vector2.zero;
@@ -182,6 +183,7 @@ public class LianaUsage : MonoBehaviour
     private void ExitLiana()
     {
         jumpedFromLiana = true;
+        isLiana = false;
         isClimbing = false;
         canGrabLiana = false;
         playerController.SetVelocity(Vector2.zero);
@@ -197,15 +199,15 @@ public class LianaUsage : MonoBehaviour
         playerController.ForceJump(jumpForce);
         // koniec poprawki
 
-        StartCoroutine(PreventClimbForOneFixedUpdate());
     }
 
     private void DropFromLiana()
     {
         jumpedFromLiana = true;
+        isLiana = false;
         isClimbing = false;
         canGrabLiana = false;
-        playerController.SetVelocity(new Vector2(0f, -2f)); 
+        playerController.SetVelocity(Vector2.zero); 
 
         // natychmiast przywróć normalną fizykę
         playerRigidbody.gravityScale = originalGravityScale;
@@ -214,18 +216,8 @@ public class LianaUsage : MonoBehaviour
         jumpHandler._jumpCount = 0;
         playerController.IsClimbing = false;
 
-        StartCoroutine(PreventClimbForOneFixedUpdate());
     }
 
-
-    private IEnumerator PreventClimbForOneFixedUpdate()
-    {
-        isClimbing = false;      // natychmiast wyłącz climbing
-        vertical = 0f;           // zerujemy input wspinania
-        yield return new WaitForFixedUpdate();
-        jumpedFromLiana = false;
-        canGrabLiana = true;
-    }
 
     private void SnapToLianaCenter()
     {
@@ -235,6 +227,11 @@ public class LianaUsage : MonoBehaviour
             Vector3 playerPosition = transform.position;
             transform.position = new Vector3(lianaPosition.x, playerPosition.y, -1f);
         }
+    }
+
+    public void CanGrabLiana(bool value)
+    {
+        canGrabLiana = value;
     }
 
 }

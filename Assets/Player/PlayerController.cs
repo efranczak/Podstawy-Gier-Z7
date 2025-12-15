@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private bool _cachedQueryStartInColliders;
     private float _gravityMultiplier = 1f;
 
+    private LianaUsage _lianaUsage;
+
     private PlayerInputActions playerControls;
     private InputAction moveAction;
     private InputAction jumpAction;
@@ -69,6 +71,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         IsGrappling = false;
 
         if (_wallJumpHandler == null) _wallJumpHandler = GetComponent<WallJumpHandler>();
+
+        _lianaUsage = GetComponent<LianaUsage>();
     }
 
     private void OnEnable()
@@ -187,6 +191,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _endedJumpEarly = false;
             _gravityMultiplier = 1f;
             GroundedChanged?.Invoke(true, Mathf.Abs(_frameVelocity.y));
+            _lianaUsage.CanGrabLiana(true);
+
         }
         // Left the Ground
         else if (_grounded && !groundHit)
