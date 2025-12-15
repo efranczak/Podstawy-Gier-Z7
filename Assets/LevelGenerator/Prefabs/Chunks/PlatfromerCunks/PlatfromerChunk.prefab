@@ -1352,6 +1352,7 @@ MonoBehaviour:
   entryTrigger: {fileID: 3177367400587831766}
   chunkCamera: {fileID: 2224502199097074055}
   snakeTail: {fileID: 391420888331976243}
+  newTimeSystem: 1
 --- !u!61 &3177367400587831766
 BoxCollider2D:
   m_ObjectHideFlags: 0
