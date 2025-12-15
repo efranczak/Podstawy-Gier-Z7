@@ -63,6 +63,7 @@ public class SnakeScript : MonoBehaviour
                 increaseTimer = 0f;
             }
         }
+
     }
 
     public void StartPlatfromingSection(float stopDuration, float stopX)
@@ -73,6 +74,7 @@ public class SnakeScript : MonoBehaviour
 
         previousVelocity = velocity;
         velocity = 0f;
+
 
         transform.position = new Vector3(stopX, transform.position.y, transform.position.z);
 

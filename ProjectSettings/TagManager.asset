@@ -13,6 +13,8 @@ TagManager:
   - ChunkCamera
   - CameraBoundary
   - tail
+  - time
+  - TimeHandler
   layers:
   - Default
   - TransparentFX

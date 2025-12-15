@@ -13,6 +13,9 @@ public class PlatfromerChunk : Chunk
     public CinemachineCamera chunkCamera;
     public GameObject snakeTail;
 
+    public bool newTimeSystem;
+    private TimeHandler timeHandler;
+
     private Transform player;
 
     private BoxCollider2D playerCameraBoundaryCollider;
@@ -39,15 +42,18 @@ public class PlatfromerChunk : Chunk
             _playerSkills = playerObject.GetComponent<PlayerSkills>();
         }
         _levelGenerator = FindAnyObjectByType<PlatformLevelGenerator>();
+        timeHandler = FindAnyObjectByType<TimeHandler>();
     }
 
     void Update()
     {
         if (isActive && apple.isCollected) EndPlatfromingSection();
+        if (isActive) timeHandler.subtractTime(Time.deltaTime);
     }
 
     private void TriggerEntry()
-    { 
+    {   
+        if (newTimeSystem) sectionDuration = (int) timeHandler.getTime();
         SnakeScript.StartPlatfromingSection(sectionDuration, Entry.position.x);
         isActive = true;
         chunkCamera.Priority = 12;
