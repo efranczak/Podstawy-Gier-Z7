@@ -139,8 +139,7 @@ public class SnakeScript : MonoBehaviour
 
     private void Move()
     {
-        if (isStopping) return;
-        Vector3 move = new Vector3(transform.position.x + velocity, player.transform.position.y + 4, transform.position.z);
+        Vector3 move = new Vector3(isStopping ? transform.position.x : transform.position.x + velocity, player.transform.position.y + 4, transform.position.z);
         transform.position = move;
     }
 
