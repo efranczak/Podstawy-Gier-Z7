@@ -10,12 +10,21 @@ public class LianaUsage : MonoBehaviour
     [SerializeField] private float jumpHorizontalForce = 3f;
     [SerializeField] JumpHandler jumpHandler;
     [SerializeField] PlayerController playerController;
+    [SerializeField] private float dropHoldTime = 0.2f;
 
+    private bool canGrabLiana = true;
+
+    private float dropTimer = 0f;
 
     private float vertical;
+    private float horizontal;
     private bool isLiana;
     private bool isClimbing;
     private bool jumpedFromLiana = false;
+
+    private Transform currentLiana;
+
+    private float originalGravityScale;
 
     private RigidbodyConstraints2D originalConstraints;
 
@@ -55,14 +64,15 @@ public class LianaUsage : MonoBehaviour
 
     void Start()
     {
+
+        originalGravityScale = playerRigidbody.gravityScale;    
+
         if (playerRigidbody == null)
         {
-            Debug.LogError("LianaUsage: playerRigidbody nie jest przypisane!");
             enabled = false;
             return;
         }
 
-        // poprawka lian jest tu
         jumpHandler = GetComponentInChildren<JumpHandler>();
         if (jumpHandler == null)
         {
@@ -74,7 +84,6 @@ public class LianaUsage : MonoBehaviour
         {
             Debug.LogError("LianaUsage: Skrypt PlayerController nie znaleziono na tym samym obiekcie!");
         }
-        // koniec poprawki
 
         originalConstraints = playerRigidbody.constraints;
 
@@ -84,11 +93,14 @@ public class LianaUsage : MonoBehaviour
     void Update()
     {
         vertical = moveAction.ReadValue<Vector2>().y;
+        horizontal = moveAction.ReadValue<Vector2>().x;
 
         // wspinanie jeśli na lianie i poruszamy się w pionie, ale nie wciśnięto Space
-        if (isLiana && Mathf.Abs(vertical) > 0.1f && !jumpAction.WasPressedThisFrame())
+        if (isLiana && canGrabLiana && Mathf.Abs(vertical) > 0.3f && !jumpAction.WasPressedThisFrame())
         {
             isClimbing = true;
+
+            SnapToLianaCenter();
 
             // poprawka lian jest tu
             playerController.IsClimbing = true;
@@ -99,9 +111,24 @@ public class LianaUsage : MonoBehaviour
         }
 
         // Zejście/skok z liany po wciśnięciu Space
-        if (isLiana && jumpAction.WasPressedThisFrame() && isClimbing)
+        if (isClimbing && jumpAction.WasPressedThisFrame() && isClimbing)
         {
             ExitLiana();
+        }
+
+        if (isClimbing && canGrabLiana && Mathf.Abs(horizontal) > 0.3f)
+        {
+            dropTimer += Time.deltaTime;
+
+            if (dropTimer >= dropHoldTime)
+            {
+                DropFromLiana();
+                dropTimer = 0f;
+            }
+        }
+        else
+        {
+            dropTimer = 0f;
         }
     }
 
@@ -115,7 +142,7 @@ public class LianaUsage : MonoBehaviour
         }
         else
         {
-            playerRigidbody.gravityScale = 1f;
+            playerRigidbody.gravityScale = originalGravityScale;
         }
     }
 
@@ -124,6 +151,8 @@ public class LianaUsage : MonoBehaviour
         if (collision.gameObject.CompareTag("Liana"))
         {
             isLiana = true;
+            currentLiana = collision.transform;
+
             Debug.Log("Wejście na lianę - isLiana = true");
         }
     }
@@ -137,8 +166,10 @@ public class LianaUsage : MonoBehaviour
                 isLiana = false;
                 isClimbing = false;
                 playerController.IsClimbing = false;
-                playerRigidbody.gravityScale = 1f;
+                playerRigidbody.gravityScale = originalGravityScale;
                 playerRigidbody.linearVelocity = Vector2.zero;
+
+                currentLiana = null;
                 Debug.Log("Opuszczenie liany - przywrócono physics");
             }
 
@@ -152,15 +183,12 @@ public class LianaUsage : MonoBehaviour
     {
         jumpedFromLiana = true;
         isClimbing = false;
-        isLiana = false;
+        canGrabLiana = false;
         playerController.SetVelocity(Vector2.zero);
 
         // natychmiast przywróć normalną fizykę
-        playerRigidbody.gravityScale = 1f;
+        playerRigidbody.gravityScale = originalGravityScale;
         playerRigidbody.linearVelocity = Vector2.zero;
-
-        float h = moveAction.ReadValue<Vector2>().x;
-        if (Mathf.Abs(h) < 0.1f) h = 1f;
 
         // poprawka lian jest tu
         jumpHandler._jumpCount = 1; // reset liczby skoków podczas wspinaczki, wejscie na liane traktuje jako dotkniecie ziemii (resetuje skoki)
@@ -172,6 +200,23 @@ public class LianaUsage : MonoBehaviour
         StartCoroutine(PreventClimbForOneFixedUpdate());
     }
 
+    private void DropFromLiana()
+    {
+        jumpedFromLiana = true;
+        isClimbing = false;
+        canGrabLiana = false;
+        playerController.SetVelocity(new Vector2(0f, -2f)); 
+
+        // natychmiast przywróć normalną fizykę
+        playerRigidbody.gravityScale = originalGravityScale;
+        playerRigidbody.linearVelocity = Vector2.zero;
+
+        jumpHandler._jumpCount = 0;
+        playerController.IsClimbing = false;
+
+        StartCoroutine(PreventClimbForOneFixedUpdate());
+    }
+
 
     private IEnumerator PreventClimbForOneFixedUpdate()
     {
@@ -179,6 +224,17 @@ public class LianaUsage : MonoBehaviour
         vertical = 0f;           // zerujemy input wspinania
         yield return new WaitForFixedUpdate();
         jumpedFromLiana = false;
+        canGrabLiana = true;
+    }
+
+    private void SnapToLianaCenter()
+    {
+        if (currentLiana != null)
+        {
+            Vector3 lianaPosition = currentLiana.position;
+            Vector3 playerPosition = transform.position;
+            transform.position = new Vector3(lianaPosition.x, playerPosition.y, -1f);
+        }
     }
 
 }

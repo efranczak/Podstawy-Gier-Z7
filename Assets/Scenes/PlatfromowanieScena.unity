@@ -3222,6 +3222,7 @@ MonoBehaviour:
   jumpHorizontalForce: 3
   jumpHandler: {fileID: 909251776}
   playerController: {fileID: 1310816160}
+  dropHoldTime: 0.1
 --- !u!114 &1310816168
 MonoBehaviour:
   m_ObjectHideFlags: 0
