@@ -4,7 +4,7 @@ public class SnakeLogic : MonoBehaviour
 {
 
     [Header("Snake Hunger")]
-    public int maxHunger = 100;
+    public int maxHunger = 4;
     public int currentHunger;
 
     public HealthBar hungerBar;
@@ -34,13 +34,12 @@ public class SnakeLogic : MonoBehaviour
         if (currentHunger <= 0)
         {
             currentHunger = 0;
-            hungerBar.setHealth(currentHunger);
-            appleUI.setApples(currentHunger);
+            appleUI.ResetApples();
             SnakeDefeated();
         }
         else
         {
-            hungerBar.setHealth(currentHunger);
+            appleUI.setApples(maxHunger - currentHunger);
         }   
     }
 

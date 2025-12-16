@@ -10,17 +10,19 @@ public class ApplesUI : MonoBehaviour
 
     private List<Image> apples = new List<Image>();
     
+    public void Awake()
+    {
+        apples.Add(applePrefab);
+    }
 
     public void CreateApples(int amount)
     {
-        foreach (Transform child in container.transform)
-            Destroy(child.gameObject);
+        if (apples.Count > 1)
+            apples.RemoveRange(1, apples.Count);
 
-        apples.Clear();
-
-        for (int i = 0; i < amount; i++)
+        for (int i = 1; i < amount; i++)
         {
-            Image apple = Instantiate(applePrefab, transform);
+            Image apple = Instantiate(applePrefab, container.transform);
             apple.color = Color.white;
             apples.Add(apple);
         }
