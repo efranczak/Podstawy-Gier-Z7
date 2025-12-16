@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections;
 
 public class UpgradeButton : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class UpgradeButton : MonoBehaviour
     private InputAction _selectAction;
 
     private UpgradePanelUI _upgradePanel;
+    private bool wasClickedOnce = false;
+    private bool wasSelected = false;
 
     private void Awake()
     {
@@ -61,6 +64,9 @@ public class UpgradeButton : MonoBehaviour
 
         this.isChosen = isChosen;
 
+        wasClickedOnce = false;
+        wasSelected = false;
+
     }
 
     private void Update()
@@ -78,9 +84,33 @@ public class UpgradeButton : MonoBehaviour
     private void OnSelected()
     {   
         if (!isChosen) return;
-        _upgradePanel.RegisterUpgradeChoice(_upgradeData.type);
-        _upgradeData.ApplyUpgrade(_player/*, _snake*/);
-        _upgradePanel.UpgradeSelected();
+
+        //second click
+        if (wasClickedOnce)
+        {
+            _upgradePanel.RegisterUpgradeChoice(_upgradeData.type);
+            _upgradeData.ApplyUpgrade(_player/*, _snake*/);
+            _upgradePanel.UpgradeSelected();
+            wasSelected = true;
+            return;
+        }
+
+
+        // first click
+        wasClickedOnce = true;
+        StartCoroutine(WaitForConfirmation());
+    }
+
+    private IEnumerator WaitForConfirmation()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        if (!wasSelected && isChosen)
+        {
+            _upgradePanel.RegisterUpgradeChoice(_upgradeData.type);
+            _upgradeData.ApplyUpgrade(_player/*, _snake*/);
+            _upgradePanel.UpgradeSelected();
+            wasSelected = true;
+        }
     }
 }
 
