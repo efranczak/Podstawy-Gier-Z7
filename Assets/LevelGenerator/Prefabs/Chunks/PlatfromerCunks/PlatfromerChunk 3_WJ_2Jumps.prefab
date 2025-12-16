@@ -195,7 +195,7 @@ Transform:
   m_GameObject: {fileID: 894069656302680792}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.25, y: 7.45, z: 0}
+  m_LocalPosition: {x: 5.65, y: 7.45, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1612,6 +1612,7 @@ MonoBehaviour:
   howManyDashes: 0
   howManyJumps: 2
   wallJumpingRequired: 1
+  howManySameWallMaxJumps: 2
   sectionDuration: 20
   apple: {fileID: 3304984598393750474}
   entryTrigger: {fileID: 3177367400587831766}
@@ -3794,7 +3795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.11
+      value: 4.51
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4896,7 +4897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.01
+      value: 4.96
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalPosition.z

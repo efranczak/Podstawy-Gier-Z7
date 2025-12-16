@@ -5,7 +5,7 @@ public class WallJumpHandler : MonoBehaviour
 {
     [SerializeField] private PlayerController _player;
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private bool _enabled = false;
+    [SerializeField] private bool _enabled = true;
 
     [SerializeField] private PlayerSkills _playerSkills;
 
@@ -21,6 +21,10 @@ public class WallJumpHandler : MonoBehaviour
     [Header("Input Forgiveness")]
     [SerializeField] private float _wallJumpCoyoteTime = 0.15f;
     [SerializeField] private float _wallJumpBufferTime = 0.15f;
+
+    [Header("Wall Jump Limits")]
+    private int _currentSameWallJumpCount = 0;
+    private Collider2D _lastWallJumpedFrom;
 
     private bool _isWallSliding;
     public bool IsWallSliding => _isWallSliding;
@@ -59,12 +63,23 @@ public class WallJumpHandler : MonoBehaviour
     {
         jumpAction = inputActions.Player.Jump;
         jumpAction.Enable();
+        _player.GroundedChanged += OnGroundedChanged;
 
     }
 
     private void OnDisable()
     {
         jumpAction.Disable();
+        _player.GroundedChanged -= OnGroundedChanged;
+    }
+
+    private void OnGroundedChanged(bool grounded, float velocity)
+    {
+        if (grounded)
+        {
+            _currentSameWallJumpCount = 0;
+            _lastWallJumpedFrom = null;
+        }
     }
 
     private void OnDestroy()
@@ -75,13 +90,13 @@ public class WallJumpHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_playerSkills.PlayerHasWallJump) return;
+        if (_playerSkills.SameWallJumpMaxAmount == 0) return;
         HandleWallSlideLogic();
     }
 
     private void Update()
     {
-        if (!_playerSkills.PlayerHasWallJump) return;
+        if (_playerSkills.SameWallJumpMaxAmount == 0) return;
 
         if (jumpAction.WasPressedThisFrame())
         {
@@ -101,14 +116,20 @@ public class WallJumpHandler : MonoBehaviour
 
     private void HandleWallSlideLogic()
     {
-        bool isFalling = _rb.linearVelocity.y <= 0.01f;
+        if (_playerSkills.SameWallJumpMaxAmount == 0) return;
 
+        bool isFalling = _rb.linearVelocity.y <= 0.01f;
         bool inputTowardsWall = Mathf.Sign(_player.FrameInput.x) == _player.WallDirection && Mathf.Abs(_player.FrameInput.x) > 0.01f;
 
         _isWallSliding = _player.IsTouchingWall && isFalling && inputTowardsWall;
 
         if (_isWallSliding)
         {
+            if (_player.LastWallCollider != _lastWallJumpedFrom)
+            {
+                _currentSameWallJumpCount = 0;
+            }
+
             _wallJumpCoyoteCounter = _wallJumpCoyoteTime;
             _lastWallDirection = _player.WallDirection;
 
@@ -123,7 +144,21 @@ public class WallJumpHandler : MonoBehaviour
 
     private void DoWallJump()
     {
+        Collider2D currentWall = _player.LastWallCollider;
+
+        if (currentWall != null && currentWall == _lastWallJumpedFrom)
+        {
+            if (_currentSameWallJumpCount >= _playerSkills.SameWallJumpMaxAmount) return;
+            _currentSameWallJumpCount++;
+        }
+        else
+        {
+            _currentSameWallJumpCount = 1;
+            _lastWallJumpedFrom = currentWall;
+        }
+
         float direction = _isWallSliding ? _player.WallDirection : _lastWallDirection;
+
         float jumpDirectionX = -direction;
 
         if (_jumpHandler != null)

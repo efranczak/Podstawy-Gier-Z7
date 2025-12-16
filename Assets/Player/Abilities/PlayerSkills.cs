@@ -14,13 +14,13 @@ public class PlayerSkills : MonoBehaviour
     [Tooltip("Aktualna liczba dostepnych dashy.")]
     [SerializeField] private int _playerDashes = 0;
 
-    [Tooltip("Czy gracz ma Wall Jump.")]
-    [SerializeField] private bool _playerHasWallJump = false;
+    [Tooltip("Aktualna ilosc wall jumpow na tej samej scianie.")]
+    [SerializeField] private int _sameWallJumpMaxAmount = 0;
 
     public int CurrentDifficulty => _currentDifficulty;
     public int PlayerJumps => _playerJumps;
     public int PlayerDashes => _playerDashes;
-    public bool PlayerHasWallJump => _playerHasWallJump;
+    public int SameWallJumpMaxAmount => _sameWallJumpMaxAmount;
 
     public void IncreaseDifficulty(int amount)
     {
@@ -42,9 +42,9 @@ public class PlayerSkills : MonoBehaviour
         Debug.Log($"Max Dashes increased to {_playerDashes}");
     }
 
-    public void SetWallJumpStatus(bool enabled = true)
+    public void SetSameWallJumpMaxAmount(int amount)
     {
-        _playerHasWallJump = enabled;
-        Debug.Log($"Wall Jump set to {_playerHasWallJump}");
+        _sameWallJumpMaxAmount = amount;
+        Debug.Log($"Same Wall Jump Max Amount set to {_sameWallJumpMaxAmount}");
     }
 }

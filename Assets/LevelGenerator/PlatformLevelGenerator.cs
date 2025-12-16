@@ -206,7 +206,13 @@ public class PlatformLevelGenerator : MonoBehaviour
         }
 
         // Sprawdzenie wall jump
-        if (chunk.wallJumpingRequired && !_playerSkills.PlayerHasWallJump)
+        if (chunk.wallJumpingRequired && _playerSkills.SameWallJumpMaxAmount == 0)
+        {
+            return false;
+        }
+
+        // Sprawdzenie liczby odbic od sciany w wall jump
+        if (chunk.howManySameWallMaxJumps > _playerSkills.SameWallJumpMaxAmount)
         {
             return false;
         }

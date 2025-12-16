@@ -1,8 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 public class UpgradePanelUI : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class UpgradePanelUI : MonoBehaviour
     [SerializeField] private PlayerController _player;
 
     public SnakeLogic _snakeLogic;
+    private bool _inputLocked = false;
 
     private int selectedIndex = 0;
 
@@ -56,10 +58,7 @@ public class UpgradePanelUI : MonoBehaviour
         Hide();
     }
 
-    public void OnBecameActive()
-    {
-        selectedIndex = 0;
-    }
+
 
     public void UpgradeSelected()
     {
@@ -72,6 +71,7 @@ public class UpgradePanelUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         Time.timeScale = 0f;
+        selectedIndex = 0;
 
         IEnumerable<UpgradeData> availableUpgrades;
 
@@ -88,6 +88,10 @@ public class UpgradePanelUI : MonoBehaviour
         {
             _upgradeButtons[i].Setup(chosen[i], _player, i == selectedIndex);
         }
+
+        StartCoroutine(LockInputTemporarily());
+
+
     }
     public void Hide()
     {
@@ -96,7 +100,9 @@ public class UpgradePanelUI : MonoBehaviour
     }
 
     public void OnNavigate(InputAction.CallbackContext context)
-    {
+    {   
+        if (_inputLocked) return;
+
         Vector2 navigation = context.ReadValue<Vector2>();
         if (navigation.x > 0)
         {
@@ -111,4 +117,14 @@ public class UpgradePanelUI : MonoBehaviour
             _upgradeButtons[i].setIsChosen(i == selectedIndex);
         }
     }
+
+    private IEnumerator LockInputTemporarily()
+    {
+        _inputLocked = true;
+        yield return new WaitForSecondsRealtime(0.5f);
+        _inputLocked = false;
+    }
+
+
+
 }

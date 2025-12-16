@@ -15,4 +15,6 @@ MonoBehaviour:
   upgradeName: Dash
   description: Press shift to dash!
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  upgradeType: 3
+  type: 3
+  category: 0
+  iconUI: {fileID: 21300000, guid: 615a07b57809aa648ada69399212369d, type: 3}

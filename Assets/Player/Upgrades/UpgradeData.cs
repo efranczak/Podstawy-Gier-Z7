@@ -9,6 +9,7 @@ public class UpgradeData : ScriptableObject
 
     public UpgradeType type;
     public UpgradeCategory category;
+    public Sprite iconUI;
 
     // Example apply method — call this from UpgradeButton or manager
     public void ApplyUpgrade(PlayerController player/*, SnakeScript snake*/)
@@ -38,7 +39,10 @@ public class UpgradeData : ScriptableObject
                     }
                     break;
                 case UpgradeType.WallJump:
-                    playerSkills.SetWallJumpStatus(true);
+                    {
+                        playerSkills.SetSameWallJumpMaxAmount(playerSkills.SameWallJumpMaxAmount + 1);
+                        generator.UpdateViableChunks();
+                    }
                     break;
             }
         }
