@@ -8,6 +8,12 @@ public class ConsumableHandler : MonoBehaviour
     [SerializeField] private PlayerController _player;
     [SerializeField] private ScriptableStats _baseStats;
 
+    [Header("Sprint Settings")]
+    [Tooltip("Czas po którym prêdkoœæ gracza powinna powróciæ do bazowej")]
+    [SerializeField] private float _sprintDuration = 9.0f;
+    [Tooltip("Ilukrotnie zwiêkszyæ bazow¹ prêdkoœæ")]
+    [SerializeField] private float _sprintSpeedBoostMultiplier = 1.5f;
+
     private UpgradeType? _currentConsumable = null;
     private Coroutine _activeEffectCoroutine;
 
@@ -66,7 +72,7 @@ public class ConsumableHandler : MonoBehaviour
         switch (_currentConsumable)
         {
             case UpgradeType.Sprint:
-                _activeEffectCoroutine = StartCoroutine(SprintRoutine(8f, 1.5f));
+                _activeEffectCoroutine = StartCoroutine(SprintRoutine(_sprintDuration, _sprintSpeedBoostMultiplier));
                 break;
         }
 
