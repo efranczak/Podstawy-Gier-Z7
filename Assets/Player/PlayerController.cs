@@ -21,6 +21,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private InputAction jumpAction;
     private InputAction dashAction;
 
+    private Vector3 _lastCheckpoint;
+    private SnakeScript _snake;
+    private SnakeLogic _snakeLogic;
+
+
     public bool autoRun;
 
 
@@ -73,6 +78,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (_wallJumpHandler == null) _wallJumpHandler = GetComponent<WallJumpHandler>();
 
         _lianaUsage = GetComponent<LianaUsage>();
+        _snake = FindAnyObjectByType<SnakeScript>();
+        _snakeLogic = FindAnyObjectByType<SnakeLogic>();
     }
 
     private void OnEnable()
@@ -448,6 +455,21 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         _rb.linearVelocity = finalVelocity;
     }
+
+    #region Respawn Logic
+
+    public void SetCheckpoint(Vector3 checkpointPosition)
+    {
+        _lastCheckpoint = checkpointPosition;
+    }
+
+    public void RespawnAtLastCheckpoint()
+    {
+        if (_snake.GetPosition().x >= _lastCheckpoint.x) _snakeLogic.PlayerDefeated();
+        transform.position = _lastCheckpoint;
+    }
+
+    #endregion
 
 #if UNITY_EDITOR
     private void OnValidate()
