@@ -1950,6 +1950,7 @@ MonoBehaviour:
   - {fileID: 482126655}
   _player: {fileID: 1310816160}
   _snakeLogic: {fileID: 1224409303}
+  _maxSkillSlots: 2
 --- !u!114 &627395670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3160,7 +3161,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   maxHunger: 4
   currentHunger: 0
-  hungerBar: {fileID: 1552539397}
   appleUI: {fileID: 198487277}
   gameOverScript: {fileID: 410092264}
   snakeScript: {fileID: 868943650}
@@ -4226,7 +4226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a444c4bacc43f4f81950fc9ac4c8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  slider: {fileID: 1552539396}
 --- !u!1 &1571602470
 GameObject:
   m_ObjectHideFlags: 0

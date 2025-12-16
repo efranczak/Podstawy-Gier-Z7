@@ -15,4 +15,5 @@ MonoBehaviour:
   upgradeName: WallJump
   description: Allows sliding on walls. Press space while sliding to wall jump.
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  upgradeType: 4
+  type: 4
+  category: 0
