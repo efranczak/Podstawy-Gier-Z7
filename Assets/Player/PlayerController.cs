@@ -44,7 +44,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private float _wallCheckDistance = 0.6f;
     [SerializeField] private LayerMask _wallLayer;
 
-    
+    public Collider2D LastWallCollider { get; private set; }
+
+
 
     #region Interface
 
@@ -224,6 +226,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         );
 
         IsTouchingWall = wallHit.collider != null && !_grounded;
+
+        LastWallCollider = wallHit.collider;
 
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;

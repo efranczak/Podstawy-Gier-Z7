@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb94ed5701a1694e92ca9642bd40ca2, type: 3}
   m_Name: WallJump
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
-  upgradeName: WallJump
+  upgradeName: Wall Jump
   description: Allows sliding on walls. Press space while sliding to wall jump.
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   type: 4

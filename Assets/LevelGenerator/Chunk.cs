@@ -22,4 +22,7 @@ public class Chunk : MonoBehaviour
 
     [Tooltip("Czy przejscie wymaga uzycia Wall Jump.")]
     public bool wallJumpingRequired = false;
+
+    [Tooltip("Minimalna (lub zalecana ig) liczba odbic od jednej sciany w walljump do przejscia chunka. Jezeli wynosi 0 to znaczy, ze poziom nie wymaga wall jumpa.")]
+    public int howManySameWallMaxJumps = 0;
 }
