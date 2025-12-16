@@ -78,6 +78,7 @@ public class UpgradeButton : MonoBehaviour
     private void OnSelected()
     {   
         if (!isChosen) return;
+        _upgradePanel.RegisterUpgradeChoice(_upgradeData.type);
         _upgradeData.ApplyUpgrade(_player/*, _snake*/);
         _upgradePanel.UpgradeSelected();
     }

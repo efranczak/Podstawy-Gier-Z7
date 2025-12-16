@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class UpgradePanelUI : MonoBehaviour
 {
@@ -13,11 +14,21 @@ public class UpgradePanelUI : MonoBehaviour
 
     private int selectedIndex = 0;
 
+    [SerializeField] private int _maxSkillSlots = 2;
+    private List<UpgradeType> _unlockedTypes = new List<UpgradeType>();
 
     #region Input System
 
     private PlayerInputActions _playerInputActions;
     private InputAction _navigateAction;
+
+    public void RegisterUpgradeChoice(UpgradeType type)
+    {
+        if (!_unlockedTypes.Contains(type))
+        {
+            _unlockedTypes.Add(type);
+        }
+    }
 
     private void Awake()
     {
@@ -62,7 +73,16 @@ public class UpgradePanelUI : MonoBehaviour
         gameObject.SetActive(true);
         Time.timeScale = 0f;
 
-        var chosen = _allUpgrades.OrderBy(x => Random.value).Take(_upgradeButtons.Length).ToArray();
+        IEnumerable<UpgradeData> availableUpgrades;
+
+        if (_unlockedTypes.Count >= _maxSkillSlots) {
+            availableUpgrades = _allUpgrades.Where(x => _unlockedTypes.Contains(x.type));
+        }
+        else {
+            availableUpgrades = _allUpgrades;
+        }
+
+        var chosen = availableUpgrades.OrderBy(x => Random.value).Take(_upgradeButtons.Length).ToArray();
 
         for (int i = 0; i < _upgradeButtons.Length; i++)
         {
