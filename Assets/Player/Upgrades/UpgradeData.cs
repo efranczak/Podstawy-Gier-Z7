@@ -7,7 +7,8 @@ public class UpgradeData : ScriptableObject
     [TextArea] public string description;
     public Sprite icon;
 
-    public UpgradeType upgradeType;
+    public UpgradeType type;
+    public UpgradeCategory category;
 
     // Example apply method — call this from UpgradeButton or manager
     public void ApplyUpgrade(PlayerController player/*, SnakeScript snake*/)
@@ -16,30 +17,37 @@ public class UpgradeData : ScriptableObject
 
         PlatformLevelGenerator generator = FindAnyObjectByType<PlatformLevelGenerator>();
 
-        switch (upgradeType)
+        if (category == UpgradeCategory.Permanent)
         {
-            case UpgradeType.DoubleJump:
-                var doubleJumpHandler = player.GetComponentInChildren<JumpHandler>();
-                if (doubleJumpHandler != null)
-                {
-                    playerSkills.SetMaxJumps(playerSkills.PlayerJumps + 1);
-                    generator.UpdateViableChunks();
-                }
-                break;
-            case UpgradeType.Dash:
-                var dashHandler = player.GetComponentInChildren<DashHandler>();
-                if (dashHandler != null)
-                {
-                    playerSkills.SetMaxDashes(playerSkills.PlayerDashes + 1);
-                    generator.UpdateViableChunks();
-                }
-                break;
-            case UpgradeType.Health:
-                //snake.DecreaseVelocity(-1000.0f);
-                break;
-            case UpgradeType.WallJump:
+            switch (type)
+            {
+                case UpgradeType.DoubleJump:
+                    var doubleJumpHandler = player.GetComponentInChildren<JumpHandler>();
+                    if (doubleJumpHandler != null)
+                    {
+                        playerSkills.SetMaxJumps(playerSkills.PlayerJumps + 1);
+                        generator.UpdateViableChunks();
+                    }
+                    break;
+                case UpgradeType.Dash:
+                    var dashHandler = player.GetComponentInChildren<DashHandler>();
+                    if (dashHandler != null)
+                    {
+                        playerSkills.SetMaxDashes(playerSkills.PlayerDashes + 1);
+                        generator.UpdateViableChunks();
+                    }
+                    break;
+                case UpgradeType.WallJump:
                     playerSkills.SetWallJumpStatus(true);
-                break;
+                    break;
+            }
+        }
+        else if (category == UpgradeCategory.Consumable)
+        {
+            switch (type)
+            {
+                // tera nic
+            }
         }
     }
 
@@ -47,3 +55,4 @@ public class UpgradeData : ScriptableObject
 
 public enum UpgradeType { Health, Sprint, DoubleJump, Dash, WallJump }
 
+public enum UpgradeCategory { Permanent, Consumable }
