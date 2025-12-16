@@ -96,12 +96,14 @@ public class UpgradeButton : MonoBehaviour
             _upgradeData.ApplyUpgrade(_player/*, _snake*/);
             _upgradePanel.UpgradeSelected();
             wasSelected = true;
+            outline.effectColor = Color.red;
             return;
         }
 
 
         // first click
         wasClickedOnce = true;
+        outline.effectColor = Color.green;
         StartCoroutine(WaitForConfirmation());
     }
 
@@ -116,6 +118,7 @@ public class UpgradeButton : MonoBehaviour
             _upgradePanel.UpgradeSelected();
             wasSelected = true;
         }
+        outline.effectColor = Color.red;
     }
 }
 
