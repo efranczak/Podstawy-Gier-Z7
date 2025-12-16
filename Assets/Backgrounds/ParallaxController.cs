@@ -56,6 +56,7 @@ public class ParallaxController : MonoBehaviour
         cam = Camera.main.transform;
         distance = cam.position.x - camStartPos.x;
         transform.position = new Vector3(cam.position.x, cam.position.y, 0);
+        transform.localScale = new Vector3(-cam.position.z / 10, -cam.position.z / 10, 1);
 
 
 
