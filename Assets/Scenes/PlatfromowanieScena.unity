@@ -4588,6 +4588,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableHandler
   _player: {fileID: 1310816160}
   _baseStats: {fileID: 11400000, guid: 0283c47f022e9814083880c749e4aab2, type: 2}
+  _sprintDuration: 8
+  _sprintSpeedBoostMultiplier: 1.5
 --- !u!1 &1879155489
 GameObject:
   m_ObjectHideFlags: 0
