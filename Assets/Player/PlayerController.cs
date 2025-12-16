@@ -80,6 +80,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _lianaUsage = GetComponent<LianaUsage>();
         _snake = FindAnyObjectByType<SnakeScript>();
         _snakeLogic = FindAnyObjectByType<SnakeLogic>();
+
+        _lastCheckpoint = transform.position;
+
     }
 
     private void OnEnable()
