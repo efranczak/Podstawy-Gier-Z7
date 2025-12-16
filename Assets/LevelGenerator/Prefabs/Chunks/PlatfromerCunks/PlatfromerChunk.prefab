@@ -1186,7 +1186,7 @@ MonoBehaviour:
   apple: {fileID: 3304984598393750474}
   entryTrigger: {fileID: 3177367400587831766}
   chunkCamera: {fileID: 2224502199097074055}
-  snakeTail: {fileID: 0}
+  snakeTail: {fileID: 9172499405290341797}
   newTimeSystem: 1
 --- !u!61 &3177367400587831766
 BoxCollider2D:
@@ -3092,7 +3092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 105334873011621878, guid: 957d951dfc3731f43b6874e93502ffd4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.265314
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: 105334873011621878, guid: 957d951dfc3731f43b6874e93502ffd4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3138,6 +3138,11 @@ PrefabInstance:
 --- !u!4 &3097269609906129200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 105334873011621878, guid: 957d951dfc3731f43b6874e93502ffd4, type: 3}
+  m_PrefabInstance: {fileID: 3138322632693302982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9172499405290341797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6108794600935179107, guid: 957d951dfc3731f43b6874e93502ffd4, type: 3}
   m_PrefabInstance: {fileID: 3138322632693302982}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3223304665709235973
