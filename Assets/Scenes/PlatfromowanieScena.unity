@@ -1944,7 +1944,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b3983cc9b0037b4cad831fbddee0799, type: 2}
   - {fileID: 11400000, guid: 6379a200a0ef74a4ead8ee62c66d95fa, type: 2}
   - {fileID: 11400000, guid: 4fab101bb90795544b5f8f297ac41e3e, type: 2}
-  - {fileID: 11400000, guid: e0a43689c84e23c4dab83d197129c214, type: 2}
   _upgradeButtons:
   - {fileID: 16931034}
   - {fileID: 482126655}
@@ -2894,7 +2893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WallJumpHandler
   _player: {fileID: 1310816160}
   _rb: {fileID: 1310816164}
-  _enabled: 0
+  _enabled: 1
   _playerSkills: {fileID: 1310816170}
   _wallSlideSpeed: 4
   _wallJumpPowerX: 5
@@ -3422,7 +3421,7 @@ MonoBehaviour:
   _currentDifficulty: 1
   _playerJumps: 1
   _playerDashes: 0
-  _playerHasWallJump: 0
+  _sameWallJumpMaxAmount: 0
 --- !u!1 &1328005987
 GameObject:
   m_ObjectHideFlags: 0
@@ -4585,6 +4584,7 @@ MonoBehaviour:
   howManyDashes: 0
   howManyJumps: 1
   wallJumpingRequired: 0
+  howManySameWallMaxJumps: 0
 --- !u!4 &2006758202
 Transform:
   m_ObjectHideFlags: 0

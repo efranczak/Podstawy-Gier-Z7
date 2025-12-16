@@ -38,7 +38,10 @@ public class UpgradeData : ScriptableObject
                     }
                     break;
                 case UpgradeType.WallJump:
-                    playerSkills.SetWallJumpStatus(true);
+                    {
+                        playerSkills.SetSameWallJumpMaxAmount(playerSkills.SameWallJumpMaxAmount + 1);
+                        generator.UpdateViableChunks();
+                    }
                     break;
             }
         }
