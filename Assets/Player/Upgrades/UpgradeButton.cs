@@ -23,12 +23,9 @@ public class UpgradeButton : MonoBehaviour
     private bool wasClickedOnce = false;
     private bool wasSelected = false;
 
-    private ActiveUpgradesContainer _activeUpgradesContainer;
-
     private void Awake()
     {
         _upgradePanel = GetComponentInParent<UpgradePanelUI>();
-        _activeUpgradesContainer = FindAnyObjectByType<ActiveUpgradesContainer>();
 
         _playerInputActions = new PlayerInputActions();
     }
@@ -91,8 +88,7 @@ public class UpgradeButton : MonoBehaviour
         //second click
         if (wasClickedOnce)
         {
-            _activeUpgradesContainer.UpdateActiveUpgrades(_upgradeData);
-            _upgradePanel.RegisterUpgradeChoice(_upgradeData.type);
+            _upgradePanel.RegisterUpgradeChoice(_upgradeData);
             _upgradeData.ApplyUpgrade(_player/*, _snake*/);
             _upgradePanel.UpgradeSelected();
             wasSelected = true;
@@ -112,8 +108,7 @@ public class UpgradeButton : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         if (!wasSelected && isChosen)
         {   
-            _activeUpgradesContainer.UpdateActiveUpgrades(_upgradeData);
-            _upgradePanel.RegisterUpgradeChoice(_upgradeData.type);
+            _upgradePanel.RegisterUpgradeChoice(_upgradeData);
             _upgradeData.ApplyUpgrade(_player/*, _snake*/);
             _upgradePanel.UpgradeSelected();
             wasSelected = true;
