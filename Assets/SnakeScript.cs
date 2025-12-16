@@ -175,5 +175,10 @@ public class SnakeScript : MonoBehaviour
             snakeLogic.PlayerDefeated();
         }
     }
+
+    public Vector2 GetPosition()
+    {
+        return transform.position;
+    }
 }
 

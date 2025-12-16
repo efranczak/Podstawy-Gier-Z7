@@ -7,7 +7,6 @@ public class SnakeLogic : MonoBehaviour
     public int maxHunger = 4;
     public int currentHunger;
 
-    public HealthBar hungerBar;
     public ApplesUI appleUI;
     public GameOverScript gameOverScript;
     public SnakeScript snakeScript;
@@ -16,7 +15,6 @@ public class SnakeLogic : MonoBehaviour
     void Start()
     {
         currentHunger = maxHunger;
-        hungerBar.SetMaxHealth(maxHunger);
         appleUI.CreateApples(maxHunger);
     }
 
