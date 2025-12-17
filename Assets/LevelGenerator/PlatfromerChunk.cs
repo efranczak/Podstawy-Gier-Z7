@@ -2,16 +2,21 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using Unity.Cinemachine;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class PlatfromerChunk : Chunk
 {
 
     private SnakeScript SnakeScript;
     public int sectionDuration;
-    public PlatfromerApple apple;
+    public PlatfromerApple[] apples;
     public BoxCollider2D entryTrigger;
     public CinemachineCamera chunkCamera;
     public GameObject snakeTail;
+
+    public float tailMoveUpAmount = 0.3f;
+    public float tailMoveDuration = 0.25f;
+    private Coroutine tailMoveCoroutine;
 
     public bool newTimeSystem;
     private TimeHandler timeHandler;
@@ -24,6 +29,8 @@ public class PlatfromerChunk : Chunk
     private PlatformLevelGenerator _levelGenerator;
 
     private bool isActive = false;
+
+    private int collectedApples = 0;
 
 
     void Start()
@@ -47,8 +54,26 @@ public class PlatfromerChunk : Chunk
 
     void Update()
     {
-        if (isActive && apple.isCollected) EndPlatfromingSection();
+        if (isActive && collectedApples != GetCollectedApples())
+        {
+            collectedApples = GetCollectedApples();
+            UpdateSnakeTail();
+            if (collectedApples >= apples.Length)
+            {
+                EndPlatfromingSection();
+            }
+        }
         if (isActive) timeHandler.subtractTime(Time.deltaTime);
+    }
+
+    private int GetCollectedApples()
+    {
+        int collected = 0;
+        foreach (PlatfromerApple apple in apples)
+        {
+            if (apple.isCollected) collected++;
+        }
+        return collected;
     }
 
     private void TriggerEntry()
@@ -76,7 +101,6 @@ public class PlatfromerChunk : Chunk
 
         SnakeScript.EndPlatformingSection(); 
         chunkCamera.Priority = 0;
-        Destroy(snakeTail);
         isActive = false;
         playerCameraBoundaryCollider.enabled = true;
     }
@@ -92,4 +116,39 @@ public class PlatfromerChunk : Chunk
         }
 
     }
+
+    private void UpdateSnakeTail()
+    {
+        chunkCamera.GetComponent<CameraShake>().ShakeCamera(3f, 1f);
+        if (collectedApples >= apples.Length) Destroy(snakeTail);
+        else MoveTailUpSmooth();
+    }
+
+    private void MoveTailUpSmooth()
+    {
+        if (tailMoveCoroutine != null)
+            StopCoroutine(tailMoveCoroutine);
+
+        tailMoveCoroutine = StartCoroutine(MoveTailUpCoroutine());
+    }
+
+    private IEnumerator MoveTailUpCoroutine()
+    {
+        Vector3 startPos = snakeTail.transform.localPosition;
+        Vector3 targetPos = startPos + Vector3.up * tailMoveUpAmount;
+
+        float elapsed = 0f;
+
+        while (elapsed < tailMoveDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / tailMoveDuration;
+
+            snakeTail.transform.localPosition = Vector3.Lerp(startPos, targetPos, t);
+            yield return null;
+        }
+
+        snakeTail.transform.localPosition = targetPos;
+    }
+
 }
