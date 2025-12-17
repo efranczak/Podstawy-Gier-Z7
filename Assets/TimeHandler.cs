@@ -11,7 +11,7 @@ public class TimeHandler : MonoBehaviour
 
 
     #region Interface
-    public void addTime(int time)
+    public void addTime(float time)
     {
         totalTime += time;
     }

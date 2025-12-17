@@ -73,6 +73,7 @@ public class ConsumableHandler : MonoBehaviour
         {
             case UpgradeType.Sprint:
                 _activeEffectCoroutine = StartCoroutine(SprintRoutine(_sprintDuration, _sprintSpeedBoostMultiplier));
+                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.red, _sprintDuration);
                 break;
         }
 

@@ -4,7 +4,7 @@ public class TimeObject : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D _collider;
     private TimeHandler _handler;
-    [SerializeField] private int _timePower;
+    [SerializeField] private float _timePower;
 
     private bool isCollected = false;
 
