@@ -48,9 +48,10 @@ public class UpgradeData : ScriptableObject
         }
         else if (category == UpgradeCategory.Consumable)
         {
-            switch (type)
+            var consumableHandler = player.GetComponentInChildren<ConsumableHandler>();
+            if (consumableHandler != null)
             {
-                // tera nic
+                consumableHandler.SetConsumable(this.type);
             }
         }
     }

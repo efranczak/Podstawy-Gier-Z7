@@ -10,7 +10,11 @@ public class ActiveUpgradeUI : MonoBehaviour
 
     public bool SetIcon(UpgradeData upgrade)
     {
-        if (upgrade == null) return false;
+        if (upgrade == null)
+        {
+            ClearIcon();
+            return true;
+        }
         else if (currentUpgrade != upgrade && currentUpgrade != null) return false;
         else
         { 
@@ -20,6 +24,14 @@ public class ActiveUpgradeUI : MonoBehaviour
         upgradeCounter++;
         return true;
         }
+    }
+
+    private void ClearIcon()
+    {
+        icon.texture = null;
+        icon.color = new Color(0, 0, 0, 0);
+        currentUpgrade = null;
+        upgradeCounter = 0;
     }
 
 

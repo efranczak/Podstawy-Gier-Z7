@@ -24,17 +24,25 @@ public class UpgradePanelUI : MonoBehaviour
     private PlayerInputActions _playerInputActions;
     private InputAction _navigateAction;
 
-    public void RegisterUpgradeChoice(UpgradeType type)
+    private ActiveUpgradesContainer _activeUpgradesContainer;
+
+    public void RegisterUpgradeChoice(UpgradeData upgrade)
     {
-        if (!_unlockedTypes.Contains(type))
+        if (upgrade.category == UpgradeCategory.Permanent && !_unlockedTypes.Contains(upgrade.type))
         {
-            _unlockedTypes.Add(type);
+            _activeUpgradesContainer.UpdateActiveUpgrades(upgrade);
+            _unlockedTypes.Add(upgrade.type);
+        }
+        if (upgrade.category == UpgradeCategory.Consumable)
+        {
+            _activeUpgradesContainer.UpdateConsumableUpgrades(upgrade);
         }
     }
 
     private void Awake()
     {
         _playerInputActions = new PlayerInputActions();
+        _activeUpgradesContainer = FindAnyObjectByType<ActiveUpgradesContainer>();
     }
 
     private void OnEnable()
@@ -75,10 +83,15 @@ public class UpgradePanelUI : MonoBehaviour
 
         IEnumerable<UpgradeData> availableUpgrades;
 
-        if (_unlockedTypes.Count >= _maxSkillSlots) {
-            availableUpgrades = _allUpgrades.Where(x => _unlockedTypes.Contains(x.type));
+        if (_unlockedTypes.Count >= _maxSkillSlots)
+        {
+            availableUpgrades = _allUpgrades.Where(x =>
+                _unlockedTypes.Contains(x.type) ||
+                x.category == UpgradeCategory.Consumable
+            );
         }
-        else {
+        else
+        {
             availableUpgrades = _allUpgrades;
         }
 

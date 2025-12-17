@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     public Collider2D LastWallCollider { get; private set; }
 
+    public ScriptableStats Stats => _stats;
+
 
 
     #region Interface
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _lianaUsage = GetComponent<LianaUsage>();
         _snake = FindAnyObjectByType<SnakeScript>();
         _snakeLogic = FindAnyObjectByType<SnakeLogic>();
+        _stats = Instantiate(_stats);
 
         _lastCheckpoint = transform.position;
 
