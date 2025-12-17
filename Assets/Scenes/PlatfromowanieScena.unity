@@ -426,8 +426,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 236, y: -456}
-  m_SizeDelta: {x: 800, y: 50}
+  m_AnchoredPosition: {x: 791, y: -430}
+  m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &198487277
 MonoBehaviour:
@@ -1190,7 +1190,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &330795431
 MonoBehaviour:
@@ -1417,7 +1417,7 @@ RectTransform:
   m_GameObject: {fileID: 439793563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5127, y: 1.5127, z: 1.5127}
+  m_LocalScale: {x: 0.80407566, y: 0.80407566, z: 0.80407566}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 528296917}
@@ -1427,7 +1427,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -747, y: -455}
+  m_AnchoredPosition: {x: 791, y: -485}
   m_SizeDelta: {x: 256, y: 82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &439793565
@@ -1460,7 +1460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3653,13 +3653,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbcbe9afee1fa6d4eb577c94597b817b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LianaUsage
-  playerRigidbody: {fileID: 1310816164}
-  jumpForce: 17
+  allowJumpOff: 1
   climbSpeed: 7
-  jumpHorizontalForce: 3
-  jumpHandler: {fileID: 909251776}
-  playerController: {fileID: 1310816160}
-  dropHoldTime: 0.1
+  jumpOffForce: 15
+  sideJumpForce: 5
+  snapSmoothness: 15
+  climbCooldownTime: 0.2
 --- !u!114 &1310816168
 MonoBehaviour:
   m_ObjectHideFlags: 0
