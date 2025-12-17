@@ -206,7 +206,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _endedJumpEarly = false;
             _gravityMultiplier = 1f;
             GroundedChanged?.Invoke(true, Mathf.Abs(_frameVelocity.y));
-            _lianaUsage.CanGrabLiana(true);
 
         }
         // Left the Ground
