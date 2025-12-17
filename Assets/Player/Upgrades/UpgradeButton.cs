@@ -10,6 +10,7 @@ public class UpgradeButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private TextMeshProUGUI _description;
     [SerializeField] private Outline outline;
+    [SerializeField] private Image _confirmButtonIcon;
 
     private UpgradeData _upgradeData;
     private PlayerController _player;
@@ -20,14 +21,13 @@ public class UpgradeButton : MonoBehaviour
     private InputAction _selectAction;
 
     private UpgradePanelUI _upgradePanel;
-    private bool wasClickedOnce = false;
-    private bool wasSelected = false;
 
     private void Awake()
     {
         _upgradePanel = GetComponentInParent<UpgradePanelUI>();
 
         _playerInputActions = new PlayerInputActions();
+        _confirmButtonIcon.enabled = false;
     }
 
     private void OnEnable()
@@ -64,8 +64,6 @@ public class UpgradeButton : MonoBehaviour
 
         this.isChosen = isChosen;
 
-        wasClickedOnce = false;
-        wasSelected = false;
 
     }
 
@@ -74,46 +72,24 @@ public class UpgradeButton : MonoBehaviour
         if (isChosen)
         {
             outline.enabled = true;
+            _confirmButtonIcon.enabled = true;
         }
         else
         {
             outline.enabled = false;
+            _confirmButtonIcon.enabled = false;
         }
     }
 
     private void OnSelected()
     {   
         if (!isChosen) return;
-
-        //second click
-        if (wasClickedOnce)
-        {
-            _upgradePanel.RegisterUpgradeChoice(_upgradeData);
-            _upgradeData.ApplyUpgrade(_player/*, _snake*/);
-            _upgradePanel.UpgradeSelected();
-            wasSelected = true;
-            outline.effectColor = Color.red;
-            return;
-        }
-
-
-        // first click
-        wasClickedOnce = true;
-        outline.effectColor = Color.green;
-        StartCoroutine(WaitForConfirmation());
+        _upgradePanel.RegisterUpgradeChoice(_upgradeData);
+        _upgradeData.ApplyUpgrade(_player/*, _snake*/);
+        _upgradePanel.UpgradeSelected();
+        return;
     }
 
-    private IEnumerator WaitForConfirmation()
-    {
-        yield return new WaitForSecondsRealtime(1f);
-        if (!wasSelected && isChosen)
-        {   
-            _upgradePanel.RegisterUpgradeChoice(_upgradeData);
-            _upgradeData.ApplyUpgrade(_player/*, _snake*/);
-            _upgradePanel.UpgradeSelected();
-            wasSelected = true;
-        }
-        outline.effectColor = Color.red;
-    }
+    
 }
 

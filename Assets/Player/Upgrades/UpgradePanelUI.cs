@@ -119,11 +119,11 @@ public class UpgradePanelUI : MonoBehaviour
         Vector2 navigation = context.ReadValue<Vector2>();
         if (navigation.x > 0)
         {
-            selectedIndex = (selectedIndex + 1) % _upgradeButtons.Length;
+            selectedIndex = 1;
         }
         else if (navigation.x < 0)
         {
-            selectedIndex = (selectedIndex - 1 + _upgradeButtons.Length) % _upgradeButtons.Length;
+            selectedIndex = 0;
         }
         for (int i = 0; i < _upgradeButtons.Length; i++)
         {
