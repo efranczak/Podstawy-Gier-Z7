@@ -134,6 +134,8 @@ public class PlatfromerChunk : Chunk
 
     private IEnumerator MoveTailUpCoroutine()
     {
+        if (snakeTail == null) yield break;
+
         Vector3 startPos = snakeTail.transform.localPosition;
         Vector3 targetPos = startPos + Vector3.up * tailMoveUpAmount;
 
