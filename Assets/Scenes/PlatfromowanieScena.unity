@@ -2337,6 +2337,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4fab101bb90795544b5f8f297ac41e3e, type: 2}
   - {fileID: 11400000, guid: 9e164b1cc61c8ef42b889cfa0e553712, type: 2}
   - {fileID: 11400000, guid: c209bf79fdd5782498a20ec150065e29, type: 2}
+  - {fileID: 11400000, guid: 1489e80ba7964aa4ea03b8c2bdabe097, type: 2}
   _upgradeButtons:
   - {fileID: 16931034}
   - {fileID: 482126655}
@@ -2410,6 +2411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7934d91e33f4b8445ac8f4610f53c722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  isSubtractingTime: 0
 --- !u!4 &662476889
 Transform:
   m_ObjectHideFlags: 0
@@ -4810,6 +4812,7 @@ MonoBehaviour:
   slider: {fileID: 1571602473}
   sliderMaxValue: 33
   timeHandler: {fileID: 662476888}
+  fill: {fileID: 499406012}
 --- !u!114 &1571602473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5092,6 +5095,8 @@ MonoBehaviour:
   _sprintSpeedBoostMultiplier: 1.5
   _jumpPowerDuration: 9
   _jumpPowerBoostMultiplier: 1.5
+  _fallSpeedDuration: 15
+  _fallSpeedAmount: 0.1
 --- !u!1 &1879155489
 GameObject:
   m_ObjectHideFlags: 0
