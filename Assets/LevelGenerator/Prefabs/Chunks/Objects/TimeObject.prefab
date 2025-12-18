@@ -151,4 +151,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeObject
   _collider: {fileID: 4510588105405649201}
-  _timePower: 2
+  _timePower: 1.5
