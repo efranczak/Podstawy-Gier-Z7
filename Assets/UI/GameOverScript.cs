@@ -36,6 +36,7 @@ public class GameOverScript : MonoBehaviour
         playerInputActions = new PlayerInputActions();
     }
 
+
     private void OnEnable()
     {
         button = playerInputActions.UI.Select;
@@ -46,6 +47,10 @@ public class GameOverScript : MonoBehaviour
             if (startFlag && startButton != null && startButton.IsActive())
             {
                 StartGame();
+            }
+            else if (nameInputField != null && nameInputField.gameObject.activeInHierarchy && nameInputField.isFocused)
+            {
+                SubmitScore();
             }
             else if (restartButton != null && restartButton.IsActive())
             {
