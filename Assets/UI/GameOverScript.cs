@@ -155,7 +155,6 @@ public class GameOverScript : MonoBehaviour
         PauseGame();
         submitted = false; // reset flag przy pokazaniu ekranu
         if (gameOverText != null) { gameOverText.text = "You Died"; gameOverText.enabled = true; }
-        if (controlsText != null) controlsText.enabled = true;
 
         if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
         UpdateLeaderboardUI();

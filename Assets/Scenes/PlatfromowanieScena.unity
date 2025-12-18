@@ -994,7 +994,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 98.1}
+  m_AnchoredPosition: {x: 6.7, y: 98.1}
   m_SizeDelta: {x: 257.882, y: 74.4406}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &304211885
@@ -1408,10 +1408,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   gameOverText: {fileID: 304211885}
-  controlsText: {fileID: 0}
+  controlsText: {fileID: 2105380022}
   restartButton: {fileID: 498806263}
   startButton: {fileID: 313728296}
   background: {fileID: 410092262}
+  leaderboardManager: {fileID: 0}
+  nameInputField: {fileID: 0}
+  leaderboardPanel: {fileID: 0}
+  nameTexts: []
+  scoreTexts: []
+  currentScore: {fileID: 0}
+  submitButton: {fileID: 0}
 --- !u!1 &439793563
 GameObject:
   m_ObjectHideFlags: 0
