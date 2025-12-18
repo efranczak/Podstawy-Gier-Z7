@@ -27,7 +27,7 @@ public class SnakeScript : MonoBehaviour
     private bool cameraTriggered = false;
 
     [Header ("Arrow Settings")]
-    public float showArrowDistance = 15.0f;
+    public float hideArrowDistance = 3.0f;
     public float blinkArrowDistance = 7.0f;
 
     private float distance;
@@ -71,6 +71,7 @@ public class SnakeScript : MonoBehaviour
         if (isStopping) return;
 
         isStopping = true;
+        
 
         previousVelocity = velocity;
         velocity = 0f;
@@ -79,17 +80,20 @@ public class SnakeScript : MonoBehaviour
         transform.position = new Vector3(stopX, transform.position.y, transform.position.z);
 
         CancelInvoke(nameof(EndPlatformingSection)); 
-        Invoke(nameof(EndPlatformingSection), stopDuration); 
+        Invoke(nameof(EndPlatformingSection), stopDuration);
+        
     }
 
     public void EndPlatformingSection()
     {
-        if (!isStopping) return; 
+        if (!isStopping) return;
+        arrowScript.Show();
 
         CancelInvoke(nameof(EndPlatformingSection)); 
 
         velocity = previousVelocity;  
-        isStopping = false;            
+        isStopping = false;
+        
     }
 
 
@@ -121,19 +125,31 @@ public class SnakeScript : MonoBehaviour
 
     void TriggerArrow()
     {
-        if (distance < showArrowDistance && distance > blinkArrowDistance)
+        if (isStopping)
         {
-            arrowScript.StopBlinking();
-            arrowScript.Show();
+            arrowScript.Hide();
+            return;
         }
-        else if (distance <= blinkArrowDistance && distance > startDistance)
+
+        if (distance < hideArrowDistance)
         {
+            arrowScript.Hide();
+            return;
+        } 
+        else if (distance < blinkArrowDistance && distance >= hideArrowDistance)
+        {
+            arrowScript.Show();
+            arrowScript.ChangeSize(distance);
             arrowScript.StartBlinking();
+            return;
         }
         else
-        {   
+        {
+            arrowScript.Show();
+            arrowScript.ChangeSize(distance);
             arrowScript.StopBlinking();
-            arrowScript.Hide();
+            return;
+
         }
     }
 
