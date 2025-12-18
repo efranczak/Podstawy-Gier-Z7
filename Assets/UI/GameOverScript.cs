@@ -1,20 +1,35 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverScript : MonoBehaviour
-{   
-
+{
     public Text gameOverText;
     public Text controlsText;
+
     public Button restartButton;
     public Button startButton;
     public Image background;
     private bool startFlag = true;
 
+    [Header("Leaderboard Settings")]
+    public LeaderboardManager leaderboardManager;
+    public TMP_InputField nameInputField;
+    public GameObject leaderboardPanel;
+    public TMP_Text[] nameTexts;
+    public TMP_Text[] scoreTexts;
+    public TMP_Text currentScore;
+    public Button submitButton;
+
     private PlayerInputActions playerInputActions;
     private InputAction button;
+
+    // guard ¿eby nie dublowaæ submitu
+    private bool submitted = false;
 
     private void Awake()
     {
@@ -28,11 +43,11 @@ public class GameOverScript : MonoBehaviour
 
         button.performed += ctx =>
         {
-            if (startFlag && startButton.IsActive())
+            if (startFlag && startButton != null && startButton.IsActive())
             {
                 StartGame();
             }
-            else if (restartButton.IsActive())
+            else if (restartButton != null && restartButton.IsActive())
             {
                 RestartLevel();
             }
@@ -41,62 +56,172 @@ public class GameOverScript : MonoBehaviour
 
     private void OnDisable()
     {
-        button.Disable();
+        if (button != null) button.Disable();
     }
 
-
     void Start()
-    {   
-
+    {
+        // Upewnij siê, ¿e wszystkie elementy leaderboardu s¹ ukryte na starcie
         HideGameOver();
-
         PauseGame();
-        controlsText.enabled = true;
-        background.enabled = true;
 
-        restartButton.onClick.AddListener(RestartLevel);
-        startButton.onClick.AddListener(StartGame);
-        
+        if (controlsText != null) controlsText.enabled = true;
+        if (background != null) background.enabled = true;
+        if (startButton != null) startButton.gameObject.SetActive(true);
+
+        if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
+        if (startButton != null) startButton.onClick.AddListener(StartGame);
+
+        if (leaderboardPanel != null) leaderboardPanel.SetActive(false);
+        if (nameTexts != null)
+        {
+            foreach (var t in nameTexts) if (t != null) t.gameObject.SetActive(false);
+        }
+        if (scoreTexts != null)
+        {
+            foreach (var t in scoreTexts) if (t != null) t.gameObject.SetActive(false);
+        }
     }
 
     public void StartGame()
     {
         ResumeGame();
-        controlsText.enabled = false;
-        background.enabled = false;
-        startButton.gameObject.SetActive(false);
+        HideGameOver();
+        if (startButton != null) startButton.gameObject.SetActive(false);
         startFlag = false;
+    }
+
+    public void SubmitScore()
+    {
+        Debug.Log("[GameOverScript] SubmitScore called");
+        if (submitted)
+        {
+            Debug.Log("[GameOverScript] SubmitScore ignored - already submitted");
+            return;
+        }
+
+        if (leaderboardManager == null || nameInputField == null)
+        {
+            Debug.LogWarning("[GameOverScript] leaderboardManager or nameInputField is null");
+            return;
+        }
+
+        submitted = true;
+
+        int scoreValue = ScoreManager.instance != null ? ScoreManager.instance.GetScore() : 0;
+        string playerName = string.IsNullOrEmpty(nameInputField.text) ? "Player" : nameInputField.text;
+
+        leaderboardManager.AddScore(playerName, scoreValue);
+        Debug.Log($"[GameOverScript] Added score: {playerName} = {scoreValue}");
+
+        UpdateLeaderboardUI();
+
+        nameInputField.gameObject.SetActive(false);
+        if (submitButton != null)
+        {
+            submitButton.gameObject.SetActive(false);
+            submitButton.interactable = false;
+        }
+        if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
+    }
+
+    private void UpdateLeaderboardUI()
+    {
+        List<ScoreEntry> highScores = (leaderboardManager != null) ? leaderboardManager.GetScores() : new List<ScoreEntry>();
+
+        if (nameTexts == null || scoreTexts == null) return;
+        int len = UnityEngine.Mathf.Min(nameTexts.Length, scoreTexts.Length);
+
+        for (int i = 0; i < len; i++)
+        {
+            bool hasEntry = (highScores != null && i < highScores.Count);
+            if (nameTexts[i] != null) nameTexts[i].gameObject.SetActive(hasEntry);
+            if (scoreTexts[i] != null) scoreTexts[i].gameObject.SetActive(hasEntry);
+
+            if (hasEntry)
+            {
+                if (nameTexts[i] != null) nameTexts[i].text = highScores[i].name;
+                if (scoreTexts[i] != null) scoreTexts[i].text = highScores[i].score.ToString();
+            }
+            else
+            {
+                if (nameTexts[i] != null) nameTexts[i].text = "-";
+                if (scoreTexts[i] != null) scoreTexts[i].text = "0";
+            }
+        }
     }
 
     public void TriggerGameOver()
     {
         PauseGame();
-        gameOverText.text = "You Died";
-        gameOverText.enabled = true;
-        controlsText.enabled = true;
-        restartButton.gameObject.SetActive(true);
-        background.enabled = true;
+        submitted = false; // reset flag przy pokazaniu ekranu
+        if (gameOverText != null) { gameOverText.text = "You Died"; gameOverText.enabled = true; }
+        if (controlsText != null) controlsText.enabled = true;
+
+        if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
+        UpdateLeaderboardUI();
+
+        if (restartButton != null) restartButton.gameObject.SetActive(true);
+        if (background != null) background.enabled = true;
+
+        if (nameInputField != null)
+        {
+            nameInputField.gameObject.SetActive(true);
+            nameInputField.text = "";
+            // ustaw fokus ¿eby mo¿na by³o wpisywaæ od razu
+            EventSystem.current?.SetSelectedGameObject(nameInputField.gameObject);
+            nameInputField.ActivateInputField();
+        }
+        if (currentScore != null && ScoreManager.instance != null)
+        {
+            currentScore.gameObject.SetActive(true);
+            currentScore.text = "Your Score: " + ScoreManager.instance.GetScore().ToString();
+        }
+        if (submitButton != null)
+        {
+            submitButton.gameObject.SetActive(true);
+            submitButton.onClick.RemoveAllListeners();
+            submitButton.onClick.AddListener(SubmitScore);
+            submitButton.interactable = true;
+        }
     }
 
     public void TriggerYouWon()
-    {   
+    {
         PauseGame();
-        gameOverText.text = "You Won!";
-        gameOverText.enabled = true;
-        restartButton.gameObject.SetActive(true);
-        background.enabled = true;
+        if (gameOverText != null) { gameOverText.text = "You Won!"; gameOverText.enabled = true; }
+
+        if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
+        UpdateLeaderboardUI();
+
+        if (restartButton != null) restartButton.gameObject.SetActive(true);
+        if (background != null) background.enabled = true;
     }
 
     public void HideGameOver()
     {
-        gameOverText.enabled = false;
-        controlsText.enabled = false;
-        background.enabled = false;
-        restartButton.gameObject.SetActive(false);
+        if (gameOverText != null) gameOverText.enabled = false;
+        if (controlsText != null) controlsText.enabled = false;
+        if (background != null) background.enabled = false;
+        if (restartButton != null) restartButton.gameObject.SetActive(false);
+
+        if (nameInputField != null) nameInputField.gameObject.SetActive(false);
+        if (leaderboardPanel != null) leaderboardPanel.SetActive(false);
+        if (currentScore != null) currentScore.gameObject.SetActive(false);
+        if (submitButton != null) submitButton.gameObject.SetActive(false);
+
+        if (nameTexts != null)
+        {
+            foreach (var t in nameTexts) if (t != null) t.gameObject.SetActive(false);
+        }
+        if (scoreTexts != null)
+        {
+            foreach (var t in scoreTexts) if (t != null) t.gameObject.SetActive(false);
+        }
     }
 
     public void RestartLevel()
-    {   
+    {
         ResumeGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
