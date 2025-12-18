@@ -7,7 +7,7 @@ public class GameOverScript : MonoBehaviour
 {   
 
     public Text gameOverText;
-    public Text controlsText;
+    public Image controlsText;
     public Button restartButton;
     public Button startButton;
     public Image background;
