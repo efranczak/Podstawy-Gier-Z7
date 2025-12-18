@@ -58,6 +58,6 @@ public class UpgradeData : ScriptableObject
 
 }
 
-public enum UpgradeType { Health, Sprint, DoubleJump, Dash, WallJump }
+public enum UpgradeType { Health, Sprint, DoubleJump, Dash, WallJump, JumpPower }
 
 public enum UpgradeCategory { Permanent, Consumable }

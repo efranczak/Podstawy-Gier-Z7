@@ -9,13 +9,13 @@ public class PlayerSkills : MonoBehaviour
 
     [Header("Player Abilities")]
     [Tooltip("Aktualna maksymalna liczba skokow.")]
-    [SerializeField] private int _playerJumps = 1;
+    [SerializeField] public int _playerJumps = 1;
 
     [Tooltip("Aktualna liczba dostepnych dashy.")]
-    [SerializeField] private int _playerDashes = 0;
+    [SerializeField] public int _playerDashes = 0;
 
     [Tooltip("Aktualna ilosc wall jumpow na tej samej scianie.")]
-    [SerializeField] private int _sameWallJumpMaxAmount = 0;
+    [SerializeField] public int _sameWallJumpMaxAmount = 0;
 
     public int CurrentDifficulty => _currentDifficulty;
     public int PlayerJumps => _playerJumps;

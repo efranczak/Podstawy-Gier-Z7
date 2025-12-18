@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sprint
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   upgradeName: Sprint
-  description: 'Increate your speed for a short amount of time (Use: E)'
+  description: 'Increate your speed for a short amount of time (Use: E/Triangle)'
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   type: 1
   category: 1
-  iconUI: {fileID: -8360621857648827146, guid: 98af4c510c5754240a9d7ba38de2345d, type: 3}
+  iconUI: {fileID: -7626194224069710270, guid: 27da80bbdf8f6b04e9bff09925ebaa8a, type: 3}

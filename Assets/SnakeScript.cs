@@ -1,4 +1,3 @@
-using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -15,6 +14,7 @@ public class SnakeScript : MonoBehaviour
     public float velocity = 0.05f;
     public float increaseModifier = 1.01f;
     public float increaseInterval = 1f;
+    public float increaseValue = 0.01f;
 
     private float increaseTimer = 0f;
     private float baseVelocity;
@@ -91,7 +91,8 @@ public class SnakeScript : MonoBehaviour
 
         CancelInvoke(nameof(EndPlatformingSection)); 
 
-        velocity = previousVelocity;  
+        velocity = previousVelocity;
+        increaseModifier += increaseValue;
         isStopping = false;
         
     }
