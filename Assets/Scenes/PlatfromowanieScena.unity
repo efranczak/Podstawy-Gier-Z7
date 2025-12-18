@@ -1312,6 +1312,7 @@ MonoBehaviour:
   - {fileID: 3840287670580990443, guid: 10b1ee2d50ecd7543810f2908adb5546, type: 3}
   - {fileID: 3840287670580990443, guid: 8b0feaed1f3f5954a8d4927d54719e52, type: 3}
   - {fileID: 3840287670580990443, guid: 33b21461513d81b4798ab4be05338431, type: 3}
+  - {fileID: 3840287670580990443, guid: c19872a3144bde549afdc76c110f9aac, type: 3}
   startChunk: {fileID: 3840287670580990443, guid: 290475d4762aa4b48a158d2d3deb9232, type: 3}
   spawnBuffer: 10
   despawnBuffer: 10

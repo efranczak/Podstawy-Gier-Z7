@@ -24,7 +24,7 @@ public class ConsumableHandler : MonoBehaviour
 
     [Header("Fall Speed Settings")]
     [Tooltip("Czas po którym predkosc opadania gracza powinna powróciæ do bazowej")]
-    [SerializeField] private float _fallSpeedDuration = 15.0f;
+    [SerializeField] private float _fallSpeedDuration = 9.0f;
 
     [Tooltip("Ilukrotnie zmniejszyc predkosc opadania")]
     [SerializeField] private float _fallSpeedAmount = 0.1f;
