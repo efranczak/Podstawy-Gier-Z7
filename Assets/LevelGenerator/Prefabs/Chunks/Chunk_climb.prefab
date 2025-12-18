@@ -245,10 +245,11 @@ MonoBehaviour:
   Entry: {fileID: 8775384872580894350}
   Exit: {fileID: 2273905443495756981}
   isFlippable: 0
-  difficultyLevel: 5
+  difficultyLevel: 4
   howManyDashes: 0
   howManyJumps: 1
   wallJumpingRequired: 0
+  howManySameWallMaxJumps: 0
 --- !u!1 &8510448365174794823
 GameObject:
   m_ObjectHideFlags: 0

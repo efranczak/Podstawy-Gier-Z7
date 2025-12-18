@@ -37,7 +37,7 @@ public class ActiveUpgradeUI : MonoBehaviour
             ClearIcon();
             return true;
         }
-        else if (currentUpgrade != upgrade && currentUpgrade != null) return false;
+        else if (currentUpgrade != upgrade && currentUpgrade != null && upgrade.category != UpgradeCategory.Consumable) return false;
         else
         { 
         icon.texture = upgrade.iconUI.texture;

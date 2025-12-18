@@ -79,6 +79,7 @@ public class PlatfromerChunk : Chunk
     private void TriggerEntry()
     {   
         if (newTimeSystem) sectionDuration = (int) timeHandler.getTime();
+        timeHandler.isSubtractingTime = true;
         SnakeScript.StartPlatfromingSection(sectionDuration, Entry.position.x);
         isActive = true;
         chunkCamera.Priority = 12;
@@ -100,6 +101,7 @@ public class PlatfromerChunk : Chunk
         }
 
         SnakeScript.EndPlatformingSection(); 
+        timeHandler.isSubtractingTime = false;
         chunkCamera.Priority = 0;
         isActive = false;
         playerCameraBoundaryCollider.enabled = true;

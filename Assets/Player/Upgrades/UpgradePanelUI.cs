@@ -19,6 +19,8 @@ public class UpgradePanelUI : MonoBehaviour
     [SerializeField] private int _maxSkillSlots = 2;
     private List<UpgradeType> _unlockedTypes = new List<UpgradeType>();
 
+    private bool whichUpgrade = true;
+
     #region Input System
 
     private PlayerInputActions _playerInputActions;
@@ -85,14 +87,32 @@ public class UpgradePanelUI : MonoBehaviour
 
         if (_unlockedTypes.Count >= _maxSkillSlots)
         {
-            availableUpgrades = _allUpgrades.Where(x =>
-                _unlockedTypes.Contains(x.type) ||
-                x.category == UpgradeCategory.Consumable
-            );
+            if (whichUpgrade)
+            {
+                availableUpgrades = _allUpgrades.Where(x =>
+                    _unlockedTypes.Contains(x.type)
+                );
+                whichUpgrade = false;
+            }
+            else
+            {
+                availableUpgrades = _allUpgrades.Where(x =>
+                    x.category == UpgradeCategory.Consumable);
+                whichUpgrade = true;
+            }
         }
         else
         {
-            availableUpgrades = _allUpgrades;
+            if (whichUpgrade)
+            {
+                availableUpgrades = _allUpgrades.Where(x => x.category == UpgradeCategory.Permanent);
+                whichUpgrade = false;
+            }
+            else
+            {
+                availableUpgrades = _allUpgrades.Where(x => x.category == UpgradeCategory.Consumable);
+                whichUpgrade = true;
+            }
         }
 
         var chosen = availableUpgrades.OrderBy(x => Random.value).Take(_upgradeButtons.Length).ToArray();

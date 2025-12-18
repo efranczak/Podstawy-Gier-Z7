@@ -9,12 +9,16 @@ using UnityEngine.UI;
 public class GameOverScript : MonoBehaviour
 {
     public Text gameOverText;
-    public Text controlsText;
-
+    public Image controlsText;
     public Button restartButton;
     public Button startButton;
     public Image background;
-    private bool startFlag = true;
+
+    [Header("UI elements")]
+    public GameObject upgradeSlots;
+    public GameObject apples;
+    public GameObject arrow;
+    
 
     [Header("Leaderboard Settings")]
     public LeaderboardManager leaderboardManager;
@@ -27,6 +31,7 @@ public class GameOverScript : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
     private InputAction button;
+    private bool startFlag = true;
 
     // guard ¿eby nie dublowaæ submitu
     private bool submitted = false;
@@ -73,6 +78,9 @@ public class GameOverScript : MonoBehaviour
         if (controlsText != null) controlsText.enabled = true;
         if (background != null) background.enabled = true;
         if (startButton != null) startButton.gameObject.SetActive(true);
+        if (upgradeSlots != null) upgradeSlots.SetActive(false);
+        if (arrow != null) upgradeSlots.SetActive(false);
+        if (apples != null) upgradeSlots.SetActive(false);
 
         if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
         if (startButton != null) startButton.onClick.AddListener(StartGame);
@@ -93,6 +101,9 @@ public class GameOverScript : MonoBehaviour
         ResumeGame();
         HideGameOver();
         if (startButton != null) startButton.gameObject.SetActive(false);
+        if (upgradeSlots != null) upgradeSlots.SetActive(true);
+        if (arrow != null) upgradeSlots.SetActive(true);
+        if (apples != null) upgradeSlots.SetActive(true);
         startFlag = false;
     }
 
@@ -161,7 +172,9 @@ public class GameOverScript : MonoBehaviour
         PauseGame();
         submitted = false; // reset flag przy pokazaniu ekranu
         if (gameOverText != null) { gameOverText.text = "You Died"; gameOverText.enabled = true; }
-        if (controlsText != null) controlsText.enabled = true;
+        if (upgradeSlots != null) upgradeSlots.SetActive(false);
+        if (arrow != null) upgradeSlots.SetActive(false);
+        if (apples != null) upgradeSlots.SetActive(false);
 
         if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
         UpdateLeaderboardUI();
