@@ -11,9 +11,17 @@ public class ConsumableHandler : MonoBehaviour
     [Header("Sprint Settings")]
     [Tooltip("Czas po którym prêdkoœæ gracza powinna powróciæ do bazowej")]
     [SerializeField] private float _sprintDuration = 9.0f;
+    
     [Tooltip("Ilukrotnie zwiêkszyæ bazow¹ prêdkoœæ")]
     [SerializeField] private float _sprintSpeedBoostMultiplier = 1.5f;
 
+
+    [Header("JumpPower Settings")]
+    [Tooltip("Czas po którym moc skoku gracza powinna powróciæ do bazowej")]
+    [SerializeField] private float _jumpPowerDuration = 9.0f;
+
+    [Tooltip("Ilukrotnie zwiêkszyæ bazowy skok")]
+    [SerializeField] private float _jumpPowerBoostMultiplier = 1.5f;
     private UpgradeType? _currentConsumable = null;
     private Coroutine _activeEffectCoroutine;
 
@@ -21,6 +29,7 @@ public class ConsumableHandler : MonoBehaviour
     private InputAction _useAction;
 
     private ActiveUpgradesContainer _activeUpgradesContainer;
+
 
     private void Awake()
     {
@@ -73,7 +82,11 @@ public class ConsumableHandler : MonoBehaviour
         {
             case UpgradeType.Sprint:
                 _activeEffectCoroutine = StartCoroutine(SprintRoutine(_sprintDuration, _sprintSpeedBoostMultiplier));
-                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.red, _sprintDuration);
+                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.blue, _sprintDuration);
+                break;
+            case UpgradeType.JumpPower:
+                _activeEffectCoroutine = StartCoroutine(JumpPowerRoutine(_jumpPowerDuration, _jumpPowerBoostMultiplier));
+                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.red, _jumpPowerDuration);
                 break;
         }
 
@@ -99,6 +112,28 @@ public class ConsumableHandler : MonoBehaviour
 
         currentStats.MaxSpeed = originalMaxSpeed;
         currentStats.Acceleration = originalAcceleration;
+
+        _activeEffectCoroutine = null;
+    }
+
+    private IEnumerator JumpPowerRoutine(float duration, float multiplier)
+    {
+        Debug.Log("SprintRoutine called");
+
+        ScriptableStats currentStats = _player.Stats;
+
+        if (currentStats == null) yield break;
+
+        float originalJumpPower = _baseStats.JumpPower;
+        float originalFallSpeed = _baseStats.MaxFallSpeed;
+
+        currentStats.JumpPower *= multiplier;
+        currentStats.MaxFallSpeed *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        currentStats.JumpPower = originalJumpPower;
+        currentStats.MaxFallSpeed = originalFallSpeed;
 
         _activeEffectCoroutine = null;
     }

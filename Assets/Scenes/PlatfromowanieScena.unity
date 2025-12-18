@@ -2326,6 +2326,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6379a200a0ef74a4ead8ee62c66d95fa, type: 2}
   - {fileID: 11400000, guid: 4fab101bb90795544b5f8f297ac41e3e, type: 2}
   - {fileID: 11400000, guid: 9e164b1cc61c8ef42b889cfa0e553712, type: 2}
+  - {fileID: 11400000, guid: c209bf79fdd5782498a20ec150065e29, type: 2}
   _upgradeButtons:
   - {fileID: 16931034}
   - {fileID: 482126655}
@@ -5079,6 +5080,8 @@ MonoBehaviour:
   _baseStats: {fileID: 11400000, guid: 0283c47f022e9814083880c749e4aab2, type: 2}
   _sprintDuration: 8
   _sprintSpeedBoostMultiplier: 1.5
+  _jumpPowerDuration: 9
+  _jumpPowerBoostMultiplier: 1.5
 --- !u!1 &1879155489
 GameObject:
   m_ObjectHideFlags: 0

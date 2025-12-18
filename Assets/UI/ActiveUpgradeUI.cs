@@ -35,7 +35,6 @@ public class ActiveUpgradeUI : MonoBehaviour
         if (upgrade == null)
         {
             ClearIcon();
-            upgradesText.HideText();
             return true;
         }
         else if (currentUpgrade != upgrade && currentUpgrade != null) return false;
