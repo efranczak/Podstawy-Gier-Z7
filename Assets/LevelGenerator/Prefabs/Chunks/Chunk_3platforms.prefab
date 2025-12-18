@@ -95,11 +95,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chunk
   Entry: {fileID: 8775384872580894350}
   Exit: {fileID: 2273905443495756981}
-  isFlippable: 1
+  isFlippable: 0
   difficultyLevel: 3
   howManyDashes: 0
   howManyJumps: 1
   wallJumpingRequired: 0
+  howManySameWallMaxJumps: 0
 --- !u!1 &6197626530249848299
 GameObject:
   m_ObjectHideFlags: 0

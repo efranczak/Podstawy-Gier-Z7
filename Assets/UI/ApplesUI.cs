@@ -9,10 +9,12 @@ public class ApplesUI : MonoBehaviour
     public Image applePrefab;
 
     private List<Image> apples = new List<Image>();
+    private Color ogColor;
     
     public void Awake()
     {
         apples.Add(applePrefab);
+        ogColor = applePrefab.color;
     }
 
     public void CreateApples(int amount)
@@ -23,7 +25,7 @@ public class ApplesUI : MonoBehaviour
         for (int i = 1; i < amount; i++)
         {
             Image apple = Instantiate(applePrefab, container.transform);
-            apple.color = Color.white;
+            apple.color = ogColor;
             apples.Add(apple);
         }
     }

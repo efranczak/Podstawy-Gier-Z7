@@ -230,6 +230,7 @@ MonoBehaviour:
   howManyDashes: 0
   howManyJumps: 1
   wallJumpingRequired: 0
+  howManySameWallMaxJumps: 0
 --- !u!1 &8510448365174794823
 GameObject:
   m_ObjectHideFlags: 0

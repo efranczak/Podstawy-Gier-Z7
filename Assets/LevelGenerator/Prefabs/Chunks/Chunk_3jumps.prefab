@@ -67,6 +67,7 @@ MonoBehaviour:
   howManyDashes: 0
   howManyJumps: 1
   wallJumpingRequired: 0
+  howManySameWallMaxJumps: 0
 --- !u!1 &6368987620520776813
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.55024
+      value: 0.47909394
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalScale.y
@@ -288,11 +289,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.14
+      value: -2.1389
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.8
+      value: -4.08
       objectReference: {fileID: 0}
     - target: {fileID: 8828007555819918721, guid: 21bef343c5249474c8278d7514c81546, type: 3}
       propertyPath: m_LocalPosition.z
