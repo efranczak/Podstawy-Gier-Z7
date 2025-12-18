@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 5622445313280672291}
   - component: {fileID: 6739746983091839999}
   m_Layer: 0
-  m_Name: Chunk_Begin
+  m_Name: Chunk_begin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,6 +85,7 @@ MonoBehaviour:
   howManyDashes: 0
   howManyJumps: 1
   wallJumpingRequired: 0
+  howManySameWallMaxJumps: 0
 --- !u!1 &3878302935172882193
 GameObject:
   m_ObjectHideFlags: 0

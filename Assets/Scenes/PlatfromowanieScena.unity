@@ -1412,6 +1412,9 @@ MonoBehaviour:
   restartButton: {fileID: 498806263}
   startButton: {fileID: 313728296}
   background: {fileID: 410092262}
+  upgradeSlots: {fileID: 439793563}
+  apples: {fileID: 198487275}
+  arrow: {fileID: 852115004}
   leaderboardManager: {fileID: 0}
   nameInputField: {fileID: 0}
   leaderboardPanel: {fileID: 0}
