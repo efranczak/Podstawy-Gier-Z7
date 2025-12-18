@@ -2687,7 +2687,7 @@ MonoBehaviour:
   velocity: 0.05
   increaseModifier: 1.09
   increaseInterval: 1
-  increaseValue: 0.01
+  increaseValue: 0.007
   CameraActivationDistance: 15
   hideArrowDistance: 1
   blinkArrowDistance: 40
