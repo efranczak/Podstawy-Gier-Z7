@@ -15,13 +15,20 @@ public class ConsumableHandler : MonoBehaviour
     [Tooltip("Ilukrotnie zwiêkszyæ bazow¹ prêdkoœæ")]
     [SerializeField] private float _sprintSpeedBoostMultiplier = 1.5f;
 
-
     [Header("JumpPower Settings")]
     [Tooltip("Czas po którym moc skoku gracza powinna powróciæ do bazowej")]
     [SerializeField] private float _jumpPowerDuration = 9.0f;
 
     [Tooltip("Ilukrotnie zwiêkszyæ bazowy skok")]
     [SerializeField] private float _jumpPowerBoostMultiplier = 1.5f;
+
+    [Header("Fall Speed Settings")]
+    [Tooltip("Czas po którym predkosc opadania gracza powinna powróciæ do bazowej")]
+    [SerializeField] private float _fallSpeedDuration = 15.0f;
+
+    [Tooltip("Ilukrotnie zmniejszyc predkosc opadania")]
+    [SerializeField] private float _fallSpeedAmount = 0.1f;
+
     private UpgradeType? _currentConsumable = null;
     private Coroutine _activeEffectCoroutine;
 
@@ -88,6 +95,10 @@ public class ConsumableHandler : MonoBehaviour
                 _activeEffectCoroutine = StartCoroutine(JumpPowerRoutine(_jumpPowerDuration, _jumpPowerBoostMultiplier));
                 GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.red, _jumpPowerDuration);
                 break;
+            case UpgradeType.FallSpeed:
+                _activeEffectCoroutine = StartCoroutine(FallSpeedRoutine(_fallSpeedDuration, _fallSpeedAmount));
+                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.green, _jumpPowerDuration);
+                break;
         }
 
         _currentConsumable = null;
@@ -133,6 +144,25 @@ public class ConsumableHandler : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         currentStats.JumpPower = originalJumpPower;
+        currentStats.MaxFallSpeed = originalFallSpeed;
+
+        _activeEffectCoroutine = null;
+    }
+
+    private IEnumerator FallSpeedRoutine(float duration, float multiplier)
+    {
+        Debug.Log("SprintRoutine called");
+
+        ScriptableStats currentStats = _player.Stats;
+
+        if (currentStats == null) yield break;
+
+        float originalFallSpeed = _baseStats.MaxFallSpeed;
+
+        currentStats.MaxFallSpeed *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
         currentStats.MaxFallSpeed = originalFallSpeed;
 
         _activeEffectCoroutine = null;
