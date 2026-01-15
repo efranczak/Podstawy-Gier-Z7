@@ -20,10 +20,6 @@ public class SnakeLogic : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            SnakeDefeated();
-        }
     }
 
     public void DecreaseHunger(int amount)
