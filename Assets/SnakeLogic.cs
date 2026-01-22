@@ -28,13 +28,8 @@ public class SnakeLogic : MonoBehaviour
         if (currentHunger <= 0)
         {
             currentHunger = 0;
-            appleUI.ResetApples();
             SnakeDefeated();
         }
-        else
-        {
-            appleUI.setApples(maxHunger - currentHunger);
-        }   
     }
 
     void SnakeDefeated()

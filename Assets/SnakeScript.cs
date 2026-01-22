@@ -66,38 +66,7 @@ public class SnakeScript : MonoBehaviour
 
     }
 
-    public void StartPlatfromingSection(float stopDuration, float stopX)
-    {
-        if (isStopping) return;
-
-        isStopping = true;
-        
-
-        previousVelocity = velocity;
-        velocity = 0f;
-
-
-        transform.position = new Vector3(stopX, transform.position.y, transform.position.z);
-
-        CancelInvoke(nameof(EndPlatformingSection)); 
-        Invoke(nameof(EndPlatformingSection), stopDuration);
-        
-    }
-
-    public void EndPlatformingSection()
-    {
-        if (!isStopping) return;
-        arrowScript.Show();
-
-        CancelInvoke(nameof(EndPlatformingSection)); 
-
-        velocity = previousVelocity;
-        increaseModifier += increaseValue;
-        isStopping = false;
-        
-    }
-
-
+   
 
     void FixedUpdate()
     {   
@@ -105,9 +74,14 @@ public class SnakeScript : MonoBehaviour
         Move();
     }
 
-    float DistanceToPlayer()
+    public float DistanceToPlayer()
     {
         return player.transform.position.x - transform.position.x;
+    }
+
+    public void SetDistanceToPlayer(float distance)
+    {
+        transform.position = new Vector3(player.transform.position.x - distance, transform.position.y, transform.position.z);
     }
 
     void TriggerBossEvent()

@@ -19,7 +19,7 @@ public class PlatfromerChunk : Chunk
     private Coroutine tailMoveCoroutine;
 
     public bool newTimeSystem;
-    private TimeHandler timeHandler;
+    private SnakeDistanceHandler handler;
 
     private Transform player;
 
@@ -49,7 +49,7 @@ public class PlatfromerChunk : Chunk
             _playerSkills = playerObject.GetComponent<PlayerSkills>();
         }
         _levelGenerator = FindAnyObjectByType<PlatformLevelGenerator>();
-        timeHandler = FindAnyObjectByType<TimeHandler>();
+        handler = FindAnyObjectByType<SnakeDistanceHandler>();
     }
 
     void Update()
@@ -63,7 +63,7 @@ public class PlatfromerChunk : Chunk
                 EndPlatfromingSection();
             }
         }
-        if (isActive) timeHandler.subtractTime(Time.deltaTime);
+        if (isActive) handler.subtractTime(Time.deltaTime);
     }
 
     private int GetCollectedApples()
@@ -77,10 +77,8 @@ public class PlatfromerChunk : Chunk
     }
 
     private void TriggerEntry()
-    {   
-        if (newTimeSystem) sectionDuration = (int) timeHandler.getTime();
-        timeHandler.isSubtractingTime = true;
-        SnakeScript.StartPlatfromingSection(sectionDuration, Entry.position.x);
+    {
+        handler.StartPlatfomingSection();
         isActive = true;
         chunkCamera.Priority = 12;
         playerCameraBoundaryCollider.enabled = false;
@@ -100,8 +98,7 @@ public class PlatfromerChunk : Chunk
             _levelGenerator.UpdateViableChunks();
         }
 
-        SnakeScript.EndPlatformingSection(); 
-        timeHandler.isSubtractingTime = false;
+        handler.EndPlatfomingSection();
         chunkCamera.Priority = 0;
         isActive = false;
         playerCameraBoundaryCollider.enabled = true;

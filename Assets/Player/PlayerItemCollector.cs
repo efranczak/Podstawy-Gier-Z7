@@ -4,6 +4,7 @@ public class PlayerItemCollector : MonoBehaviour
 {
     public int hungerDecreaseAmount = 10;
     public float speedDecreaseAmount = 2.5f;
+    public float distanceIncreaseAmount = 5.0f;
     private SnakeLogic snakeLogic;
     private SnakeScript snakeScript;
     private PlayerAudioManager audioManager;
@@ -31,6 +32,7 @@ public class PlayerItemCollector : MonoBehaviour
             {
                 snakeLogic.DecreaseHunger(hungerDecreaseAmount);
                 snakeScript.DecreaseVelocity(speedDecreaseAmount);
+                snakeScript.SetDistanceToPlayer(snakeScript.DistanceToPlayer() + distanceIncreaseAmount);
             }
             // Destroy or disable the apple
             Destroy(other.gameObject);

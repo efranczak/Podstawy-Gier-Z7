@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 975475858288948471}
   - component: {fileID: 1046643800332239476}
   - component: {fileID: 4510588105405649201}
-  - component: {fileID: 4345602569302460850}
   m_Layer: 0
   m_Name: TimeObject
-  m_TagString: time
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 8581363780399802525, guid: 4d83734cfe6ccd249a4c9395017768b6, type: 3}
+  m_Sprite: {fileID: -7832214784768987486, guid: dff82afc012aa084385425b1433a6d1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -130,7 +129,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.98, y: 3}
+    oldSize: {x: 4.03, y: 3.79}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -138,17 +137,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
---- !u!114 &4345602569302460850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5903158337866852085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45efa4f9e1875ef4a96fd93df0d6ed9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TimeObject
-  _collider: {fileID: 4510588105405649201}
-  _timePower: 1.5
