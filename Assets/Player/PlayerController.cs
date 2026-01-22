@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IPlayerController
 {
+
+    [SerializeField] private ParticleSystem dust;
+
     [SerializeField] private ScriptableStats _stats;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private CapsuleCollider2D _col;
@@ -308,6 +311,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _bufferedJumpUsable = false;
         _coyoteUsable = false;
         _frameVelocity.y = _stats.JumpPower;
+
+        CreateDust();
+
         Jumped?.Invoke();
     }
 
@@ -403,10 +409,14 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void HandleSpriteDirection()
     {
         if (_frameInput.Move.x > 0.01f)
+        {
             _spriteRenderer.flipX = false;
+        }
         else if (_frameInput.Move.x < -0.01f)
+        {
             _spriteRenderer.flipX = true;
-    }
+        }
+        }
 
     #endregion
 
@@ -486,6 +496,15 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (_stats == null) Debug.LogWarning("Please assign a ScriptableStats asset to the Player Controller's Stats slot", this);
     }
 #endif
+
+
+    private void CreateDust()
+    {
+        if (dust != null)
+        {
+            dust.Play();
+        }
+    }
 }
 
 public struct FrameInput
