@@ -15,6 +15,7 @@ TagManager:
   - tail
   - time
   - TimeHandler
+  - ShopEntrance
   layers:
   - Default
   - TransparentFX

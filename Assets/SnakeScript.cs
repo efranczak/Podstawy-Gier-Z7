@@ -9,6 +9,7 @@ public class SnakeScript : MonoBehaviour
     private CameraScript camera;
     public SnakeLogic snakeLogic;
     public ArrowScript arrowScript;
+    public static SnakeScript Instance;
 
     [Header ("Speed Settings")]
     public float velocity = 0.05f;
@@ -18,7 +19,7 @@ public class SnakeScript : MonoBehaviour
 
     private float increaseTimer = 0f;
     private float baseVelocity;
-    private bool isStopping = false;
+    public bool isStopping = false;
     private float stopTimer = 0f;
     private float previousVelocity = 0f;
 
@@ -36,6 +37,7 @@ public class SnakeScript : MonoBehaviour
 
     void Start()
     {
+        if (Instance == null) Instance = this;
         player = GameObject.FindWithTag("Player");
         camera = Camera.main.GetComponent<CameraScript>();
         startDistance = DistanceToPlayer();

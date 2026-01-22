@@ -15,10 +15,13 @@ public class PlatformLevelGenerator : MonoBehaviour
     private List<GameObject> _viableEndlessChunkTemplates = new List<GameObject>();
     private List<GameObject> _viablePlatfromChunkTemplates = new List<GameObject>();
     public GameObject startChunk;
+    public GameObject shopChunk;
 
     [Header("Ustawienia")]
     public float spawnBuffer = 10f;
     public float despawnBuffer = 10f;
+    public int shopTimer = 4;
+    private int chunkTimer = 0;
 
     private List<Chunk> activeChunks = new List<Chunk>();
     private float rightmostX = 0f;
@@ -80,6 +83,14 @@ public class PlatformLevelGenerator : MonoBehaviour
 
             if (nextChunk != null)
             {
+
+                chunkTimer++;
+                if(chunkTimer >= shopTimer)
+                {
+                    nextChunk = shopChunk;
+                    chunkTimer = 0;
+                }
+
                 SpawnNextChunk(Vector3.zero, nextChunk);
             }
             else

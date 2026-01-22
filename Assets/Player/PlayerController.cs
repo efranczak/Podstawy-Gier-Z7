@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 
+
 public class PlayerController : MonoBehaviour, IPlayerController
 {
 
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void Awake()
     {
+
         playerControls = new PlayerInputActions();
 
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;

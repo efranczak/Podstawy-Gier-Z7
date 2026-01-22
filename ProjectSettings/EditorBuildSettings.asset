@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlatfromowanieScena.unity
     guid: 11538ff08c9dd10408881b08b56344d4
+  - enabled: 1
+    path: Assets/Scenes/ShopScene.unity
+    guid: 316e7f941943b9e4e83b12cff1e35bc1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -1704,8 +1704,10 @@ MonoBehaviour:
   - {fileID: 3840287670580990443, guid: 33b21461513d81b4798ab4be05338431, type: 3}
   - {fileID: 3840287670580990443, guid: c19872a3144bde549afdc76c110f9aac, type: 3}
   startChunk: {fileID: 3840287670580990443, guid: 290475d4762aa4b48a158d2d3deb9232, type: 3}
+  shopChunk: {fileID: 5269735628016967238, guid: 257f1858a93799f42b6fa8abdf902241, type: 3}
   spawnBuffer: 10
   despawnBuffer: 10
+  shopTimer: 7
 --- !u!1 &410092260
 GameObject:
   m_ObjectHideFlags: 0
@@ -8706,6 +8708,7 @@ MonoBehaviour:
   increaseModifier: 1.09
   increaseInterval: 1
   increaseValue: 0.007
+  isStopping: 0
   CameraActivationDistance: 15
   hideArrowDistance: 1
   blinkArrowDistance: 40
@@ -10764,6 +10767,7 @@ GameObject:
   - component: {fileID: 1310816166}
   - component: {fileID: 1310816165}
   - component: {fileID: 1310816170}
+  - component: {fileID: 1310816171}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -10991,6 +10995,23 @@ MonoBehaviour:
   _playerJumps: 1
   _playerDashes: 0
   _sameWallJumpMaxAmount: 0
+--- !u!114 &1310816171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310816159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0186fb0ba6722e04db90353ffb9a3d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopEnter
+  snake: {fileID: 0}
+  uselessUI:
+  - {fileID: 852115004}
+  - {fileID: 1571602470}
+  - {fileID: 237195218}
 --- !u!1 &1328005987
 GameObject:
   m_ObjectHideFlags: 0

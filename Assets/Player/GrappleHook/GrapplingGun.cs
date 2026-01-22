@@ -57,6 +57,9 @@ public class GrapplingGun : MonoBehaviour
 
     private void Update()
     {
+        if(m_camera == null) return;
+
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SetGrapplePoint();
