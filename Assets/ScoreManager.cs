@@ -8,6 +8,12 @@ public class ScoreManager : MonoBehaviour
     public Text scoreText;
     public Text highScoreText;
 
+    [Header("Audio")]
+    public AudioClip[] pointCollectSounds;
+    [Range(0f, 1f)] public float pointVolume = 1.0f;
+
+    private AudioSource _audioSource;
+
     int score = 0;
     int highScore = 0;
 
@@ -16,6 +22,12 @@ public class ScoreManager : MonoBehaviour
         instance = this;
         highScore = PlayerPrefs.GetInt("highscore", 0);
         Debug.Log($"ScoreManager Awake - loaded highscore = {highScore}");
+
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
     void Start()
     {
@@ -41,8 +53,24 @@ public class ScoreManager : MonoBehaviour
     {
         if (other.CompareTag("point"))
         {
+            PlayPointSound();
             AddPoint();
             Destroy(other.gameObject);
+        }
+    }
+
+    private void PlayPointSound()
+    {
+        if (pointCollectSounds == null || pointCollectSounds.Length == 0)
+        {
+            return;
+        }
+
+        int index = Random.Range(0, pointCollectSounds.Length);
+        AudioClip clip = pointCollectSounds[index];
+        if (clip != null)
+        {
+            _audioSource.PlayOneShot(clip, pointVolume);
         }
     }
 
