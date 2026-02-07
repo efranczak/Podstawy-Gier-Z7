@@ -79,6 +79,10 @@ public class PlatfromerChunk : Chunk
     private void TriggerEntry()
     {
         handler.StartPlatfomingSection();
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.SwitchToPlatform();
+        }
         isActive = true;
         chunkCamera.Priority = 12;
         playerCameraBoundaryCollider.enabled = false;
@@ -99,6 +103,10 @@ public class PlatfromerChunk : Chunk
         }
 
         handler.EndPlatfomingSection();
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.SwitchToGameplay();
+        }
         chunkCamera.Priority = 0;
         isActive = false;
         playerCameraBoundaryCollider.enabled = true;
