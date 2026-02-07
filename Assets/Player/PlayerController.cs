@@ -13,6 +13,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private CapsuleCollider2D _col;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private float _runThreshold = 0.1f;
+    [SerializeField] private string _animIsRunningParam = "isRunning";
+    [SerializeField] private string _animIsGroundedParam = "isGrounding";
+    [SerializeField] private string _animYVelocityParam = "YVelocity";
+    [SerializeField] private string _animIsClimbingParam = "isClimbing";
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
@@ -93,6 +99,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         _lastCheckpoint = transform.position;
 
+        if (_animator == null)
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
+
     }
 
     private void OnEnable()
@@ -131,6 +142,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         _time += Time.deltaTime;
         GatherInput();
+        UpdateRunAnimation();
+        UpdateAirAnimation();
     }
 
     private void GatherInput()
@@ -475,6 +488,40 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
 
         _rb.linearVelocity = finalVelocity;
+    }
+
+    private void UpdateRunAnimation()
+    {
+        if (_animator == null || _rb == null) return;
+
+        bool hasMoveInput = Mathf.Abs(_frameInput.Move.x) > 0.1f;
+        bool hasHorizontalSpeed = Mathf.Abs(_rb.linearVelocity.x) > _runThreshold;
+        bool isRunning = _grounded && !IsClimbing && !IsDashing && (autoRun ? hasHorizontalSpeed : (hasMoveInput && hasHorizontalSpeed));
+
+        if (!string.IsNullOrWhiteSpace(_animIsRunningParam))
+        {
+            _animator.SetBool(_animIsRunningParam, isRunning);
+        }
+    }
+
+    private void UpdateAirAnimation()
+    {
+        if (_animator == null || _rb == null) return;
+
+        if (!string.IsNullOrWhiteSpace(_animIsGroundedParam))
+        {
+            _animator.SetBool(_animIsGroundedParam, _grounded);
+        }
+
+        if (!string.IsNullOrWhiteSpace(_animIsClimbingParam))
+        {
+            _animator.SetBool(_animIsClimbingParam, IsClimbing);
+        }
+
+        if (!string.IsNullOrWhiteSpace(_animYVelocityParam))
+        {
+            _animator.SetFloat(_animYVelocityParam, _rb.linearVelocity.y);
+        }
     }
 
     #region Respawn Logic
