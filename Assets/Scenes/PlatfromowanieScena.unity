@@ -11012,7 +11012,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73281a79f75f2047867df34abdcfb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioManager
-  appleCollectSound: {fileID: 8300000, guid: 4a2a772d96da5b04ab38f7f0180ebcd9, type: 3}
+  appleCollectSounds:
+  - {fileID: 8300000, guid: 9c6150c0eabcff74ba22554871718a43, type: 3}
+  - {fileID: 8300000, guid: 2766a65e96aebb343af06615e8387ba7, type: 3}
   appleVolume: 0.8
 --- !u!114 &1310816167
 MonoBehaviour:

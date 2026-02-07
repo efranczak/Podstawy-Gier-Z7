@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerAudioManager : MonoBehaviour
 {
     [Header("Audio Clips")]
-    public AudioClip appleCollectSound;
+    public AudioClip[] appleCollectSounds;
 
     [Header("Settings")]
 
@@ -23,9 +23,16 @@ public class PlayerAudioManager : MonoBehaviour
 
     public void PlayAppleSound()
     {
-        if (appleCollectSound != null)
+        if (appleCollectSounds == null || appleCollectSounds.Length == 0)
         {
-            audioSource.PlayOneShot(appleCollectSound, appleVolume);
+            return;
+        }
+
+        int index = Random.Range(0, appleCollectSounds.Length);
+        AudioClip clip = appleCollectSounds[index];
+        if (clip != null)
+        {
+            audioSource.PlayOneShot(clip, appleVolume);
         }
     }
 }
