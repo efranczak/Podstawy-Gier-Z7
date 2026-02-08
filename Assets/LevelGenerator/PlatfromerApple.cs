@@ -47,11 +47,12 @@ public class PlatfromerApple : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !isCollected)
+        if (isCollected)
         {
-            isMoving = true;
+            return;
         }
-        if (collision.CompareTag("tail"))
+
+        if (collision.CompareTag("Player") || collision.CompareTag("tail"))
         {
             isCollected = true;
             PlayCollectSound();
