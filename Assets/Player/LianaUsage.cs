@@ -15,6 +15,9 @@ public class LianaUsage : MonoBehaviour
     private PlayerController _player;
     private Transform _currentLiana;
     private PlayerInputActions _inputActions;
+    private Rigidbody2D _rb;
+    private float _originalGravityScale;
+    private Vector2 _cachedMoveInput;
 
     private bool _canClimb = false;
     private bool _isClimbing = false;
@@ -24,6 +27,11 @@ public class LianaUsage : MonoBehaviour
     {
         _player = GetComponent<PlayerController>();
         _inputActions = new PlayerInputActions();
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb != null)
+        {
+            _originalGravityScale = _rb.gravityScale;
+        }
     }
 
     private void OnEnable() => _inputActions.Enable();
@@ -37,6 +45,7 @@ public class LianaUsage : MonoBehaviour
         }
 
         Vector2 moveInput = _player.FrameInput;
+        _cachedMoveInput = moveInput;
         bool jumpPressed = _inputActions.Player.Jump.WasPressedThisFrame();
 
         if (_canClimb && !_isClimbing && _cooldownTimer <= 0)
@@ -55,13 +64,18 @@ public class LianaUsage : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isClimbing && _currentLiana != null)
+        if (_isClimbing)
         {
-            float targetX = _currentLiana.position.x;
-            float currentX = transform.position.x;
+            _player.SetVelocity(new Vector2(0f, _cachedMoveInput.y * climbSpeed));
 
-            float newX = Mathf.Lerp(currentX, targetX, snapSmoothness * Time.fixedDeltaTime);
-            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+            if (_currentLiana != null)
+            {
+                float targetX = _currentLiana.position.x;
+                float currentX = transform.position.x;
+
+                float newX = Mathf.Lerp(currentX, targetX, snapSmoothness * Time.fixedDeltaTime);
+                transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+            }
         }
     }
 
@@ -83,12 +97,20 @@ public class LianaUsage : MonoBehaviour
         _player.IsClimbing = true;
         _player.IsGrappling = false;
         _player.SetVelocity(Vector2.zero);
+        if (_rb != null)
+        {
+            _rb.gravityScale = 0f;
+        }
     }
 
     private void StopClimbing()
     {
         _isClimbing = false;
         _player.IsClimbing = false;
+        if (_rb != null)
+        {
+            _rb.gravityScale = _originalGravityScale;
+        }
     }
 
     private void PerformJumpOff(float xInput)

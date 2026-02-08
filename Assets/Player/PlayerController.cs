@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Animator _animator;
     [SerializeField] private float _runThreshold = 0.1f;
+    [SerializeField] private float _climbIdleThreshold = 0.05f;
     [SerializeField] private string _animIsRunningParam = "isRunning";
     [SerializeField] private string _animIsGroundedParam = "isGrounding";
     [SerializeField] private string _animYVelocityParam = "YVelocity";
@@ -522,6 +523,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             _animator.SetFloat(_animYVelocityParam, _rb.linearVelocity.y);
         }
+
+        bool isClimbingIdle = IsClimbing && Mathf.Abs(_rb.linearVelocity.y) <= _climbIdleThreshold;
+        _animator.speed = isClimbingIdle ? 0f : 1f;
     }
 
     #region Respawn Logic

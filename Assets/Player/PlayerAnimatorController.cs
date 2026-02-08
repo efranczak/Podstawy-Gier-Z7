@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerAnimatorController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private float climbIdleThreshold = 0.05f;
 
     private PlayerController _controller;
     private Rigidbody2D _rb;
@@ -54,6 +55,9 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetFloat(YVelocityHash, _rb.linearVelocity.y);
         animator.SetBool(IsGroundingHash, _isGrounded);
         animator.SetBool(IsClimbingHash, _controller.IsClimbing);
+
+        bool isClimbingIdle = _controller.IsClimbing && Mathf.Abs(_rb.linearVelocity.y) <= climbIdleThreshold;
+        animator.speed = isClimbingIdle ? 0f : 1f;
     }
 
     private void OnGroundedChanged(bool isGrounded, float _)
