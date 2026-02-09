@@ -3733,6 +3733,7 @@ MonoBehaviour:
   _animIsGroundedParam: isGrounding
   _animYVelocityParam: YVelocity
   _animIsClimbingParam: isClimbing
+  _animIsDashingParam: isDashing
   autoRun: 0
   _wallJumpHandler: {fileID: 0}
   _wallCheckDistance: 0.6
@@ -11186,6 +11187,7 @@ MonoBehaviour:
   _animIsGroundedParam: isGrounding
   _animYVelocityParam: YVelocity
   _animIsClimbingParam: isClimbing
+  _animIsDashingParam: isDashing
   autoRun: 0
   _wallJumpHandler: {fileID: 1117491350}
   _wallCheckDistance: 0.6
@@ -13741,7 +13743,7 @@ Transform:
   m_GameObject: {fileID: 1800209107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -955.09, y: -540.0135, z: 0}
+  m_LocalPosition: {x: -960.03, y: -540.03, z: 0}
   m_LocalScale: {x: 1.4564831, y: 1.5112568, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private string _animIsGroundedParam = "isGrounding";
     [SerializeField] private string _animYVelocityParam = "YVelocity";
     [SerializeField] private string _animIsClimbingParam = "isClimbing";
+    [SerializeField] private string _animIsDashingParam = "isDashing";
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
@@ -517,6 +518,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (!string.IsNullOrWhiteSpace(_animIsClimbingParam))
         {
             _animator.SetBool(_animIsClimbingParam, IsClimbing);
+        }
+
+        if (!string.IsNullOrWhiteSpace(_animIsDashingParam))
+        {
+            _animator.SetBool(_animIsDashingParam, IsDashing);
         }
 
         if (!string.IsNullOrWhiteSpace(_animYVelocityParam))
