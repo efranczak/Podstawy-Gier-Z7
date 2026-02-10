@@ -17,7 +17,7 @@ public class LeaderboardManager : MonoBehaviour
     public void AddScore(string name, int score)
     {
         LoadScores();
-        scores.Add(new ScoreEntry { name = string.IsNullOrEmpty(name) ? "Player" : name, score = score });
+        scores.Add(new ScoreEntry { name = string.IsNullOrEmpty(name) ? "AAA" : name, score = score });
         scores = scores.OrderByDescending(s => s.score).Take(MaxEntries).ToList();
         SaveScores();
         Debug.Log($"[LeaderboardManager] Added score {name}={score}. Total entries={scores.Count}");

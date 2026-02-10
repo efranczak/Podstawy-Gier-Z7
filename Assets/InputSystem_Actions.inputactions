@@ -588,7 +588,7 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "15cef263-9014-4fd5-94d9-4e4a6234a6ef",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -660,6 +660,15 @@
                     "name": "Select",
                     "type": "Button",
                     "id": "b0538dc5-c257-4930-a3f8-9e2af1dbc20d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel1",
+                    "type": "Button",
+                    "id": "e32ba996-e5f2-4c0f-8c62-f54c92e40ea8",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1115,6 +1124,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11d0f45b-3f50-4403-92f1-7c2d5a649438",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7118420-70ed-4dac-a98d-14a5e2d9aec5",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd49ac5b-42e4-4802-bc0a-1dcc3caddde5",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
