@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 472cf8e3c1845774bb8e314364a48d4f
+guid: 224c74a63450b2b4c982a70c5e37c525
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -103,10 +103,10 @@ TextureImporter:
       name: snake_tail-export_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 9
-        width: 949
-        height: 268
+        x: 17
+        y: 2
+        width: 401
+        height: 1423
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
