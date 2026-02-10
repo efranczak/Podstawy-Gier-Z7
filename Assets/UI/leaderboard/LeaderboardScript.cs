@@ -52,10 +52,13 @@ public class LeaderboardScript : MonoBehaviour
     {
         leaderboardPanel.SetActive(true);
 
+        Debug.Log("Activating leaderboard animation sequence.");
+
         if (animator != null)
         {
             animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             animator.SetTrigger("showAnim");
+            Debug.Log("Started leaderboard animation.");
         }
 
         yield return new WaitForSecondsRealtime(2.0f);

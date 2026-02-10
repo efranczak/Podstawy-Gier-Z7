@@ -18,7 +18,7 @@ public class GameOverScript : MonoBehaviour
     public GameObject upgradeSlots;
     public GameObject apples;
     public GameObject arrow;
-    
+
 
     [Header("Leaderboard Settings")]
     public LeaderboardManager leaderboardManager;
