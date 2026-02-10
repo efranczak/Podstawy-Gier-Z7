@@ -1812,6 +1812,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: score (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6426531820361035939, guid: 7b0dc8361e1dfc94584d98ca776a48d1, type: 3}
+      propertyPath: m_TagString
+      value: Collectible
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

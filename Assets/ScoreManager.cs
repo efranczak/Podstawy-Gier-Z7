@@ -51,7 +51,7 @@ public class ScoreManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("point"))
+        if (other.CompareTag("Collectible"))
         {
             PlayPointSound();
             AddPoint();
