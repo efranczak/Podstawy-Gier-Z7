@@ -36,6 +36,8 @@ public class GameOverScript : MonoBehaviour
     // guard ¿eby nie dublowaæ submitu
     private bool submitted = false;
 
+    public LeaderboardScript leaderboard_;
+
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -52,14 +54,6 @@ public class GameOverScript : MonoBehaviour
             if (startFlag && startButton != null && startButton.IsActive())
             {
                 StartGame();
-            }
-            else if (nameInputField != null && nameInputField.gameObject.activeInHierarchy && nameInputField.isFocused)
-            {
-                SubmitScore();
-            }
-            else if (restartButton != null && restartButton.IsActive())
-            {
-                RestartLevel();
             }
         };
     }
@@ -85,7 +79,6 @@ public class GameOverScript : MonoBehaviour
         if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
         if (startButton != null) startButton.onClick.AddListener(StartGame);
 
-        if (leaderboardPanel != null) leaderboardPanel.SetActive(false);
         if (nameTexts != null)
         {
             foreach (var t in nameTexts) if (t != null) t.gameObject.SetActive(false);
@@ -94,6 +87,7 @@ public class GameOverScript : MonoBehaviour
         {
             foreach (var t in scoreTexts) if (t != null) t.gameObject.SetActive(false);
         }
+
     }
 
     public void StartGame()
@@ -124,14 +118,6 @@ public class GameOverScript : MonoBehaviour
 
         submitted = true;
 
-        int scoreValue = ScoreManager.instance != null ? ScoreManager.instance.GetScore() : 0;
-        string playerName = string.IsNullOrEmpty(nameInputField.text) ? "Player" : nameInputField.text;
-
-        leaderboardManager.AddScore(playerName, scoreValue);
-        Debug.Log($"[GameOverScript] Added score: {playerName} = {scoreValue}");
-
-        UpdateLeaderboardUI();
-
         nameInputField.gameObject.SetActive(false);
         if (submitButton != null)
         {
@@ -141,43 +127,16 @@ public class GameOverScript : MonoBehaviour
         if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
     }
 
-    private void UpdateLeaderboardUI()
-    {
-        List<ScoreEntry> highScores = (leaderboardManager != null) ? leaderboardManager.GetScores() : new List<ScoreEntry>();
-
-        if (nameTexts == null || scoreTexts == null) return;
-        int len = UnityEngine.Mathf.Min(nameTexts.Length, scoreTexts.Length);
-
-        for (int i = 0; i < len; i++)
-        {
-            bool hasEntry = (highScores != null && i < highScores.Count);
-            if (nameTexts[i] != null) nameTexts[i].gameObject.SetActive(hasEntry);
-            if (scoreTexts[i] != null) scoreTexts[i].gameObject.SetActive(hasEntry);
-
-            if (hasEntry)
-            {
-                if (nameTexts[i] != null) nameTexts[i].text = highScores[i].name;
-                if (scoreTexts[i] != null) scoreTexts[i].text = highScores[i].score.ToString();
-            }
-            else
-            {
-                if (nameTexts[i] != null) nameTexts[i].text = "-";
-                if (scoreTexts[i] != null) scoreTexts[i].text = "0";
-            }
-        }
-    }
 
     public void TriggerGameOver()
     {
         PauseGame();
         submitted = false; // reset flag przy pokazaniu ekranu
-        if (gameOverText != null) { gameOverText.text = "You Died"; gameOverText.enabled = true; }
         if (upgradeSlots != null) upgradeSlots.SetActive(false);
         if (arrow != null) upgradeSlots.SetActive(false);
         if (apples != null) upgradeSlots.SetActive(false);
 
-        if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
-        UpdateLeaderboardUI();
+        if (leaderboard_ != null) leaderboard_.ActivateLeaderboard();
 
         if (restartButton != null) restartButton.gameObject.SetActive(true);
         if (background != null) background.enabled = true;
@@ -189,11 +148,6 @@ public class GameOverScript : MonoBehaviour
             // ustaw fokus ¿eby mo¿na by³o wpisywaæ od razu
             EventSystem.current?.SetSelectedGameObject(nameInputField.gameObject);
             nameInputField.ActivateInputField();
-        }
-        if (currentScore != null && ScoreManager.instance != null)
-        {
-            currentScore.gameObject.SetActive(true);
-            currentScore.text = "Your Score: " + ScoreManager.instance.GetScore().ToString();
         }
         if (submitButton != null)
         {
@@ -210,7 +164,7 @@ public class GameOverScript : MonoBehaviour
         if (gameOverText != null) { gameOverText.text = "You Won!"; gameOverText.enabled = true; }
 
         if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
-        UpdateLeaderboardUI();
+        // UpdateLeaderboardUI();
 
         if (restartButton != null) restartButton.gameObject.SetActive(true);
         if (background != null) background.enabled = true;
