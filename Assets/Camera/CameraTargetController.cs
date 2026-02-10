@@ -27,13 +27,16 @@ public class CameraTargetController : MonoBehaviour
 
     private void Start()
     {
-        transform.position = _playerTransform.position;
-        _targetY = _playerTransform.position.y;
-        _lastGroundedY = _playerTransform.position.y;
-        _playerRb = _playerController.GetComponent<Rigidbody2D>();
+        if (_playerTransform != null)
+        {
+            transform.position = _playerTransform.position;
+            _targetY = _playerTransform.position.y;
+            _lastGroundedY = _playerTransform.position.y;
+        }
 
         if (_playerController != null)
         {
+            _playerRb = _playerController.GetComponent<Rigidbody2D>();
             _playerController.GroundedChanged += OnGroundedChanged;
         }
     }
@@ -59,13 +62,17 @@ public class CameraTargetController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_playerTransform == null) return;
+        if (_playerTransform == null || _playerController == null) return;
 
         float targetX = _playerTransform.position.x + _xOffset;
 
-        if (_isGrounded)
+        bool isClimbing = _playerController.IsClimbing;
+
+        if (_isGrounded || isClimbing)
         {
             _targetY = _playerTransform.position.y;
+
+            _lastGroundedY = _playerTransform.position.y;
         }
         else
         {

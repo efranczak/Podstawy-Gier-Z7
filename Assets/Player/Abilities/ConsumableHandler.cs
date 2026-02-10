@@ -10,27 +10,30 @@ public class ConsumableHandler : MonoBehaviour
 
     [Header("Sprint Settings")]
     [Tooltip("Czas po którym prêdkoœæ gracza powinna powróciæ do bazowej")]
-    [SerializeField] private float _sprintDuration = 9.0f;
+    [SerializeField] private float _sprintDuration = 15.0f;
     
     [Tooltip("Ilukrotnie zwiêkszyæ bazow¹ prêdkoœæ")]
     [SerializeField] private float _sprintSpeedBoostMultiplier = 1.5f;
 
     [Header("JumpPower Settings")]
     [Tooltip("Czas po którym moc skoku gracza powinna powróciæ do bazowej")]
-    [SerializeField] private float _jumpPowerDuration = 9.0f;
+    [SerializeField] private float _jumpPowerDuration = 15.0f;
 
     [Tooltip("Ilukrotnie zwiêkszyæ bazowy skok")]
     [SerializeField] private float _jumpPowerBoostMultiplier = 1.5f;
 
     [Header("Fall Speed Settings")]
     [Tooltip("Czas po którym predkosc opadania gracza powinna powróciæ do bazowej")]
-    [SerializeField] private float _fallSpeedDuration = 9.0f;
+    [SerializeField] private float _fallSpeedDuration = 20.0f;
 
     [Tooltip("Ilukrotnie zmniejszyc predkosc opadania")]
     [SerializeField] private float _fallSpeedAmount = 0.1f;
 
     private UpgradeType? _currentConsumable = null;
-    private Coroutine _activeEffectCoroutine;
+    private bool _isEffectActive = false;
+    private float _remainingTime = 0f;
+
+    private SpriteRenderer _spriteRenderer;
 
     private PlayerInputActions _inputActions;
     private InputAction _useAction;
@@ -49,6 +52,14 @@ public class ConsumableHandler : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (_player != null)
+        {
+            _spriteRenderer = _player.GetComponentInChildren<SpriteRenderer>();
+        }
+    }
+
     private void OnEnable()
     {
         _useAction = _inputActions.Player.Interact;
@@ -62,109 +73,139 @@ public class ConsumableHandler : MonoBehaviour
 
     private void Update()
     {
-        if (_useAction.WasPressedThisFrame())
-        {
-            Debug.Log("Use action pressed");
-        }
-
         if (_useAction.WasPressedThisFrame() && _currentConsumable.HasValue)
         {
-            ActivateConsumable();
+            ToggleConsumable();
+        }
+
+        if (_isEffectActive && _remainingTime > 0)
+        {
+            _remainingTime -= Time.deltaTime;
+
+            if (_remainingTime <= 0)
+            {
+                FinishConsumable();
+            }
         }
     }
 
     public void SetConsumable(UpgradeType type)
     {
+        if (_currentConsumable.HasValue)
+        {
+            DeactivateEffect();
+        }
+
         _currentConsumable = type;
-        Debug.Log($"Picked up consumable: {type}");
+        _isEffectActive = false;
+
+        switch (type)
+        {
+            case UpgradeType.Sprint: _remainingTime = _sprintDuration; break;
+            case UpgradeType.JumpPower: _remainingTime = _jumpPowerDuration; break;
+            case UpgradeType.FallSpeed: _remainingTime = _fallSpeedDuration; break;
+        }
+
+        Debug.Log($"Picked up consumable: {type}. Time: {_remainingTime}s");
     }
 
-    private void ActivateConsumable()
+    private void ToggleConsumable()
     {
-        Debug.Log("ActivateConsumable called");
+        if (_isEffectActive)
+        {
+            DeactivateEffect();
 
-        if (_activeEffectCoroutine != null) StopCoroutine(_activeEffectCoroutine);
+            // Kara za pauzowanie: 1s
+            _remainingTime -= 1.0f;
+
+            if (_remainingTime <= 0) FinishConsumable();
+        }
+        else if (_remainingTime > 0) ActivateEffect();
+    }
+    private void ActivateEffect()
+    {
+        _isEffectActive = true;
+        ApplyStats(true);
+
+        if (_spriteRenderer != null && _currentConsumable.HasValue)
+        {
+            switch (_currentConsumable.Value)
+            {
+                case UpgradeType.Sprint:
+                    _spriteRenderer.color = Color.blue;
+                    break;
+                case UpgradeType.JumpPower:
+                    _spriteRenderer.color = Color.red;
+                    break;
+                case UpgradeType.FallSpeed:
+                    _spriteRenderer.color = Color.green;
+                    break;
+            }
+        }
+    }
+    private void DeactivateEffect()
+    {
+        _isEffectActive = false;
+        ApplyStats(false);
+
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = Color.white;
+        }
+    }
+    private void FinishConsumable()
+    {
+        Debug.Log("Consumable finished!");
+        DeactivateEffect();
+        _currentConsumable = null;
+        _remainingTime = 0;
+        _activeUpgradesContainer.UpdateConsumableUpgrades(null);
+    }
+    private void ApplyStats(bool applyBoost)
+    {
+        ScriptableStats currentStats = _player.Stats;
+        if (currentStats == null || !_currentConsumable.HasValue) return;
 
         switch (_currentConsumable)
         {
             case UpgradeType.Sprint:
-                _activeEffectCoroutine = StartCoroutine(SprintRoutine(_sprintDuration, _sprintSpeedBoostMultiplier));
-                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.blue, _sprintDuration);
+                currentStats.MaxSpeed = _baseStats.MaxSpeed;
+                currentStats.Acceleration = _baseStats.Acceleration;
                 break;
             case UpgradeType.JumpPower:
-                _activeEffectCoroutine = StartCoroutine(JumpPowerRoutine(_jumpPowerDuration, _jumpPowerBoostMultiplier));
-                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.red, _jumpPowerDuration);
+                currentStats.JumpPower = _baseStats.JumpPower;
+                currentStats.MaxFallSpeed = _baseStats.MaxFallSpeed;
                 break;
             case UpgradeType.FallSpeed:
-                _activeEffectCoroutine = StartCoroutine(FallSpeedRoutine(_fallSpeedDuration, _fallSpeedAmount));
-                GameObject.FindWithTag("Player").GetComponentInChildren<SpriteShading>().Flash(Color.green, _jumpPowerDuration);
+                currentStats.MaxFallSpeed = _baseStats.MaxFallSpeed;
                 break;
         }
 
-        _currentConsumable = null;
-        _activeUpgradesContainer.UpdateConsumableUpgrades(null);
+        if (applyBoost)
+        {
+            switch (_currentConsumable)
+            {
+                case UpgradeType.Sprint:
+                    currentStats.MaxSpeed *= _sprintSpeedBoostMultiplier;
+                    currentStats.Acceleration *= _sprintSpeedBoostMultiplier;
+                    break;
+                case UpgradeType.JumpPower:
+                    currentStats.JumpPower *= _jumpPowerBoostMultiplier;
+                    currentStats.MaxFallSpeed *= _jumpPowerBoostMultiplier;
+                    break;
+                case UpgradeType.FallSpeed:
+                    currentStats.MaxFallSpeed *= _fallSpeedAmount;
+                    break;
+            }
+        }
+    }
+    public float GetTimeRemaining()
+    {
+        return _currentConsumable.HasValue ? Mathf.Max(0, _remainingTime) : 0f;
     }
 
-    private IEnumerator SprintRoutine(float duration, float multiplier)
+    public bool IsActive()
     {
-        Debug.Log("SprintRoutine called");
-
-        ScriptableStats currentStats = _player.Stats;
-
-        if (currentStats == null) yield break;
-
-        float originalMaxSpeed = _baseStats.MaxSpeed;
-        float originalAcceleration = _baseStats.Acceleration;
-
-        currentStats.MaxSpeed *= multiplier;
-        currentStats.Acceleration *= multiplier;
-
-        yield return new WaitForSeconds(duration);
-
-        currentStats.MaxSpeed = originalMaxSpeed;
-        currentStats.Acceleration = originalAcceleration;
-
-        _activeEffectCoroutine = null;
-    }
-
-    private IEnumerator JumpPowerRoutine(float duration, float multiplier)
-    {
-        Debug.Log("SprintRoutine called");
-
-        ScriptableStats currentStats = _player.Stats;
-
-        if (currentStats == null) yield break;
-
-        float originalJumpPower = _baseStats.JumpPower;
-        float originalFallSpeed = _baseStats.MaxFallSpeed;
-
-        currentStats.JumpPower *= multiplier;
-        currentStats.MaxFallSpeed *= multiplier;
-
-        yield return new WaitForSeconds(duration);
-
-        currentStats.JumpPower = originalJumpPower;
-        currentStats.MaxFallSpeed = originalFallSpeed;
-
-        _activeEffectCoroutine = null;
-    }
-
-    private IEnumerator FallSpeedRoutine(float duration, float multiplier)
-    {
-        Debug.Log("SprintRoutine called");
-
-        ScriptableStats currentStats = _player.Stats;
-
-        if (currentStats == null) yield break;
-
-        float originalFallSpeed = _baseStats.MaxFallSpeed;
-
-        currentStats.MaxFallSpeed *= multiplier;
-
-        yield return new WaitForSeconds(duration);
-
-        currentStats.MaxFallSpeed = originalFallSpeed;
-
-        _activeEffectCoroutine = null;
+        return _isEffectActive;
     }
 }

@@ -4,22 +4,35 @@ using UnityEngine;
 public class ActiveUpgradesText : MonoBehaviour
 {
     private TextMeshProUGUI _textMesh;
-
-
-    void Start()
+    private void ValidateMesh()
     {
-        _textMesh = GetComponent<TextMeshProUGUI>();
-        _textMesh.enabled = false;
-    }
+        if (_textMesh == null)
+        {
+            _textMesh = GetComponent<TextMeshProUGUI>();
 
+            if (_textMesh == null)
+            {
+                Debug.LogError($"[ActiveUpgradesText] Brak TextMeshProUGUI na obiekcie {gameObject.name}!");
+            }
+        }
+    }
     public void SetText(string text)
     {
-        _textMesh.text = text;
-        _textMesh.enabled = true;
-    }
+        ValidateMesh();
 
+        if (_textMesh != null)
+        {
+            _textMesh.text = text;
+            _textMesh.enabled = true;
+        }
+    }
     public void HideText()
     {
-        _textMesh.enabled = false;
+        ValidateMesh();
+
+        if (_textMesh != null)
+        {
+            _textMesh.enabled = false;
+        }
     }
 }
