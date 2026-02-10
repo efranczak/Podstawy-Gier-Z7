@@ -155,7 +155,7 @@ MonoBehaviour:
   PivotOffset: {x: 0, y: 0, z: 0}
   AmplitudeGain: 0
   FrequencyGain: 1
-  m_NoiseOffsets: {x: 0, y: 0, z: 0}
+  m_NoiseOffsets: {x: 269.0084, y: -782.4354, z: 13.082886}
 --- !u!114 &1077062331010672409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,11 +559,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5518978815107828435, guid: 8f8c5ad809a3c334b976798f7342d77f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.37
+      value: -2.79
       objectReference: {fileID: 0}
     - target: {fileID: 5518978815107828435, guid: 8f8c5ad809a3c334b976798f7342d77f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.2499628
+      value: -4.37
       objectReference: {fileID: 0}
     - target: {fileID: 5518978815107828435, guid: 8f8c5ad809a3c334b976798f7342d77f, type: 3}
       propertyPath: m_LocalPosition.z
