@@ -674,7 +674,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""15cef263-9014-4fd5-94d9-4e4a6234a6ef"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -746,6 +746,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Select"",
                     ""type"": ""Button"",
                     ""id"": ""b0538dc5-c257-4930-a3f8-9e2af1dbc20d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel1"",
+                    ""type"": ""Button"",
+                    ""id"": ""e32ba996-e5f2-4c0f-8c62-f54c92e40ea8"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1203,6 +1212,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11d0f45b-3f50-4403-92f1-7c2d5a649438"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7118420-70ed-4dac-a98d-14a5e2d9aec5"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd49ac5b-42e4-4802-bc0a-1dcc3caddde5"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1295,6 +1337,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
+        m_UI_Cancel1 = m_UI.FindAction("Cancel1", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -1582,6 +1625,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_Select;
+    private readonly InputAction m_UI_Cancel1;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -1637,6 +1681,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Select".
         /// </summary>
         public InputAction @Select => m_Wrapper.m_UI_Select;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/Cancel1".
+        /// </summary>
+        public InputAction @Cancel1 => m_Wrapper.m_UI_Cancel1;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1696,6 +1744,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Select.started += instance.OnSelect;
             @Select.performed += instance.OnSelect;
             @Select.canceled += instance.OnSelect;
+            @Cancel1.started += instance.OnCancel1;
+            @Cancel1.performed += instance.OnCancel1;
+            @Cancel1.canceled += instance.OnCancel1;
         }
 
         /// <summary>
@@ -1740,6 +1791,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Select.started -= instance.OnSelect;
             @Select.performed -= instance.OnSelect;
             @Select.canceled -= instance.OnSelect;
+            @Cancel1.started -= instance.OnCancel1;
+            @Cancel1.performed -= instance.OnCancel1;
+            @Cancel1.canceled -= instance.OnCancel1;
         }
 
         /// <summary>
@@ -2000,5 +2054,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelect(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Cancel1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCancel1(InputAction.CallbackContext context);
     }
 }
