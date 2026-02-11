@@ -8,6 +8,8 @@ public class MenuScript : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject firstMenu;
+    public GameObject creditsMenu;
+    public GameObject leaderboardsMenu;
     public TMP_Text promptText;
     public GameObject title;
 
@@ -45,8 +47,6 @@ public class MenuScript : MonoBehaviour
                      mainMenu.SetActive(true);
                      mainMenu.GetComponent<MainMenuScript>().ShowMenu();
                  });
-
-
             }
         };
     }
@@ -77,4 +77,7 @@ public class MenuScript : MonoBehaviour
         yield return new WaitForSeconds(blinkInterval);
         promptText.enabled = false;
     }
+
+
+    
 }

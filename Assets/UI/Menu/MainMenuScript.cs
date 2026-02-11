@@ -13,6 +13,12 @@ public class MainMenuScript : MonoBehaviour
     public GameObject ButtonBackground;
     public CanvasGroup canvasGroup;
     public TMP_Text[] menuOptions;
+    public GameObject title;
+    public CanvasGroup creditsPanel;
+
+    private bool isInCredits = false;
+    private bool isTransitioning = false;
+
 
 
     #region Input System
@@ -53,6 +59,9 @@ public class MainMenuScript : MonoBehaviour
 
     private void navigateMenu()
     {
+        if (isTransitioning || isInCredits)
+            return;
+
         Vector2 navigation = horizontal.ReadValue<Vector2>();
         if (navigation.y > 0.5f)
         {
@@ -70,11 +79,53 @@ public class MainMenuScript : MonoBehaviour
     private void Start()
     {
         canvasGroup.alpha = 0f;
+        creditsPanel.alpha = 0f;
     }
 
     public void ShowMenu()
     {
         canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.OutCubic);
+    }
+
+    public void ShowCredits()
+    {
+        if (isTransitioning)
+            return;
+
+        isTransitioning = true;
+
+
+        RectTransform rect = title.GetComponent<RectTransform>();
+        canvasGroup.DOFade(0f, 0.5f).SetEase(Ease.InCubic);
+
+        rect.DOAnchorPosY(
+            rect.anchoredPosition.y + 180f,
+            2f
+        ).SetEase(Ease.InOutSine)
+         .OnComplete(() =>
+         {
+             creditsPanel.DOFade(1f, 0.5f).SetEase(Ease.OutCubic);
+             isTransitioning = false;
+         });
+    }
+
+    public void HideCredits()
+    {
+        if (isTransitioning) return;
+
+        isTransitioning = true;
+
+        RectTransform rect = title.GetComponent<RectTransform>();
+        creditsPanel.DOFade(0f, 0.5f).SetEase(Ease.InCubic);
+        rect.DOAnchorPosY(
+            rect.anchoredPosition.y - 180f,
+            2f
+        ).SetEase(Ease.InOutSine)
+         .OnComplete(() =>
+         {
+             ShowMenu();
+             isTransitioning = false;
+         });
     }
 
     private void UpdateMenuVisuals()
@@ -100,6 +151,17 @@ public class MainMenuScript : MonoBehaviour
 
     private void onSelect()
     {
+        if (isTransitioning)
+            return;
+
+        if (isInCredits)
+        {
+            HideCredits();
+            isInCredits = false;
+            return;
+        }
+
+
         switch (selectedIndex)
         {
             case 0:
@@ -110,7 +172,8 @@ public class MainMenuScript : MonoBehaviour
                 // Show Leaderboard
                 break;
             case 2:
-                // Show Credits
+                ShowCredits();
+                isInCredits = true;
                 break;
             case 3:
                 Application.Quit();
