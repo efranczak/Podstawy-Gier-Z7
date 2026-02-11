@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
 
-    public Text scoreText;
-    public Text highScoreText;
+    public TMP_Text scoreText;
+    public TMP_Text highScoreText;
 
     [Header("Audio")]
     public AudioClip[] pointCollectSounds;
