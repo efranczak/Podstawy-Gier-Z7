@@ -1,14 +1,15 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ShopEnter : MonoBehaviour
 {
 
     public GameObject snake;
     public GameObject[] uselessUI;
-    public TMP_Text enterShopText;
-    public TMP_Text buyItemText;
+    public RawImage Enter;
+    public RawImage Exit;
 
 
     private bool canEnter;
@@ -23,11 +24,15 @@ public class ShopEnter : MonoBehaviour
     private const string EXIT_TEXT = "[W] to exit the shop";
 
 
-
     private void Start()
     {
         snake = GameObject.FindWithTag("Snake");
-        enterShopText.enabled = false;        
+        if (Enter != null)
+            Enter.enabled = false;
+
+        if (Exit != null)
+            Exit.enabled = false;
+
     }
 
     private void Update()
@@ -36,8 +41,9 @@ public class ShopEnter : MonoBehaviour
         {
             if (!isInsideShop)
             {
-                if (enterShopText != null)
-                    enterShopText.enabled = false;
+                if (Enter != null) Enter.enabled = false;
+                if (Exit != null) Exit.enabled = false;
+
 
                 playerPos = transform.position;
 
@@ -60,8 +66,9 @@ public class ShopEnter : MonoBehaviour
             }
             else
             {
-                if (enterShopText != null)
-                    enterShopText.enabled = false;
+                if (Enter != null) Enter.enabled = false;
+                if (Exit != null) Exit.enabled = false;
+
                 foreach (GameObject uselessElement in uselessUI)
                 {
                     if (uselessElement != null)
@@ -85,10 +92,15 @@ public class ShopEnter : MonoBehaviour
             canEnter = true;
             currentDoorTrigger = other.gameObject;
 
-            if (enterShopText != null)
+            if (!isInsideShop)
             {
-                enterShopText.text = isInsideShop ? EXIT_TEXT : ENTER_TEXT;
-                enterShopText.enabled = true;
+                if (Enter != null) Enter.enabled = true;
+                if (Exit != null) Exit.enabled = false;
+            }
+            else
+            {
+                if (Enter != null) Enter.enabled = false;
+                if (Exit != null) Exit.enabled = true;
             }
         }
     }
@@ -100,8 +112,8 @@ public class ShopEnter : MonoBehaviour
             canEnter = false;
             currentDoorTrigger = null;
 
-            if (enterShopText != null)
-                enterShopText.enabled = false;
+            if (Enter != null) Enter.enabled = false;
+            if (Exit != null) Exit.enabled = false;
         }
     }
 }

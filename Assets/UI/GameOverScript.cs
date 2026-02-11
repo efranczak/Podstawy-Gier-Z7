@@ -17,7 +17,6 @@ public class GameOverScript : MonoBehaviour
     [Header("UI elements")]
     public GameObject upgradeSlots;
     public GameObject apples;
-    public GameObject arrow;
 
 
     [Header("Leaderboard Settings")]
@@ -73,7 +72,6 @@ public class GameOverScript : MonoBehaviour
         if (background != null) background.enabled = true;
         if (startButton != null) startButton.gameObject.SetActive(true);
         if (upgradeSlots != null) upgradeSlots.SetActive(false);
-        if (arrow != null) upgradeSlots.SetActive(false);
         if (apples != null) upgradeSlots.SetActive(false);
 
         if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
@@ -96,7 +94,6 @@ public class GameOverScript : MonoBehaviour
         HideGameOver();
         if (startButton != null) startButton.gameObject.SetActive(false);
         if (upgradeSlots != null) upgradeSlots.SetActive(true);
-        if (arrow != null) upgradeSlots.SetActive(true);
         if (apples != null) upgradeSlots.SetActive(true);
         startFlag = false;
     }
@@ -133,7 +130,6 @@ public class GameOverScript : MonoBehaviour
         PauseGame();
         submitted = false; // reset flag przy pokazaniu ekranu
         if (upgradeSlots != null) upgradeSlots.SetActive(false);
-        if (arrow != null) upgradeSlots.SetActive(false);
         if (apples != null) upgradeSlots.SetActive(false);
 
         if (leaderboard_ != null) leaderboard_.ActivateLeaderboard();
