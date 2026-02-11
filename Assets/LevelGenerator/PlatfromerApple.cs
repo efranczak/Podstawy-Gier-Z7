@@ -6,6 +6,8 @@ public class PlatfromerApple : MonoBehaviour
     public float value = 1f;
     public bool isCollected = false;
 
+    public Sprite collectedSprite;
+
     [Header("Audio")]
     public AudioClip[] collectSounds;
     [Range(0f, 1f)] public float collectVolume = 0.8f;
@@ -47,12 +49,12 @@ public class PlatfromerApple : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isCollected)
+        if (collision.CompareTag("Player") && !isCollected)
         {
-            return;
+            isMoving = true;
+            gameObject.GetComponent<SpriteRenderer>().sprite = collectedSprite;
         }
-
-        if (collision.CompareTag("Player") || collision.CompareTag("tail"))
+        if (collision.CompareTag("tail"))
         {
             isCollected = true;
             PlayCollectSound();

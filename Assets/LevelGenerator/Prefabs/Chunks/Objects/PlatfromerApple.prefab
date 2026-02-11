@@ -181,6 +181,7 @@ MonoBehaviour:
   saturation: 0.7
   value: 1
   isCollected: 0
+  collectedSprite: {fileID: 4384335583278809683, guid: 68b9786f8d49b3549ab20e790375cb5b, type: 3}
   collectSounds:
   - {fileID: 8300000, guid: 3df8d3db23ed9434fbe0b75c83b29420, type: 3}
   collectVolume: 1
