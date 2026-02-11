@@ -15,8 +15,10 @@ public class MainMenuScript : MonoBehaviour
     public TMP_Text[] menuOptions;
     public GameObject title;
     public CanvasGroup creditsPanel;
+    public LeaderboardScript leaderboardScript;
 
     private bool isInCredits = false;
+    private bool isInLeaderboard = false;
     private bool isTransitioning = false;
 
 
@@ -80,6 +82,7 @@ public class MainMenuScript : MonoBehaviour
     {
         canvasGroup.alpha = 0f;
         creditsPanel.alpha = 0f;
+        leaderboardScript.leaderboardPanel.SetActive(false);
     }
 
     public void ShowMenu()
@@ -128,6 +131,46 @@ public class MainMenuScript : MonoBehaviour
          });
     }
 
+    private void ShowLeaderboard()
+    {
+        if (isTransitioning)
+            return;
+        isTransitioning = true;
+
+        RectTransform rect = title.GetComponent<RectTransform>();
+        canvasGroup.DOFade(0f, 0.5f).SetEase(Ease.InCubic);
+
+
+        rect.DOAnchorPosY(
+            rect.anchoredPosition.y + 180f,
+            2f
+        ).SetEase(Ease.InOutSine)
+         .OnComplete(() =>
+         {
+             isTransitioning = false;
+             isInLeaderboard = true;
+             leaderboardScript.leaderboardPanel.SetActive(true);
+             leaderboardScript.ActivateLeaderboard();
+         });
+    }
+
+    private void HideLeaderboard()
+    {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        RectTransform rect = title.GetComponent<RectTransform>();
+        leaderboardScript.leaderboardPanel.SetActive(false);
+        rect.DOAnchorPosY(
+            rect.anchoredPosition.y - 180f,
+            2f
+        ).SetEase(Ease.InOutSine)
+         .OnComplete(() =>
+         {
+             isTransitioning = false;
+             ShowMenu();
+         });
+    }
+
     private void UpdateMenuVisuals()
     {
         for (int i = 0; i < menuOptions.Length; i++)
@@ -161,6 +204,13 @@ public class MainMenuScript : MonoBehaviour
             return;
         }
 
+        if (isInLeaderboard)
+        {
+            HideLeaderboard();
+            isInLeaderboard = false;
+            return;
+        }
+
 
         switch (selectedIndex)
         {
@@ -169,7 +219,7 @@ public class MainMenuScript : MonoBehaviour
                 SceneManager.LoadScene(0);
                 break;
             case 1:
-                // Show Leaderboard
+                ShowLeaderboard();
                 break;
             case 2:
                 ShowCredits();

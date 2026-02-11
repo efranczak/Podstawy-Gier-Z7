@@ -26,9 +26,9 @@ public class LeaderboardScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        leaderboardPanel.SetActive(false);
-        titleText.gameObject.SetActive(false);
-        input.gameObject.SetActive(false);
+        if (leaderboardPanel != null) leaderboardPanel.SetActive(false);
+        if (titleText != null )titleText.gameObject.SetActive(false);
+        if (input != null) input.gameObject.SetActive(false);
 
         for (int i = 0; i < nameTexts.Length; i++)
         {
@@ -50,7 +50,7 @@ public class LeaderboardScript : MonoBehaviour
 
     private IEnumerator PlayAnimationSequence()
     {
-        leaderboardPanel.SetActive(true);
+        if (leaderboardPanel != null) leaderboardPanel.SetActive(true);
 
         Debug.Log("Activating leaderboard animation sequence.");
 
@@ -59,9 +59,9 @@ public class LeaderboardScript : MonoBehaviour
             animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             animator.SetTrigger("showAnim");
             Debug.Log("Started leaderboard animation.");
+            yield return new WaitForSecondsRealtime(2.0f);
         }
 
-        yield return new WaitForSecondsRealtime(2.0f);
 
 
 
@@ -80,7 +80,7 @@ public class LeaderboardScript : MonoBehaviour
         }
 
         yield return new WaitForSecondsRealtime(0.5f);
-        input.gameObject.SetActive(true);
+        if (input != null) input.gameObject.SetActive(true);
         if (currentScore != null && ScoreManager.instance != null)
         {
             currentScore.gameObject.SetActive(true);
