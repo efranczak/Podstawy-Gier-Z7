@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: be05caba78853eb45a471fe193192248
+guid: a963b80415f816646a084efe565cf408
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5154189640090123692
-    second: flag_0
+      213: 2517129475618268046
+    second: gadogon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flag_0
+      name: gadogon_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 96
-        height: 96
+        y: 2
+        width: 392
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4520e6594d3a878b0800000000000000
-      internalID: -5154189640090123692
+      spriteID: e8364e7fbe3aee220800000000000000
+      internalID: 2517129475618268046
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      flag_0: -5154189640090123692
+      gadogon_0: 2517129475618268046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
