@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -8,6 +9,8 @@ public class ShopItemDisplay : MonoBehaviour
 
     private bool canBuy = false;
     private PlayerController playerRef;
+    
+
 
     public void Setup(UpgradeData newData)
     {
