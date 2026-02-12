@@ -55,7 +55,7 @@ public class GameOverScript : MonoBehaviour
 
         button.performed += ctx =>
         {
-            if (startFlag && startButton != null && startButton.IsActive())
+            if (startFlag)
             {
                 StartGame();
             }

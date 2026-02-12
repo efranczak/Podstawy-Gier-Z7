@@ -11,7 +11,7 @@ public class ShopItemDisplay : MonoBehaviour
     private PlayerController playerRef;
     public TMP_Text descriptionText;
     public TMP_Text priceText;
-
+    
     public void Setup(UpgradeData newData)
     {
         data = newData;

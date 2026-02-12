@@ -3681,7 +3681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 287, y: -128.8}
+  m_AnchoredPosition: {x: 1928, y: -919}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &707735811
@@ -3704,7 +3704,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Coins: 100'
+  m_text: 'apples: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 22bee942fba79924e82d9149daeb4bcc, type: 2}
   m_sharedMaterial: {fileID: -8052850019816706357, guid: 22bee942fba79924e82d9149daeb4bcc, type: 2}
@@ -3731,8 +3731,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11537,7 +11537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
   hungerDecreaseAmount: 1
   speedDecreaseAmount: 0.1
-  distanceIncreaseAmount: 3
+  distanceIncreaseAmount: 2
 --- !u!114 &1310816170
 MonoBehaviour:
   m_ObjectHideFlags: 0

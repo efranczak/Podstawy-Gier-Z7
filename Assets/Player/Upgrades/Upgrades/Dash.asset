@@ -17,5 +17,5 @@ MonoBehaviour:
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   type: 3
   category: 0
-  iconUI: {fileID: 21300000, guid: eda664478943e0b44b1a903bfe05f5ff, type: 3}
+  iconUI: {fileID: 7110878671101974141, guid: 2b9062ccfb7d519409f81b166ca558a7, type: 3}
   price: 10
