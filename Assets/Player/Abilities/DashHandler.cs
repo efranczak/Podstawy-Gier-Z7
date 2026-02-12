@@ -90,6 +90,15 @@ public class DashHandler : MonoBehaviour
 
     private void TryDash()
     {
+        if (_player.IsClimbing)
+        {
+            var liana = GetComponent<LianaUsage>();
+            if (liana != null)
+            {
+                liana.StopClimbingWithCooldown();
+            }
+        }
+
         if (_currentConsecutiveDashes < _playerSkills.PlayerDashes)
         {
             StartCoroutine(DashCoroutine());
@@ -98,11 +107,16 @@ public class DashHandler : MonoBehaviour
 
     private IEnumerator DashCoroutine()
     {
+        if (_player.IsClimbing)
+        {
+            var liana = GetComponent<LianaUsage>();
+            if (liana != null) liana.StopClimbingWithCooldown();
+        }
+
         _canDash = false;
         _currentConsecutiveDashes++;
 
         float direction = _player.GetFacingDirection();
-
         Vector2 dashVelocity = new Vector2(direction * (DashDistance / DashDuration), 0f);
 
         _player.AddExternalVelocity(dashVelocity, DashDuration);
@@ -112,7 +126,6 @@ public class DashHandler : MonoBehaviour
         if (_currentConsecutiveDashes < _playerSkills.PlayerDashes)
         {
             yield return new WaitForSeconds(DashCooldown);
-
             _canDash = true;
         }
     }

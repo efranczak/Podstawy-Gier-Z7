@@ -44,6 +44,8 @@ public class LianaUsage : MonoBehaviour
             _cooldownTimer -= Time.deltaTime;
         }
 
+        if (_player.IsDashing) return;
+
         Vector2 moveInput = _player.FrameInput;
         _cachedMoveInput = moveInput;
         bool jumpPressed = _inputActions.Player.Jump.WasPressedThisFrame();
@@ -64,7 +66,7 @@ public class LianaUsage : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isClimbing)
+        if (_isClimbing && !_player.IsDashing)
         {
             _player.SetVelocity(new Vector2(0f, _cachedMoveInput.y * climbSpeed));
 
@@ -101,9 +103,15 @@ public class LianaUsage : MonoBehaviour
         {
             _rb.gravityScale = 0f;
         }
+
+        var dashHandler = GetComponent<DashHandler>();
+        if (dashHandler != null)
+        {
+            dashHandler.ResetDashChain();
+        }
     }
 
-    private void StopClimbing()
+    public void StopClimbing()
     {
         _isClimbing = false;
         _player.IsClimbing = false;
@@ -111,6 +119,12 @@ public class LianaUsage : MonoBehaviour
         {
             _rb.gravityScale = _originalGravityScale;
         }
+    }
+
+    public void StopClimbingWithCooldown()
+    {
+        StopClimbing();
+        _cooldownTimer = climbCooldownTime;
     }
 
     private void PerformJumpOff(float xInput)
