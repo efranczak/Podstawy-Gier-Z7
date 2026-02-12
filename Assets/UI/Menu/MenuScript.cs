@@ -61,6 +61,8 @@ public class MenuScript : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
+
         firstMenu.SetActive(true);
         mainMenu.SetActive(false);
         StartCoroutine(BlinkingCoroutine());
@@ -68,6 +70,7 @@ public class MenuScript : MonoBehaviour
 
     IEnumerator BlinkingCoroutine()
     {
+        promptText.enabled = false;
         while (true && !lockAnyButton)
         {
             promptText.enabled = !promptText.enabled;

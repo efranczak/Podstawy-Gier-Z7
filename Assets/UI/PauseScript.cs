@@ -79,24 +79,35 @@ public class PauseScript : MonoBehaviour
     public void ShowPause(bool isEnd = false)
     {
         Time.timeScale = 0f;
+
         if (!isEnd)
         {
             backgroundAnimator.SetTrigger("showAnim");
             isResumeActive = true;
             resumeText.text = "Resume";
+            DOVirtual.DelayedCall(1.5f, () =>
+            {
+                resumeText.enabled = true;
+                mainMenuText.enabled = true;
+            }).SetUpdate(true);
         }
-        if (isEnd)
+        else
         {
             backgroundAnimator.SetTrigger("showEnd");
             isResumeActive = false;
             resumeText.text = "New Game";
+            DOVirtual.DelayedCall(0.25f, () =>
+            {
+                resumeText.enabled = true;
+                mainMenuText.enabled = true;
+            }).SetUpdate(true);
         }
 
-            resumeText.enabled = true;
-        mainMenuText.enabled = true;
-
         isHidden = false;
+
+
     }
+
 
     private void Navigate(Vector2 direction)
     {
