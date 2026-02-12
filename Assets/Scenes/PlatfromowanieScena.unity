@@ -9179,7 +9179,7 @@ MonoBehaviour:
   velocity: 0.05
   increaseModifier: 1.09
   increaseInterval: 1
-  increaseValue: 0.007
+  increaseValue: 0.01
   isStopping: 0
   CameraActivationDistance: 15
 --- !u!61 &868943651
@@ -11536,8 +11536,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
   hungerDecreaseAmount: 1
-  speedDecreaseAmount: 0.1
-  distanceIncreaseAmount: 2
+  speedDecreaseAmount: 0.05
+  distanceIncreaseAmount: 1
 --- !u!114 &1310816170
 MonoBehaviour:
   m_ObjectHideFlags: 0
