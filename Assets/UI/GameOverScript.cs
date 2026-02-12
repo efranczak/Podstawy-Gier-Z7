@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class GameOverScript : MonoBehaviour
 {
-    public Text gameOverText;
+    public TMP_Text gameOverText;
     public Image controlsText;
     public Button restartButton;
     public Button startButton;

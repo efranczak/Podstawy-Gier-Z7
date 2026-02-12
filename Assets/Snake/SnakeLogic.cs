@@ -6,6 +6,7 @@ public class SnakeLogic : MonoBehaviour
     [Header("Snake Hunger")]
     public int maxHunger = 4;
     public int currentHunger;
+    public int snakeDefeatCount = 0;
 
     public ApplesUI appleUI;
     public GameOverScript gameOverScript;
@@ -34,8 +35,7 @@ public class SnakeLogic : MonoBehaviour
 
     void SnakeDefeated()
     {   
-        upgradePanelUI.ShowUpgradeSelection();
-        // snakeScript.resetPosition();
+        snakeDefeatCount++;
     }
 
 
