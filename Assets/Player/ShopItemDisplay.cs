@@ -25,7 +25,7 @@ public class ShopItemDisplay : MonoBehaviour
 
     private void Update()
     {
-        if (canBuy && Input.GetKeyDown(KeyCode.W))
+        if (canBuy && (Input.GetKeyDown(KeyCode.W)||Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.JoystickButton4)))
         {
             if (playerRef.GetComponent<ScoreManager>().coins > data.price)
             {

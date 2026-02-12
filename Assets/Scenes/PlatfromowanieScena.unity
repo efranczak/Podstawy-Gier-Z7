@@ -9177,7 +9177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SnakeScript
   snakeLogic: {fileID: 1224409303}
   velocity: 0.05
-  increaseModifier: 1.09
+  increaseModifier: 1.15
   increaseInterval: 1
   increaseValue: 0.01
   isStopping: 0
