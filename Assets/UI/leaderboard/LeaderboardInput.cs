@@ -17,6 +17,7 @@ public class LeaderboardInput : MonoBehaviour
 
     public LeaderboardInputLetter[] leaderboardInputLetters;
     public LeaderboardManager leaderboardManager;
+    public PauseScript pauseScript;
 
     #region Input System
 
@@ -76,16 +77,24 @@ public class LeaderboardInput : MonoBehaviour
     private void OnSelect(InputAction.CallbackContext context)
     {
         if (_inputLocked) return;
-        leaderboardInputLetters[currentLetter].SetNotActive();
+        leaderboardInputLetters[Mathf.Min(currentLetter, leaderboardInputLetters.Length - 1)].SetNotActive();
         currentLetter++;
-        if (currentLetter >= leaderboardInputLetters.Length)
+        if (currentLetter == leaderboardInputLetters.Length + 1)
         {
-            playerName[currentLetter - 1] = leaderboardInputLetters[currentLetter - 1].GetCurrentLetter();
+            playerName[leaderboardInputLetters.Length-1] = leaderboardInputLetters[leaderboardInputLetters.Length - 1].GetCurrentLetter();
             string finalName = new string(playerName);
             leaderboardManager.AddScore(finalName, ScoreManager.instance != null ? ScoreManager.instance.GetScore() : 0);
 
-            _gameOverScript.RestartLevel();
+            pauseScript.ShowPause(true);
+            gameObject.transform.parent.gameObject.SetActive(false);
             // END OF LEADERBOARD INPUT HERE
+        }
+        else if (currentLetter >= leaderboardInputLetters.Length)
+        {
+            for (int i = 0; i < leaderboardInputLetters.Length; i++)
+            {
+                leaderboardInputLetters[i].SetActive();
+            }
         }
         else
         {

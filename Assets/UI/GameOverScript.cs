@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,7 @@ public class GameOverScript : MonoBehaviour
     public Button restartButton;
     public Button startButton;
     public Image background;
+    public PauseScript pauseScript;
 
     [Header("UI elements")]
     public GameObject upgradeSlots;
@@ -30,7 +32,10 @@ public class GameOverScript : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
     private InputAction button;
+    private InputAction pauseButton;
     private bool startFlag = true;
+    private bool pauseFlag = false;
+    private bool inPauseMenu = false;
 
     // guard ¿eby nie dublowaæ submitu
     private bool submitted = false;
@@ -54,6 +59,22 @@ public class GameOverScript : MonoBehaviour
             {
                 StartGame();
             }
+        };
+
+        pauseButton = playerInputActions.UI.Cancel1;
+        pauseButton.Enable();
+
+        pauseButton.performed += ctx =>
+        {
+            if (!pauseFlag && !inPauseMenu)
+            {
+                // show pause menu
+            }
+            else if (pauseFlag && inPauseMenu)
+            {
+                // hide pause menu
+            }
+            // else do nothing
         };
     }
 
@@ -197,10 +218,27 @@ public class GameOverScript : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        pauseFlag = true;
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+        pauseFlag = false;
+    }
+
+    public void ShowPauseMenu()
+    {
+        
+        inPauseMenu = true;
+        PauseGame();
+        pauseScript.ShowPause();
+    }
+
+    public void HidePauseMenu()
+    {
+        inPauseMenu = false;
+        pauseScript.HidePause();
+        ResumeGame();
     }
 }
