@@ -44,6 +44,24 @@ public class ShopItemDisplay : MonoBehaviour
 
             data.ApplyUpgrade(playerRef);
 
+            ActiveUpgradesContainer uiContainer = FindAnyObjectByType<ActiveUpgradesContainer>();
+
+            if (uiContainer != null)
+            {
+                if (data.category == UpgradeCategory.Permanent)
+                {
+                    uiContainer.UpdateActiveUpgrades(data);
+                }
+                else if (data.category == UpgradeCategory.Consumable)
+                {
+                    uiContainer.UpdateConsumableUpgrades(data);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Nie znaleziono ActiveUpgradesContainer na scenie!");
+            }
+
             Destroy(gameObject);
         }
     }
