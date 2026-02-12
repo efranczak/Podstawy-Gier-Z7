@@ -969,13 +969,13 @@ MonoBehaviour:
   - {fileID: 1025585559}
   - {fileID: 1207363996}
   itemPrefab: {fileID: 1466897504070880809, guid: 138a068ae19920f40b0255752b11820e, type: 3}
-  possibleUpgrades:
-  - {fileID: 11400000, guid: 4fab101bb90795544b5f8f297ac41e3e, type: 2}
-  - {fileID: 11400000, guid: 9e164b1cc61c8ef42b889cfa0e553712, type: 2}
-  - {fileID: 11400000, guid: c209bf79fdd5782498a20ec150065e29, type: 2}
+  jumpData: {fileID: 11400000, guid: 1b3983cc9b0037b4cad831fbddee0799, type: 2}
+  dashData: {fileID: 11400000, guid: 6379a200a0ef74a4ead8ee62c66d95fa, type: 2}
+  wallData: {fileID: 11400000, guid: 4fab101bb90795544b5f8f297ac41e3e, type: 2}
+  optionalUpgrades:
   - {fileID: 11400000, guid: 1489e80ba7964aa4ea03b8c2bdabe097, type: 2}
-  - {fileID: 11400000, guid: 1b3983cc9b0037b4cad831fbddee0799, type: 2}
-  - {fileID: 11400000, guid: 6379a200a0ef74a4ead8ee62c66d95fa, type: 2}
+  - {fileID: 11400000, guid: c209bf79fdd5782498a20ec150065e29, type: 2}
+  - {fileID: 11400000, guid: 9e164b1cc61c8ef42b889cfa0e553712, type: 2}
 --- !u!1 &911499003
 GameObject:
   m_ObjectHideFlags: 0
