@@ -10,6 +10,7 @@ public class UpgradeData : ScriptableObject
     public UpgradeType type;
     public UpgradeCategory category;
     public Sprite iconUI;
+    public int price;
 
     // Example apply method — call this from UpgradeButton or manager
     public void ApplyUpgrade(PlayerController player/*, SnakeScript snake*/)

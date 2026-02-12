@@ -20,3 +20,4 @@ MonoBehaviour:
   type: 5
   category: 1
   iconUI: {fileID: 1994490555352000475, guid: 962b27e209f7f9540bfeee5b0a058aea, type: 3}
+  price: 100

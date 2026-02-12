@@ -8,6 +8,7 @@ public class ScoreManager : MonoBehaviour
 
     public TMP_Text scoreText;
     public TMP_Text highScoreText;
+    public TMP_Text coinsText;
 
     [Header("Audio")]
     public AudioClip[] pointCollectSounds;
@@ -17,6 +18,8 @@ public class ScoreManager : MonoBehaviour
 
     int score = 0;
     int highScore = 0;
+
+    public int coins = 0;
 
     private void Awake()
     {
@@ -34,12 +37,15 @@ public class ScoreManager : MonoBehaviour
     {
         scoreText.text = "SCORE: " + score.ToString();
         highScoreText.text = "HIGH SCORE: " + highScore.ToString();
+        coinsText.text = "COINS: " + coins.ToString();
     }
 
     public void AddPoint()
     {
+        coins += 10;
         score += 100;
         scoreText.text = "SCORE: " + score.ToString();
+        coinsText.text = "COINS: " + coins.ToString();
         if (highScore < score)
         {
             highScore = score;
