@@ -212,7 +212,8 @@ public class GameOverScript : MonoBehaviour
     public void RestartLevel()
     {
         ResumeGame();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.buildIndex);
     }
 
     public void PauseGame()

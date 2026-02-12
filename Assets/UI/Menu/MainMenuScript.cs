@@ -216,7 +216,7 @@ public class MainMenuScript : MonoBehaviour
         {
             case 0:
                 // Start Game
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(1);
                 break;
             case 1:
                 ShowLeaderboard();

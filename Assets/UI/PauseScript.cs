@@ -157,7 +157,7 @@ public class PauseScript : MonoBehaviour
                 else gameOverScript.RestartLevel();
                 break;
             case 1:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
                 break;
         }
 
