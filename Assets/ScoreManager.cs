@@ -37,15 +37,15 @@ public class ScoreManager : MonoBehaviour
     {
         scoreText.text = "SCORE: " + score.ToString();
         highScoreText.text = "HIGH SCORE: " + highScore.ToString();
-        coinsText.text = "COINS: " + coins.ToString();
+        coinsText.text = "APPLES: " + coins.ToString();
     }
 
     public void AddPoint()
     {
-        coins += 10;
+        coins += 1;
         score += 100;
         scoreText.text = "SCORE: " + score.ToString();
-        coinsText.text = "COINS: " + coins.ToString();
+        coinsText.text = "APPLES: " + coins.ToString();
         if (highScore < score)
         {
             highScore = score;
