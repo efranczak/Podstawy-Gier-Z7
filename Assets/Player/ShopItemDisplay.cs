@@ -30,7 +30,7 @@ public class ShopItemDisplay : MonoBehaviour
             if (playerRef.GetComponent<ScoreManager>().coins > data.price)
             {
                 playerRef.GetComponent<ScoreManager>().coins -= data.price;
-                playerRef.GetComponent<ScoreManager>().coinsText.text = "COINS: " + playerRef.GetComponent<ScoreManager>().coins.ToString();
+                playerRef.GetComponent<ScoreManager>().coinsText.text = "Apples: " + playerRef.GetComponent<ScoreManager>().coins.ToString();
                 BuyItem();
             }
         }
@@ -55,7 +55,7 @@ public class ShopItemDisplay : MonoBehaviour
             canBuy = true;
             playerRef = other.GetComponent<PlayerController>();
             descriptionText.text = data.description;
-            priceText.text = "Price: " + data.price.ToString();
+            priceText.text = "Price: " + data.price.ToString() + " apples";
         }
     }
 
