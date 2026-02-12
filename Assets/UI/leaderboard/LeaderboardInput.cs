@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class LeaderboardInput : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class LeaderboardInput : MonoBehaviour
     public LeaderboardInputLetter[] leaderboardInputLetters;
     public LeaderboardManager leaderboardManager;
     public PauseScript pauseScript;
+
+    public GameObject arrows;
+    private float[] arrowsPosX = { -18f, 60f, 135f };
 
     #region Input System
 
@@ -95,11 +99,18 @@ public class LeaderboardInput : MonoBehaviour
             {
                 leaderboardInputLetters[i].SetActive();
             }
+            arrows.SetActive(false);
         }
         else
         {
             playerName[currentLetter-1] = leaderboardInputLetters[currentLetter-1].GetCurrentLetter();
             leaderboardInputLetters[currentLetter].SetActive();
+            RectTransform arrowsRect = arrows.GetComponent<RectTransform>();
+
+            arrowsRect.DOAnchorPosX(arrowsPosX[currentLetter], 0.15f)
+                      .SetEase(Ease.InOutSine)
+                      .SetUpdate(true); 
+
         }
     }
 
