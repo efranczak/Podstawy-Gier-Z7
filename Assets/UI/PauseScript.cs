@@ -41,7 +41,11 @@ public class PauseScript : MonoBehaviour
         pauseButton.performed += ctx =>
         {
             if (isHidden) ShowPause();
-            else HidePause();
+            else
+            {
+                HidePause();
+                Time.timeScale = 1f;
+            }
         };
     }
 
@@ -57,6 +61,7 @@ public class PauseScript : MonoBehaviour
     void Start()
     {
         HidePause();
+
         RectTransform resumeRect = resumeText.GetComponent<RectTransform>();
         resumeRect.DOScale(1.1f, 0.2f).SetEase(Ease.OutCubic);
         resumeText.color = Color.yellow;
@@ -68,7 +73,6 @@ public class PauseScript : MonoBehaviour
 
     public void HidePause()
     {
-        Time.timeScale = 1f;
         backgroundAnimator.Play("Idle");
         resumeText.enabled = false;
         mainMenuText.enabled = false;
@@ -145,7 +149,11 @@ public class PauseScript : MonoBehaviour
         switch (currentButton)
         {
             case 0:
-                if (isResumeActive) HidePause();
+                if (isResumeActive)
+                {
+                    HidePause();
+                    Time.timeScale = 1f;
+                }
                 else gameOverScript.RestartLevel();
                 break;
             case 1:
