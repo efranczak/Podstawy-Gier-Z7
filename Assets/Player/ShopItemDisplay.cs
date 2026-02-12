@@ -9,8 +9,8 @@ public class ShopItemDisplay : MonoBehaviour
 
     private bool canBuy = false;
     private PlayerController playerRef;
-    
-
+    public TMP_Text descriptionText;
+    public TMP_Text priceText;
 
     public void Setup(UpgradeData newData)
     {
@@ -18,13 +18,21 @@ public class ShopItemDisplay : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = data.iconUI;
 
         gameObject.name = "ShopItem_" + data.upgradeName;
+
+        descriptionText = GameObject.Find("Description").GetComponent<TMP_Text>();
+        priceText = GameObject.Find("Price").GetComponent<TMP_Text>();
     }
 
     private void Update()
     {
         if (canBuy && Input.GetKeyDown(KeyCode.W))
         {
-            BuyItem();
+            if (playerRef.GetComponent<ScoreManager>().coins > data.price)
+            {
+                playerRef.GetComponent<ScoreManager>().coins -= data.price;
+                playerRef.GetComponent<ScoreManager>().coinsText.text = "COINS: " + playerRef.GetComponent<ScoreManager>().coins.ToString();
+                BuyItem();
+            }
         }
     }
 
@@ -46,6 +54,8 @@ public class ShopItemDisplay : MonoBehaviour
         {
             canBuy = true;
             playerRef = other.GetComponent<PlayerController>();
+            descriptionText.text = data.description;
+            priceText.text = "Price: " + data.price.ToString();
         }
     }
 
@@ -55,6 +65,8 @@ public class ShopItemDisplay : MonoBehaviour
         {
             canBuy = false;
             playerRef = null;
+            descriptionText.text = null;
+            priceText.text = null;
         }
     }
 }

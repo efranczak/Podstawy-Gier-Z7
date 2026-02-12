@@ -13,6 +13,7 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
+        ClearOldItems();
         SpawnShopItems();
     }
 
@@ -38,6 +39,16 @@ public class ShopManager : MonoBehaviour
 
             availableData.RemoveAt(randomIndex);
 
+        }
+    }
+
+    private void ClearOldItems()
+    {
+        ShopItemDisplay[] itemsToDestroy = FindObjectsByType<ShopItemDisplay>(FindObjectsSortMode.None);
+
+        foreach (ShopItemDisplay item in itemsToDestroy)
+        {
+            Destroy(item.gameObject);
         }
     }
 }
