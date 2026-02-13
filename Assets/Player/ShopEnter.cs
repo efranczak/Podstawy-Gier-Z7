@@ -82,6 +82,8 @@ public class ShopEnter : MonoBehaviour
                 SnakeScript.Instance.gameObject.SetActive(true);
                 activeShopDoor.GetComponent<Collider2D>().enabled = false;
                 transform.position = playerPos;
+
+                SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
             }
         }
 
